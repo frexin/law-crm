@@ -4,7 +4,7 @@
 1) PHP >= 7.0.9
 
 ## Wiki
-1. [Руководство по проектированию базы](http://git.devbrains.me/team/lawyers/wikis/db_tables)
+1. [Краткое описание структуры базы данных](http://git.devbrains.me/team/lawyers/wikis/db_tables)
 
 ## Библиотеки / модули подключенные к проекту
 1. [Doctrine ORM](https://symfony.com/doc/current/doctrine.html) - для работы с БД. Включена по умолчанию.
