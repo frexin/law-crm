@@ -15,12 +15,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $test = $this->getDoctrine()
-            ->getRepository('AppBundle:ServiceCategory')
-            ->findAll();
-
-        dump($test);
-        die();
+//        $test = $this->getDoctrine()
+//            ->getRepository('AppBundle:ServiceCategory')
+//            ->findAll();
+//
+//        dump($test);
+//        die();
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
