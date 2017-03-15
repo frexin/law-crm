@@ -15,3 +15,6 @@
 `php bin/console doctrine:migrations:diff` - проверяет различия между базой данных и Entities в проекте. Создает миграцию, если они есть.
 
 `php bin/console doctrine:migrations:migrate` - запускает миграции
+
+## Запуск фикстур
+`php ./bin/console doctrine:fixtures:load` - **ВНИМАНИЕ** - применение фикстур сотрет все записи из бд
