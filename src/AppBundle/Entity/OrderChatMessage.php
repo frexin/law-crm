@@ -2,13 +2,13 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Traits\Timestampable;
+use Common\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * OrderChatMessage
  *
- * @ORM\Table(name="orders_chat_messages", indexes={@ORM\Index(name="fk_law_order_chat_messages_1_idx", columns={"order_id"}), @ORM\Index(name="fk_law_orders_chat_messages_1_idx", columns={"user_from"}), @ORM\Index(name="fk_law_orders_chat_messages_2_idx", columns={"user_to"})})
+ * @ORM\Table(name="orders_chat_messages", indexes={@ORM\Index(name="fk_law_orders_chat_messages_1_idx", columns={"order_id"}), @ORM\Index(name="fk_law_orders_chat_messages_1_idx", columns={"user_from"}), @ORM\Index(name="fk_law_orders_chat_messages_2_idx", columns={"user_to"})})
  * @ORM\Entity
  */
 class OrderChatMessage
@@ -18,7 +18,7 @@ class OrderChatMessage
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -36,8 +36,9 @@ class OrderChatMessage
      *
      * @ORM\ManyToOne(targetEntity="Order")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false)
      * })
+     *
      */
     private $order;
 
@@ -46,8 +47,9 @@ class OrderChatMessage
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_from", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_from", referencedColumnName="id", nullable=false)
      * })
+     *
      */
     private $userFrom;
 
@@ -58,6 +60,7 @@ class OrderChatMessage
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_to", referencedColumnName="id")
      * })
+     *
      */
     private $userTo;
 

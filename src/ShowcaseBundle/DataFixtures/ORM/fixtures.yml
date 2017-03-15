@@ -1,0 +1,99 @@
+# Категории услуг
+ShowcaseBundle\Entity\ServiceCategory:
+    serviceCategory_{1..3}:
+        title: <category()>
+
+# Услуги
+ShowcaseBundle\Entity\Service:
+    service_1:
+        title: 'Оказание устной консультации'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_1'
+
+    service_2:
+        title: 'Оказание юридических консультационных услуг физ.лицам'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_1'
+
+    service_3:
+        title: 'Оказание юридических консультационных услуг юр.лицам'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_1'
+
+    service_4:
+        title: 'Написание отзыва на исковое заявление'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_2'
+
+    service_5:
+        title: 'Услуги по написанию иска в Верховный суд РФ'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_2'
+
+    service_6:
+        title: 'Услуги по написанию иска в арбитражный суд'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_2'
+
+    service_7:
+        title: 'Написание претензии контрагенту'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_3'
+
+    service_8:
+        title: 'Оказание устной консультации'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_3'
+
+    service_9:
+        title: 'Оказание юридических консультационных услуг физ.лицам'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_3'
+
+    service_10:
+        title: 'Оказание юридических консультационных услуг юр.лицам'
+        shortDescription: 'Цель претензии — урегулировать возникший конфликт во внесудебном порядке. В ней вы сообщаете о ненадлежащем исполнении контрагентом договорных обязательств, требуете устранить нарушения и предупреждаете о возможных санкциях.'
+        description: '<description()>'
+        imageUrl: 'http://placehold.it/300x200'
+        serviceCategory: '@serviceCategory_3'
+
+# Модификции услуг
+ShowcaseBundle\Entity\ServiceModification:
+    serviceModification_{1..10}:
+        name: 'Услуга обычная'
+        price: <numberBetween(1000, 4000)>
+        description: 'Обычное выполнение задание.'
+        timeLimit: '3 дня'
+        service: '@service_<current()>'
+
+    serviceModification_{11..20}:
+        name: 'Услуга расширенная'
+        price: <numberBetween(4000, 8000)>
+        description: 'Обычное выполнение задание + подробны еконсультации и объяснения юриста'
+        timeLimit: '5 дня'
+        service: '@service_<iterate(10)>'
+
+    serviceModification_{21..30}:
+        name: 'Услуга люкс'
+        price: <numberBetween(10000, 15000)>
+        description: 'Обычное выполнение задание + подробны еконсультации и объяснения юриста + юрист сопровождает вас в суд и помогает с оформлением документов'
+        timeLimit: '10 дней'
+        service: '@service_<iterate(10)>'

@@ -1,0 +1,11 @@
+{% extends '@showcase/base.html.twig' %}
+
+{% block body %}
+    {% for serviceCategory in serviceCategories %}
+        {{ serviceCategory.title }} <br>
+
+        {% for service in serviceCategory.services %}
+            <span>-----</span>{{ service.title }} <br>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

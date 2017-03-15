@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace ShowcaseBundle\Entity;
 
-use AppBundle\Entity\Traits\Timestampable;
+use Common\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +18,7 @@ class ServiceModification
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -57,7 +57,7 @@ class ServiceModification
      *
      * @ORM\ManyToOne(targetEntity="Service")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="service_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="service_id", referencedColumnName="id", )
      * })
      */
     private $service;
@@ -173,11 +173,11 @@ class ServiceModification
     /**
      * Set service
      *
-     * @param \AppBundle\Entity\Service $service
+     * @param \ShowcaseBundle\Entity\Service $service
      *
      * @return ServiceModification
      */
-    public function setService(\AppBundle\Entity\Service $service = null)
+    public function setService(\ShowcaseBundle\Entity\Service $service = null)
     {
         $this->service = $service;
 
@@ -187,7 +187,7 @@ class ServiceModification
     /**
      * Get service
      *
-     * @return \AppBundle\Entity\Service
+     * @return \ShowcaseBundle\Entity\Service
      */
     public function getService()
     {

@@ -2,8 +2,9 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Traits\Timestampable;
+use Common\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use ShowcaseBundle\Entity\ServiceModification;
 
 /**
  * Order
@@ -18,7 +19,7 @@ class Order
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -64,7 +65,7 @@ class Order
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $user;
@@ -72,9 +73,9 @@ class Order
     /**
      * @var ServiceModification
      *
-     * @ORM\ManyToOne(targetEntity="ServiceModification")
+     * @ORM\ManyToOne(targetEntity="ShowcaseBundle\Entity\ServiceModification")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="service_modification_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="service_modification_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $serviceModification;
@@ -248,11 +249,11 @@ class Order
     /**
      * Set serviceModification
      *
-     * @param \AppBundle\Entity\ServiceModification $serviceModification
+     * @param \ShowcaseBundle\Entity\ServiceModification $serviceModification
      *
      * @return Order
      */
-    public function setServiceModification(\AppBundle\Entity\ServiceModification $serviceModification = null)
+    public function setServiceModification(\ShowcaseBundle\Entity\ServiceModification $serviceModification = null)
     {
         $this->serviceModification = $serviceModification;
 
@@ -262,7 +263,7 @@ class Order
     /**
      * Get serviceModification
      *
-     * @return \AppBundle\Entity\ServiceModification
+     * @return \ShowcaseBundle\Entity\ServiceModification
      */
     public function getServiceModification()
     {

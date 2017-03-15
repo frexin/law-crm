@@ -1,8 +1,9 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace ShowcaseBundle\Entity;
 
-use AppBundle\Entity\Traits\Timestampable;
+use Common\Traits\Sluggable;
+use Common\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,12 +14,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Service
 {
-    use Timestampable;
+    use Timestampable, Sluggable;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -30,13 +31,6 @@ class Service
      * @ORM\Column(name="title", type="string", length=180, nullable=false)
      */
     private $title;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="slug", type="string", length=128, nullable=false)
-     */
-    private $slug;
 
     /**
      * @var string
@@ -62,13 +56,12 @@ class Service
     /**
      * @var ServiceCategory
      *
-     * @ORM\ManyToOne(targetEntity="ServiceCategory")
+     * @ORM\ManyToOne(targetEntity="ServiceCategory", inversedBy="services")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="service_category_id", referencedColumnName="id")
      * })
      */
     private $serviceCategory;
-
 
 
     /**
@@ -103,30 +96,6 @@ class Service
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     *
-     * @return Service
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * Get slug
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
     }
 
     /**
@@ -204,11 +173,11 @@ class Service
     /**
      * Set serviceCategory
      *
-     * @param \AppBundle\Entity\ServiceCategory $serviceCategory
+     * @param \ShowcaseBundle\Entity\ServiceCategory $serviceCategory
      *
      * @return Service
      */
-    public function setServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory = null)
+    public function setServiceCategory(\ShowcaseBundle\Entity\ServiceCategory $serviceCategory = null)
     {
         $this->serviceCategory = $serviceCategory;
 
@@ -218,7 +187,7 @@ class Service
     /**
      * Get serviceCategory
      *
-     * @return \AppBundle\Entity\ServiceCategory
+     * @return \ShowcaseBundle\Entity\ServiceCategory
      */
     public function getServiceCategory()
     {

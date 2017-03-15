@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Traits\Timestampable;
+use Common\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +18,7 @@ class PrivateOrderComment
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -43,7 +43,7 @@ class PrivateOrderComment
      *
      * @ORM\ManyToOne(targetEntity="Order")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $order;
