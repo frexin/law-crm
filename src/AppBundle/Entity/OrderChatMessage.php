@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawOrdersChatMessages
+ * OrderChatMessage
  *
- * @ORM\Table(name="law_orders_chat_messages", indexes={@ORM\Index(name="fk_law_order_chat_messages_1_idx", columns={"order_id"}), @ORM\Index(name="fk_law_orders_chat_messages_1_idx", columns={"user_from"}), @ORM\Index(name="fk_law_orders_chat_messages_2_idx", columns={"user_to"})})
+ * @ORM\Table(name="orders_chat_messages", indexes={@ORM\Index(name="fk_law_order_chat_messages_1_idx", columns={"order_id"}), @ORM\Index(name="fk_law_orders_chat_messages_1_idx", columns={"user_from"}), @ORM\Index(name="fk_law_orders_chat_messages_2_idx", columns={"user_to"})})
  * @ORM\Entity
  */
-class LawOrdersChatMessages
+class OrderChatMessage
 {
     use Timestampable;
 
@@ -32,9 +32,9 @@ class LawOrdersChatMessages
     private $text;
 
     /**
-     * @var LawOrders
+     * @var Order
      *
-     * @ORM\ManyToOne(targetEntity="LawOrders")
+     * @ORM\ManyToOne(targetEntity="Order")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      * })
@@ -42,9 +42,9 @@ class LawOrdersChatMessages
     private $order;
 
     /**
-     * @var LawUsers
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="LawUsers")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_from", referencedColumnName="id")
      * })
@@ -52,9 +52,9 @@ class LawOrdersChatMessages
     private $userFrom;
 
     /**
-     * @var LawUsers
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="LawUsers")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_to", referencedColumnName="id")
      * })
@@ -78,7 +78,7 @@ class LawOrdersChatMessages
      *
      * @param string $text
      *
-     * @return LawOrdersChatMessages
+     * @return OrderChatMessage
      */
     public function setText($text)
     {
@@ -98,61 +98,13 @@ class LawOrdersChatMessages
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawOrdersChatMessages
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawOrdersChatMessages
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
      * Set order
      *
-     * @param \AppBundle\Entity\LawOrders $order
+     * @param \AppBundle\Entity\Order $order
      *
-     * @return LawOrdersChatMessages
+     * @return OrderChatMessage
      */
-    public function setOrder(\AppBundle\Entity\LawOrders $order = null)
+    public function setOrder(\AppBundle\Entity\Order $order = null)
     {
         $this->order = $order;
 
@@ -162,7 +114,7 @@ class LawOrdersChatMessages
     /**
      * Get order
      *
-     * @return \AppBundle\Entity\LawOrders
+     * @return \AppBundle\Entity\Order
      */
     public function getOrder()
     {
@@ -172,11 +124,11 @@ class LawOrdersChatMessages
     /**
      * Set userFrom
      *
-     * @param \AppBundle\Entity\LawUsers $userFrom
+     * @param \AppBundle\Entity\User $userFrom
      *
-     * @return LawOrdersChatMessages
+     * @return OrderChatMessage
      */
-    public function setUserFrom(\AppBundle\Entity\LawUsers $userFrom = null)
+    public function setUserFrom(\AppBundle\Entity\User $userFrom = null)
     {
         $this->userFrom = $userFrom;
 
@@ -186,7 +138,7 @@ class LawOrdersChatMessages
     /**
      * Get userFrom
      *
-     * @return \AppBundle\Entity\LawUsers
+     * @return \AppBundle\Entity\User
      */
     public function getUserFrom()
     {
@@ -196,11 +148,11 @@ class LawOrdersChatMessages
     /**
      * Set userTo
      *
-     * @param \AppBundle\Entity\LawUsers $userTo
+     * @param \AppBundle\Entity\User $userTo
      *
-     * @return LawOrdersChatMessages
+     * @return OrderChatMessage
      */
-    public function setUserTo(\AppBundle\Entity\LawUsers $userTo = null)
+    public function setUserTo(\AppBundle\Entity\User $userTo = null)
     {
         $this->userTo = $userTo;
 
@@ -210,7 +162,7 @@ class LawOrdersChatMessages
     /**
      * Get userTo
      *
-     * @return \AppBundle\Entity\LawUsers
+     * @return \AppBundle\Entity\User
      */
     public function getUserTo()
     {

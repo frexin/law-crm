@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawOrdersActionsHistory
+ * OrderActionHistory
  *
- * @ORM\Table(name="law_orders_actions_history", indexes={@ORM\Index(name="fk_law_orders_actions_history_1_idx", columns={"order_id"})})
+ * @ORM\Table(name="orders_actions_history", indexes={@ORM\Index(name="fk_law_orders_actions_history_1_idx", columns={"order_id"})})
  * @ORM\Entity
  */
-class LawOrdersActionsHistory
+class OrderActionHistory
 {
 
     use Timestampable;
@@ -40,9 +40,9 @@ class LawOrdersActionsHistory
     private $additionalInformation;
 
     /**
-     * @var LawOrders
+     * @var Order
      *
-     * @ORM\ManyToOne(targetEntity="LawOrders")
+     * @ORM\ManyToOne(targetEntity="Order")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      * })
@@ -66,7 +66,7 @@ class LawOrdersActionsHistory
      *
      * @param boolean $actionType
      *
-     * @return LawOrdersActionsHistory
+     * @return OrderActionHistory
      */
     public function setActionType($actionType)
     {
@@ -90,7 +90,7 @@ class LawOrdersActionsHistory
      *
      * @param string $additionalInformation
      *
-     * @return LawOrdersActionsHistory
+     * @return OrderActionHistory
      */
     public function setAdditionalInformation($additionalInformation)
     {
@@ -110,61 +110,13 @@ class LawOrdersActionsHistory
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawOrdersActionsHistory
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawOrdersActionsHistory
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
      * Set order
      *
-     * @param \AppBundle\Entity\LawOrders $order
+     * @param \AppBundle\Entity\Order $order
      *
-     * @return LawOrdersActionsHistory
+     * @return OrderActionHistory
      */
-    public function setOrder(\AppBundle\Entity\LawOrders $order = null)
+    public function setOrder(\AppBundle\Entity\Order $order = null)
     {
         $this->order = $order;
 
@@ -174,7 +126,7 @@ class LawOrdersActionsHistory
     /**
      * Get order
      *
-     * @return \AppBundle\Entity\LawOrders
+     * @return \AppBundle\Entity\Order
      */
     public function getOrder()
     {

@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawPrivateOrdersComments
+ * PrivateOrderComment
  *
- * @ORM\Table(name="law_private_orders_comments", indexes={@ORM\Index(name="fk_law_private_order_comments_1_idx", columns={"order_id"})})
+ * @ORM\Table(name="private_orders_comments", indexes={@ORM\Index(name="fk_law_private_order_comments_1_idx", columns={"order_id"})})
  * @ORM\Entity
  */
-class LawPrivateOrdersComments
+class PrivateOrderComment
 {
     use Timestampable;
 
@@ -39,9 +39,9 @@ class LawPrivateOrdersComments
     private $text;
 
     /**
-     * @var LawOrders
+     * @var Order
      *
-     * @ORM\ManyToOne(targetEntity="LawOrders")
+     * @ORM\ManyToOne(targetEntity="Order")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      * })
@@ -65,7 +65,7 @@ class LawPrivateOrdersComments
      *
      * @param boolean $isFromLawyer
      *
-     * @return LawPrivateOrdersComments
+     * @return PrivateOrderComment
      */
     public function setIsFromLawyer($isFromLawyer)
     {
@@ -89,7 +89,7 @@ class LawPrivateOrdersComments
      *
      * @param string $text
      *
-     * @return LawPrivateOrdersComments
+     * @return PrivateOrderComment
      */
     public function setText($text)
     {
@@ -109,61 +109,13 @@ class LawPrivateOrdersComments
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawPrivateOrdersComments
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawPrivateOrdersComments
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
      * Set order
      *
-     * @param \AppBundle\Entity\LawOrders $order
+     * @param \AppBundle\Entity\Order $order
      *
-     * @return LawPrivateOrdersComments
+     * @return PrivateOrderComment
      */
-    public function setOrder(\AppBundle\Entity\LawOrders $order = null)
+    public function setOrder(\AppBundle\Entity\Order $order = null)
     {
         $this->order = $order;
 
@@ -173,7 +125,7 @@ class LawPrivateOrdersComments
     /**
      * Get order
      *
-     * @return \AppBundle\Entity\LawOrders
+     * @return \AppBundle\Entity\Order
      */
     public function getOrder()
     {

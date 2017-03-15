@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawServicesModifications
+ * ServiceModification
  *
- * @ORM\Table(name="law_services_modifications", indexes={@ORM\Index(name="fk_law_orders_modifications_1_idx", columns={"service_id"})})
+ * @ORM\Table(name="services_modifications", indexes={@ORM\Index(name="fk_law_orders_modifications_1_idx", columns={"service_id"})})
  * @ORM\Entity
  */
-class LawServicesModifications
+class ServiceModification
 {
     use Timestampable;
 
@@ -53,9 +53,9 @@ class LawServicesModifications
     private $timeLimit;
 
     /**
-     * @var LawServices
+     * @var Service
      *
-     * @ORM\ManyToOne(targetEntity="LawServices")
+     * @ORM\ManyToOne(targetEntity="Service")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="service_id", referencedColumnName="id")
      * })
@@ -79,7 +79,7 @@ class LawServicesModifications
      *
      * @param string $name
      *
-     * @return LawServicesModifications
+     * @return ServiceModification
      */
     public function setName($name)
     {
@@ -103,7 +103,7 @@ class LawServicesModifications
      *
      * @param string $price
      *
-     * @return LawServicesModifications
+     * @return ServiceModification
      */
     public function setPrice($price)
     {
@@ -127,7 +127,7 @@ class LawServicesModifications
      *
      * @param string $description
      *
-     * @return LawServicesModifications
+     * @return ServiceModification
      */
     public function setDescription($description)
     {
@@ -151,7 +151,7 @@ class LawServicesModifications
      *
      * @param string $timeLimit
      *
-     * @return LawServicesModifications
+     * @return ServiceModification
      */
     public function setTimeLimit($timeLimit)
     {
@@ -171,61 +171,13 @@ class LawServicesModifications
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawServicesModifications
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawServicesModifications
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
      * Set service
      *
-     * @param \AppBundle\Entity\LawServices $service
+     * @param \AppBundle\Entity\Service $service
      *
-     * @return LawServicesModifications
+     * @return ServiceModification
      */
-    public function setService(\AppBundle\Entity\LawServices $service = null)
+    public function setService(\AppBundle\Entity\Service $service = null)
     {
         $this->service = $service;
 
@@ -235,7 +187,7 @@ class LawServicesModifications
     /**
      * Get service
      *
-     * @return \AppBundle\Entity\LawServices
+     * @return \AppBundle\Entity\Service
      */
     public function getService()
     {

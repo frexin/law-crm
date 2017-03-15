@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawServicesCategories
+ * ServiceCategory
  *
- * @ORM\Table(name="law_services_categories")
+ * @ORM\Table(name="services_categories")
  * @ORM\Entity
  */
-class LawServicesCategories
+class ServiceCategory
 {
     use Timestampable;
 
@@ -53,7 +53,7 @@ class LawServicesCategories
      *
      * @param string $name
      *
-     * @return LawServicesCategories
+     * @return ServiceCategory
      */
     public function setName($name)
     {
@@ -77,7 +77,7 @@ class LawServicesCategories
      *
      * @param string $slug
      *
-     * @return LawServicesCategories
+     * @return ServiceCategory
      */
     public function setSlug($slug)
     {
@@ -94,53 +94,5 @@ class LawServicesCategories
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawServicesCategories
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawServicesCategories
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 }

@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawScheduleEvents
+ * ScheduleEvent
  *
- * @ORM\Table(name="law_schedule_events", indexes={@ORM\Index(name="fk_law_schedule_events_1_idx", columns={"user_id"}), @ORM\Index(name="shedule_events_status_idx", columns={"status"})})
+ * @ORM\Table(name="schedule_events", indexes={@ORM\Index(name="fk_law_schedule_events_1_idx", columns={"user_id"}), @ORM\Index(name="shedule_events_status_idx", columns={"status"})})
  * @ORM\Entity
  */
-class LawScheduleEvents
+class ScheduleEvent
 {
     use Timestampable;
 
@@ -53,9 +53,9 @@ class LawScheduleEvents
     private $date = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var LawUsers
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="LawUsers")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -79,7 +79,7 @@ class LawScheduleEvents
      *
      * @param boolean $type
      *
-     * @return LawScheduleEvents
+     * @return ScheduleEvent
      */
     public function setType($type)
     {
@@ -103,7 +103,7 @@ class LawScheduleEvents
      *
      * @param boolean $status
      *
-     * @return LawScheduleEvents
+     * @return ScheduleEvent
      */
     public function setStatus($status)
     {
@@ -127,7 +127,7 @@ class LawScheduleEvents
      *
      * @param string $description
      *
-     * @return LawScheduleEvents
+     * @return ScheduleEvent
      */
     public function setDescription($description)
     {
@@ -151,7 +151,7 @@ class LawScheduleEvents
      *
      * @param \DateTime $date
      *
-     * @return LawScheduleEvents
+     * @return ScheduleEvent
      */
     public function setDate($date)
     {
@@ -171,61 +171,13 @@ class LawScheduleEvents
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawScheduleEvents
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawScheduleEvents
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
      * Set user
      *
-     * @param \AppBundle\Entity\LawUsers $user
+     * @param \AppBundle\Entity\User $user
      *
-     * @return LawScheduleEvents
+     * @return ScheduleEvent
      */
-    public function setUser(\AppBundle\Entity\LawUsers $user = null)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -235,7 +187,7 @@ class LawScheduleEvents
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\LawUsers
+     * @return \AppBundle\Entity\User
      */
     public function getUser()
     {

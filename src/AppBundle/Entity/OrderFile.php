@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawOrdersFiles
+ * OrderFile
  *
- * @ORM\Table(name="law_orders_files", indexes={@ORM\Index(name="fk_law_orders_files_1_idx", columns={"order_id"})})
+ * @ORM\Table(name="orders_files", indexes={@ORM\Index(name="fk_law_orders_files_1_idx", columns={"order_id"})})
  * @ORM\Entity
  */
-class LawOrdersFiles
+class OrderFile
 {
     use Timestampable;
 
@@ -39,9 +39,9 @@ class LawOrdersFiles
     private $type;
 
     /**
-     * @var LawOrders
+     * @var Order
      *
-     * @ORM\ManyToOne(targetEntity="LawOrders")
+     * @ORM\ManyToOne(targetEntity="Order")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      * })
@@ -65,7 +65,7 @@ class LawOrdersFiles
      *
      * @param string $filePath
      *
-     * @return LawOrdersFiles
+     * @return OrderFile
      */
     public function setFilePath($filePath)
     {
@@ -89,7 +89,7 @@ class LawOrdersFiles
      *
      * @param boolean $type
      *
-     * @return LawOrdersFiles
+     * @return OrderFile
      */
     public function setType($type)
     {
@@ -109,61 +109,13 @@ class LawOrdersFiles
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawOrdersFiles
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawOrdersFiles
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
      * Set order
      *
-     * @param \AppBundle\Entity\LawOrders $order
+     * @param \AppBundle\Entity\Order $order
      *
-     * @return LawOrdersFiles
+     * @return OrderFile
      */
-    public function setOrder(\AppBundle\Entity\LawOrders $order = null)
+    public function setOrder(\AppBundle\Entity\Order $order = null)
     {
         $this->order = $order;
 
@@ -173,7 +125,7 @@ class LawOrdersFiles
     /**
      * Get order
      *
-     * @return \AppBundle\Entity\LawOrders
+     * @return \AppBundle\Entity\Order
      */
     public function getOrder()
     {

@@ -25,6 +25,7 @@ trait Timestampable
      * Sets createdAt.
      *
      * @param  \DateTime $createdAt
+     *
      * @return $this
      */
     public function setCreatedAt(\DateTime $createdAt)
@@ -48,6 +49,7 @@ trait Timestampable
      * Sets updatedAt.
      *
      * @param  \DateTime $updatedAt
+     *
      * @return $this
      */
     public function setUpdatedAt(\DateTime $updatedAt)

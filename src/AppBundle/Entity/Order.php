@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawOrders
+ * Order
  *
- * @ORM\Table(name="law_orders", indexes={@ORM\Index(name="orders_status_idx", columns={"status"}), @ORM\Index(name="fk_law_orders_1_idx", columns={"user_id"}), @ORM\Index(name="fk_law_orders_2_idx", columns={"service_modification_id"}), @ORM\Index(name="fk_law_orders_3_idx", columns={"lawyer_id"})})
+ * @ORM\Table(name="orders", indexes={@ORM\Index(name="orders_status_idx", columns={"status"}), @ORM\Index(name="fk_law_orders_1_idx", columns={"user_id"}), @ORM\Index(name="fk_law_orders_2_idx", columns={"service_modification_id"}), @ORM\Index(name="fk_law_orders_3_idx", columns={"lawyer_id"})})
  * @ORM\Entity
  */
-class LawOrders
+class Order
 {
     use Timestampable;
 
@@ -60,9 +60,9 @@ class LawOrders
     private $endDate;
 
     /**
-     * @var LawUsers
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="LawUsers")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -70,9 +70,9 @@ class LawOrders
     private $user;
 
     /**
-     * @var LawServicesModifications
+     * @var ServiceModification
      *
-     * @ORM\ManyToOne(targetEntity="LawServicesModifications")
+     * @ORM\ManyToOne(targetEntity="ServiceModification")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="service_modification_id", referencedColumnName="id")
      * })
@@ -80,9 +80,9 @@ class LawOrders
     private $serviceModification;
 
     /**
-     * @var LawUsers
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="LawUsers")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="lawyer_id", referencedColumnName="id")
      * })
@@ -106,7 +106,7 @@ class LawOrders
      *
      * @param boolean $status
      *
-     * @return LawOrders
+     * @return Order
      */
     public function setStatus($status)
     {
@@ -130,7 +130,7 @@ class LawOrders
      *
      * @param string $title
      *
-     * @return LawOrders
+     * @return Order
      */
     public function setTitle($title)
     {
@@ -154,7 +154,7 @@ class LawOrders
      *
      * @param string $description
      *
-     * @return LawOrders
+     * @return Order
      */
     public function setDescription($description)
     {
@@ -178,7 +178,7 @@ class LawOrders
      *
      * @param \DateTime $startDate
      *
-     * @return LawOrders
+     * @return Order
      */
     public function setStartDate($startDate)
     {
@@ -202,7 +202,7 @@ class LawOrders
      *
      * @param \DateTime $endDate
      *
-     * @return LawOrders
+     * @return Order
      */
     public function setEndDate($endDate)
     {
@@ -222,61 +222,13 @@ class LawOrders
     }
 
     /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawOrders
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawOrders
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
      * Set user
      *
-     * @param \AppBundle\Entity\LawUsers $user
+     * @param \AppBundle\Entity\User $user
      *
-     * @return LawOrders
+     * @return Order
      */
-    public function setUser(\AppBundle\Entity\LawUsers $user = null)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -286,7 +238,7 @@ class LawOrders
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\LawUsers
+     * @return \AppBundle\Entity\User
      */
     public function getUser()
     {
@@ -296,11 +248,11 @@ class LawOrders
     /**
      * Set serviceModification
      *
-     * @param \AppBundle\Entity\LawServicesModifications $serviceModification
+     * @param \AppBundle\Entity\ServiceModification $serviceModification
      *
-     * @return LawOrders
+     * @return Order
      */
-    public function setServiceModification(\AppBundle\Entity\LawServicesModifications $serviceModification = null)
+    public function setServiceModification(\AppBundle\Entity\ServiceModification $serviceModification = null)
     {
         $this->serviceModification = $serviceModification;
 
@@ -310,7 +262,7 @@ class LawOrders
     /**
      * Get serviceModification
      *
-     * @return \AppBundle\Entity\LawServicesModifications
+     * @return \AppBundle\Entity\ServiceModification
      */
     public function getServiceModification()
     {
@@ -320,11 +272,11 @@ class LawOrders
     /**
      * Set lawyer
      *
-     * @param \AppBundle\Entity\LawUsers $lawyer
+     * @param \AppBundle\Entity\User $lawyer
      *
-     * @return LawOrders
+     * @return Order
      */
-    public function setLawyer(\AppBundle\Entity\LawUsers $lawyer = null)
+    public function setLawyer(\AppBundle\Entity\User $lawyer = null)
     {
         $this->lawyer = $lawyer;
 
@@ -334,7 +286,7 @@ class LawOrders
     /**
      * Get lawyer
      *
-     * @return \AppBundle\Entity\LawUsers
+     * @return \AppBundle\Entity\User
      */
     public function getLawyer()
     {

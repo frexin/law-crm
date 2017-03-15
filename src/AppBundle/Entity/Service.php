@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawServices
+ * Service
  *
- * @ORM\Table(name="law_services", indexes={@ORM\Index(name="fk_law_services_1_idx", columns={"service_category_id"})})
+ * @ORM\Table(name="services", indexes={@ORM\Index(name="fk_law_services_1_idx", columns={"service_category_id"})})
  * @ORM\Entity
  */
-class LawServices
+class Service
 {
     use Timestampable;
 
@@ -60,9 +60,9 @@ class LawServices
     private $imageUrl;
 
     /**
-     * @var LawServicesCategories
+     * @var ServiceCategory
      *
-     * @ORM\ManyToOne(targetEntity="LawServicesCategories")
+     * @ORM\ManyToOne(targetEntity="ServiceCategory")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="service_category_id", referencedColumnName="id")
      * })
@@ -86,7 +86,7 @@ class LawServices
      *
      * @param string $title
      *
-     * @return LawServices
+     * @return Service
      */
     public function setTitle($title)
     {
@@ -110,7 +110,7 @@ class LawServices
      *
      * @param string $slug
      *
-     * @return LawServices
+     * @return Service
      */
     public function setSlug($slug)
     {
@@ -134,7 +134,7 @@ class LawServices
      *
      * @param string $shortDescription
      *
-     * @return LawServices
+     * @return Service
      */
     public function setShortDescription($shortDescription)
     {
@@ -158,7 +158,7 @@ class LawServices
      *
      * @param string $description
      *
-     * @return LawServices
+     * @return Service
      */
     public function setDescription($description)
     {
@@ -182,7 +182,7 @@ class LawServices
      *
      * @param string $imageUrl
      *
-     * @return LawServices
+     * @return Service
      */
     public function setImageUrl($imageUrl)
     {
@@ -202,61 +202,13 @@ class LawServices
     }
 
     /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawServices
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawServices
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
      * Set serviceCategory
      *
-     * @param \AppBundle\Entity\LawServicesCategories $serviceCategory
+     * @param \AppBundle\Entity\ServiceCategory $serviceCategory
      *
-     * @return LawServices
+     * @return Service
      */
-    public function setServiceCategory(\AppBundle\Entity\LawServicesCategories $serviceCategory = null)
+    public function setServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory = null)
     {
         $this->serviceCategory = $serviceCategory;
 
@@ -266,7 +218,7 @@ class LawServices
     /**
      * Get serviceCategory
      *
-     * @return \AppBundle\Entity\LawServicesCategories
+     * @return \AppBundle\Entity\ServiceCategory
      */
     public function getServiceCategory()
     {

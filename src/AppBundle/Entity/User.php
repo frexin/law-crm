@@ -6,12 +6,12 @@ use AppBundle\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LawUsers
+ * User
  *
- * @ORM\Table(name="law_users", uniqueConstraints={@ORM\UniqueConstraint(name="email_UNIQUE", columns={"email"}), @ORM\UniqueConstraint(name="confirmation_token_UNIQUE", columns={"email_confirmation_token"}), @ORM\UniqueConstraint(name="phone_confirmation_token_UNIQUE", columns={"phone_confirmation_token"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="email_UNIQUE", columns={"email"}), @ORM\UniqueConstraint(name="confirmation_token_UNIQUE", columns={"email_confirmation_token"}), @ORM\UniqueConstraint(name="phone_confirmation_token_UNIQUE", columns={"phone_confirmation_token"})})
  * @ORM\Entity
  */
-class LawUsers
+class User
 {
     use Timestampable;
 
@@ -116,7 +116,7 @@ class LawUsers
      *
      * @param string $firstName
      *
-     * @return LawUsers
+     * @return User
      */
     public function setFirstName($firstName)
     {
@@ -140,7 +140,7 @@ class LawUsers
      *
      * @param string $secondName
      *
-     * @return LawUsers
+     * @return User
      */
     public function setSecondName($secondName)
     {
@@ -164,7 +164,7 @@ class LawUsers
      *
      * @param string $middleName
      *
-     * @return LawUsers
+     * @return User
      */
     public function setMiddleName($middleName)
     {
@@ -188,7 +188,7 @@ class LawUsers
      *
      * @param string $email
      *
-     * @return LawUsers
+     * @return User
      */
     public function setEmail($email)
     {
@@ -212,7 +212,7 @@ class LawUsers
      *
      * @param string $password
      *
-     * @return LawUsers
+     * @return User
      */
     public function setPassword($password)
     {
@@ -236,7 +236,7 @@ class LawUsers
      *
      * @param string $phone
      *
-     * @return LawUsers
+     * @return User
      */
     public function setPhone($phone)
     {
@@ -260,7 +260,7 @@ class LawUsers
      *
      * @param string $otherContacts
      *
-     * @return LawUsers
+     * @return User
      */
     public function setOtherContacts($otherContacts)
     {
@@ -284,7 +284,7 @@ class LawUsers
      *
      * @param string $emailConfirmationToken
      *
-     * @return LawUsers
+     * @return User
      */
     public function setEmailConfirmationToken($emailConfirmationToken)
     {
@@ -308,7 +308,7 @@ class LawUsers
      *
      * @param string $phoneConfirmationToken
      *
-     * @return LawUsers
+     * @return User
      */
     public function setPhoneConfirmationToken($phoneConfirmationToken)
     {
@@ -332,7 +332,7 @@ class LawUsers
      *
      * @param string $role
      *
-     * @return LawUsers
+     * @return User
      */
     public function setRole($role)
     {
@@ -356,7 +356,7 @@ class LawUsers
      *
      * @param string $avatarUrl
      *
-     * @return LawUsers
+     * @return User
      */
     public function setAvatarUrl($avatarUrl)
     {
@@ -373,53 +373,5 @@ class LawUsers
     public function getAvatarUrl()
     {
         return $this->avatarUrl;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return LawUsers
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return LawUsers
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 }
