@@ -1,0 +1,36 @@
+/* Общие классы */
+
+.disabled {
+    display: none !important;
+}
+
+/* Главная страница */
+.filter-form .form-horizontal label {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.service-card {
+    border: 1px solid rgba(73, 130, 141, 0.54);
+    border-radius: 2%;
+    padding: 15px 30px;
+    margin-bottom: 30px;
+    height: 555px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    background-color: rgba(160, 252, 255, 0.2);
+}
+
+.service-card-wrapper:nth-of-type(3n+1) .service-card {
+    margin-left: 0;
+}
+
+.service-card-wrapper:nth-of-type(3n)  .service-card {
+    margin-right: 0;
+}
+
+.service-category {
+    color: #8c8c8c;
+}

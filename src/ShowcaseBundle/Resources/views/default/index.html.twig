@@ -1,11 +1,32 @@
 {% extends '@showcase/base.html.twig' %}
 
 {% block body %}
-    {% for serviceCategory in serviceCategories %}
-        {{ serviceCategory.title }} <br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Витрина услуг</h3>
+            <hr>
 
-        {% for service in serviceCategory.services %}
-            <span>-----</span>{{ service.title }} <br>
-        {% endfor %}
-    {% endfor %}
+            <div class="filter-form col-md-5">
+                <form class="form-horizontal filter-form" role="form">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-md-5 control-label text-left">Фильтр по категории: </label>
+                        <div class="col-md-7">
+                            <select name="category" class="form-control" id="select-category">
+                                <option value="Все" selected>Все</option>
+                                {% for serviceCategory in serviceCategories %}
+                                    <option value="{{ serviceCategory.title }}">{{ serviceCategory.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {{ include('@showcase/default/_service_list.html.twig') }}
+    </div>
+</div>
 {% endblock %}

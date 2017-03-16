@@ -3,9 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('bundles/ShowcaseBundle/css/main.css') }}">
         {% endblock %}
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -17,6 +19,7 @@
         {% block javascripts %}
             <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
             <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/ShowcaseBundle/js/main.js') }}"></script>
         {% endblock %}
     </body>
 </html>
