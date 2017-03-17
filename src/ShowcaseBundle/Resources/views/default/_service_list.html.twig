@@ -12,7 +12,7 @@
 
                     <p>
                         <span class="service-price">{{ service.modifications[0].price|number_format(0, ',', '') }} P</span>
-                        <a class="btn btn-md btn-default pull-right service-order-button" href="#" role="button">Заказать</a>
+                        <a class="btn btn-md btn-default pull-right service-order-button" href="{{ path('showcase_service', {'slug' : service.slug}) }}" role="button">Заказать</a>
                     </p>
                 </div>
             </div>

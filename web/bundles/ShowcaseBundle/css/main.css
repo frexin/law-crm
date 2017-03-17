@@ -1,10 +1,20 @@
+/* ************ */
 /* Общие классы */
+/* ************ */
 
 .disabled {
     display: none !important;
 }
 
+
+.no-padding {
+    padding: 0;
+}
+
+/* **************** */
 /* Главная страница */
+/* **************** */
+
 .filter-form {
     padding: 0;
 }
@@ -55,4 +65,66 @@
 
 .service-order-button {
     font-size: 17px;
+}
+/* *************** */
+/* Описание услуги */
+/* *************** */
+
+.service-description {
+    padding: 0 0 0 40px;
+    text-align: justify;
+}
+
+.service-image {
+    text-align: center;
+}
+
+.service-image img {
+    display: inline-block;
+}
+
+@media screen and (max-width: 766px) {
+    .service-description {
+        padding: 0;
+        margin-top: 30px;
+    }
+}
+
+.desc-service-button {
+    margin-left: 40px;
+}
+
+.desc-service-price {
+    height: 46px;
+    line-height: 46px;
+}
+
+.service-prices table tr td:nth-of-type(2) {
+    color: #4b79ff;
+}
+
+.service-additional-info table tr td:nth-of-type(2) {
+    text-align: right;
+    font-weight: 600;
+}
+
+.service-additional-info table tr:first-of-type td {
+    border: none;
+}
+
+.service-additional-info table tr:last-of-type td {
+    border-bottom: 1px solid #ddd;
+}
+
+.service-additional-info h4 {
+    padding-left: 10px;
+}
+
+@media screen and (max-width: 766px) {
+    .service-prices  {
+        margin-top: 50px;
+    }
+}
+.service-additional-info {
+    margin-top: 20px;
 }

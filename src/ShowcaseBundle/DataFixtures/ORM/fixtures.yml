@@ -88,7 +88,7 @@ ShowcaseBundle\Entity\ServiceModification:
         name: 'Услуга расширенная'
         price: <numberBetween(4000, 8000)>
         description: 'Обычное выполнение задание + подробны еконсультации и объяснения юриста'
-        timeLimit: '5 дня'
+        timeLimit: '5 дней'
         service: '@service_<iterate(10)>'
 
     serviceModification_{21..30}:

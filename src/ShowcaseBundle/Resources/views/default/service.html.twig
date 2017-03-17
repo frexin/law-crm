@@ -1,0 +1,66 @@
+{% extends '@showcase/base.html.twig' %}
+
+{% block title %}
+    {{ service.title }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>{{ service.title }}</h3>
+                <hr>
+
+                <div class="service-info">
+                    <div class="service-image col-md-3 col-sm-5 no-padding">
+                        <img src="{{ service.imageUrl }}"  class="img-responsive" alt="Изображение услуги">
+                    </div>
+                    <div class="service-description col-md-9 col-sm-7">
+                        <p>{{ service.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="price-section">
+                    <a class="btn btn-lg btn-primary desc-service-button pull-right" href="#" role="button">Заказать услугу</a>
+                    <span class="desc-service-price service-price pull-right">от {{ service.modifications[0].price|number_format(0, ',', '') }} P</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 service-additional-info">
+                <div class="service-prices">
+                    <div class="col-md-4 no-padding">
+                        <h4>Стоимость услуги</h4>
+                        <hr>
+                        <table class="table">
+                            {% for modification in service.modifications %}
+                                <tr>
+                                    <td>{{ modification.name }}</td>
+                                    <td>{{ modification.price|number_format(0, ',', '') }} P</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+                <div class="service-dates">
+                    <div class="col-md-4 no-padding col-md-offset-3">
+                        <h4>Стоимость услуги</h4>
+                        <hr >
+                        <table class="table">
+                            {% for modification in service.modifications %}
+                                <tr>
+                                    <td>{{ modification.name }}</td>
+                                    <td>{{ modification.timeLimit }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
