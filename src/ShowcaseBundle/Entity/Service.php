@@ -64,7 +64,7 @@ class Service
     private $serviceCategory;
 
     /**
-     * @ORM\OneToMany(targetEntity="ServiceModification", mappedBy="service")
+     * @ORM\OneToMany(targetEntity="ServiceModification", mappedBy="service", fetch="EAGER")
      * @ORM\OrderBy({"price" = "ASC"})
      */
     private $modifications;
