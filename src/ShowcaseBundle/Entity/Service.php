@@ -63,6 +63,11 @@ class Service
      */
     private $serviceCategory;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ServiceModification", mappedBy="service")
+     * @ORM\OrderBy({"price" = "ASC"})
+     */
+    private $modifications;
 
     /**
      * Get id
@@ -192,5 +197,21 @@ class Service
     public function getServiceCategory()
     {
         return $this->serviceCategory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModifications()
+    {
+        return $this->modifications;
+    }
+
+    /**
+     * @param mixed $modifications
+     */
+    public function setModifications($modifications)
+    {
+        $this->modifications = $modifications;
     }
 }

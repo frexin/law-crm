@@ -1,6 +1,6 @@
 services:
-    twig.extension.view-helper:
-        class: ShowcaseBundle\Twig\Extension\ShowcaseViewHelper
-        arguments: ['@doctrine.orm.entity_manager']
-        tags:
-            - { name: 'twig.extension' }
+#    twig.extension.view-helper:
+#        class: ShowcaseBundle\Twig\Extension\ShowcaseViewHelper
+#        arguments: ['@doctrine.orm.entity_manager']
+#        tags:
+#            - { name: 'twig.extension' }
