@@ -1,3 +1,7 @@
 showcase_homepage:
-    path:     /
+    path: /
     defaults: { _controller: ShowcaseBundle:Default:index }
+
+showcase_service:
+    path: /service/{slug}
+    defaults: { _controller: ShowcaseBundle:Default:service }
