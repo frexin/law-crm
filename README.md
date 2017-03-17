@@ -1,7 +1,7 @@
 # Lawyers
 
 ## Требования
-1) PHP >= 7.0.9
+1) PHP >= 7.1
 
 ## Wiki
 1. [Краткое описание структуры базы данных](http://git.devbrains.me/team/lawyers/wikis/db_tables)
