@@ -1,6 +1,6 @@
 <?php
 
-namespace ShowcaseBundle\Entity;
+namespace Common\Entity;
 
 use Common\Traits\Sluggable;
 use Common\Traits\Timestampable;
@@ -178,11 +178,11 @@ class Service
     /**
      * Set serviceCategory
      *
-     * @param \ShowcaseBundle\Entity\ServiceCategory $serviceCategory
+     * @param \Common\Entity\ServiceCategory $serviceCategory
      *
      * @return Service
      */
-    public function setServiceCategory(\ShowcaseBundle\Entity\ServiceCategory $serviceCategory = null)
+    public function setServiceCategory(\Common\Entity\ServiceCategory $serviceCategory = null)
     {
         $this->serviceCategory = $serviceCategory;
 
@@ -192,7 +192,7 @@ class Service
     /**
      * Get serviceCategory
      *
-     * @return \ShowcaseBundle\Entity\ServiceCategory
+     * @return \Common\Entity\ServiceCategory
      */
     public function getServiceCategory()
     {

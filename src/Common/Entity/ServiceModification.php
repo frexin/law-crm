@@ -1,6 +1,6 @@
 <?php
 
-namespace ShowcaseBundle\Entity;
+namespace Common\Entity;
 
 use Common\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
@@ -173,11 +173,11 @@ class ServiceModification
     /**
      * Set service
      *
-     * @param \ShowcaseBundle\Entity\Service $service
+     * @param \Common\Entity\Service $service
      *
      * @return ServiceModification
      */
-    public function setService(\ShowcaseBundle\Entity\Service $service = null)
+    public function setService(\Common\Entity\Service $service = null)
     {
         $this->service = $service;
 
@@ -187,7 +187,7 @@ class ServiceModification
     /**
      * Get service
      *
-     * @return \ShowcaseBundle\Entity\Service
+     * @return \Common\Entity\Service
      */
     public function getService()
     {

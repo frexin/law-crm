@@ -1,6 +1,6 @@
 <?php
 
-namespace ShowcaseBundle\Entity;
+namespace Common\Entity;
 
 use Common\Traits\Sluggable;
 use Common\Traits\Timestampable;
