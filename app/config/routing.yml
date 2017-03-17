@@ -1,6 +1,6 @@
 showcase:
     resource: "@ShowcaseBundle/Resources/config/routing.yml"
-    prefix:   /showcase
+    host: showcase.%base_host%
 
 app:
     resource: "@AppBundle/Controller/"

@@ -1,6 +1,6 @@
 {% for serviceCategory in serviceCategories %}
     {% for service in serviceCategory.services %}
-        <article class="col-sm-4 service-card-wrapper">
+        <article class="col-md-4 col-sm-6 service-card-wrapper">
             <div class="service-card">
                 <div class="service-icon">
                     <img src="{{ service.imageUrl }}" class="img-responsive" alt="Изображение услуги">
@@ -11,8 +11,8 @@
                     <p class="service-short-description">{{ service.shortDescription }}</p>
 
                     <p>
-                        {#<span class="service-price">{{ service.price }} P</span>#}
-                        <a class="btn btn-md btn-default pull-right" href="#" role="button">Заказать</a>
+                        <span class="service-price">{{ getServiceMinPrice(service)|number_format(0, ',', '') }} P</span>
+                        <a class="btn btn-md btn-default pull-right service-order-button" href="#" role="button">Заказать</a>
                     </p>
                 </div>
             </div>
