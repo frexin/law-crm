@@ -24,8 +24,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="price-section">
-                    <a class="btn btn-lg btn-primary desc-service-button pull-right" href="#" role="button">Заказать услугу</a>
-                    <span class="desc-service-price service-price pull-right">от {{ service.modifications[0].price|number_format(0, ',', '') }} P</span>
+                    <a class="btn btn-lg btn-primary desc-service-button pull-right" href="{{ path('showcase_order', {'slug': service.slug}) }}" role="button">Заказать услугу</a>
+                    <span class="desc-service-price service-price pull-right">от {{ service.serviceModifications[0].price|number_format(0, ',', '') }} P</span>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
                         <h4>Стоимость услуги</h4>
                         <hr>
                         <table class="table">
-                            {% for modification in service.modifications %}
+                            {% for modification in service.serviceModifications %}
                                 <tr>
                                     <td>{{ modification.name }}</td>
                                     <td>{{ modification.price|number_format(0, ',', '') }} P</td>
@@ -51,7 +51,7 @@
                         <h4>Стоимость услуги</h4>
                         <hr >
                         <table class="table">
-                            {% for modification in service.modifications %}
+                            {% for modification in service.serviceModifications %}
                                 <tr>
                                     <td>{{ modification.name }}</td>
                                     <td>{{ modification.timeLimit }}</td>

@@ -39,6 +39,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - bootstrap_3_horizontal_layout.html.twig
+        - _formTheme.html.twig
     paths:
         '%kernel.root_dir%/../src/ShowcaseBundle/Resources/views': showcase
 

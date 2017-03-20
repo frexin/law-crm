@@ -67,7 +67,7 @@ class Service
      * @ORM\OneToMany(targetEntity="ServiceModification", mappedBy="service", fetch="EAGER")
      * @ORM\OrderBy({"price" = "ASC"})
      */
-    private $modifications;
+    private $serviceModifications;
 
     /**
      * Get id
@@ -202,16 +202,16 @@ class Service
     /**
      * @return mixed
      */
-    public function getModifications()
+    public function getServiceModifications()
     {
-        return $this->modifications;
+        return $this->serviceModifications;
     }
 
     /**
-     * @param mixed $modifications
+     * @param mixed $serviceModifications
      */
-    public function setModifications($modifications)
+    public function setServiceModifications($serviceModifications)
     {
-        $this->modifications = $modifications;
+        $this->serviceModifications = $serviceModifications;
     }
 }

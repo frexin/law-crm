@@ -55,7 +55,7 @@ class ServiceModification
     /**
      * @var Service
      *
-     * @ORM\ManyToOne(targetEntity="Service", inversedBy="modifications")
+     * @ORM\ManyToOne(targetEntity="Service", inversedBy="serviceModifications")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="service_id", referencedColumnName="id")
      * })

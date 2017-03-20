@@ -5,3 +5,7 @@ showcase_homepage:
 showcase_service:
     path: /service/{slug}
     defaults: { _controller: ShowcaseBundle:Default:service }
+
+showcase_order:
+    path: /order/{slug}
+    defaults: { _controller: ShowcaseBundle:Default:order }

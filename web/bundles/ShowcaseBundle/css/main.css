@@ -128,3 +128,77 @@
 .service-additional-info {
     margin-top: 20px;
 }
+
+/* ******************* */
+/* Форма заказа услуги */
+/* ******************* */
+.order-form section:first-of-type {
+    margin-bottom: 20px;
+}
+
+.order-form fieldset {
+    border: 1px solid #ddd !important;
+    margin: 0;
+    padding: 10px;
+    position: relative;
+    border-radius:4px;
+    background-color: rgba(245, 245, 245, 0.84);
+}
+
+.order-form legend {
+    font-size: 17px;
+    margin: 0 0 0 20px;
+    width: auto;
+    border: none;
+}
+
+.form-user-info .form-group {
+    margin-bottom: 26px;
+}
+
+.order-form .service-modification-lable {
+    display: block;
+    text-align: left;
+}
+
+.order-form .form-service-info fieldset {
+    padding: 10px 25px;
+}
+
+.order-form .form-service-name {
+    font-weight: bold;
+}
+
+.form-payment-info {
+    margin: 20px 0 0 0;
+}
+
+.form-payment-info fieldset {
+    padding: 20px 15px;
+}
+
+.form-price-font {
+    font-weight: bold;
+    padding: 0 0 0 15px;
+}
+
+.form-price-font span {
+    font-size: 28px;
+}
+
+.form-pay-button {
+    width: 100%;
+    height: 60px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 990px) {
+    .order-form section:last-of-type {
+        margin-top: 20px;
+    }
+
+    .form-user-info .form-group {
+        margin-bottom: 15px;
+    }
+}
