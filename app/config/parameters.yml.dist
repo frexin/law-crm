@@ -21,3 +21,6 @@ parameters:
     # Base host, needed to create routes for sub-domains
     base_host: ~
     email_from: ~
+
+    # Директория, куда будут загружаться файлы, прикрепляемые к заданию
+    documents_upload_directory: '%kernel.root_dir%/../web/uploads/files'

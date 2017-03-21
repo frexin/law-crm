@@ -48,8 +48,6 @@ class OrderFile
      */
     private $order;
 
-
-
     /**
      * Get id
      *

@@ -91,6 +91,11 @@ class Order
     private $serviceModification;
 
     /**
+     * @Assert\File()
+     */
+    private $uploadedFiles;
+
+    /**
      * @var bool
      * @Assert\Type("bool")
      * @Assert\IsTrue(message="Вы должны согласиться с условиями.")
@@ -255,5 +260,21 @@ class Order
     public function setIsAgree(bool $isAgree)
     {
         $this->isAgree = $isAgree;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUploadedFiles()
+    {
+        return $this->uploadedFiles;
+    }
+
+    /**
+     * @param mixed $uploadedFiles
+     */
+    public function setUploadedFiles($uploadedFiles)
+    {
+        $this->uploadedFiles = $uploadedFiles;
     }
 }

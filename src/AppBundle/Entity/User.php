@@ -399,6 +399,7 @@ class User implements UserInterface
 
     /**
      * @param mixed $plainPassword
+     * @return $this
      */
     public function setPlainPassword($plainPassword = null)
     {
@@ -412,6 +413,8 @@ class User implements UserInterface
         // forces the object to look "dirty" to Doctrine. Avoids
         // Doctrine *not* saving this entity, if only plainPassword changes
         $this->password = null;
+
+        return $this;
     }
 
     public function getSalt()

@@ -4,6 +4,11 @@ parameters:
     appbundle.db.table_prefix: law_
 
 services:
+    # сервисы
+    app.file_uploader:
+        class: AppBundle\Services\FileUploader
+        arguments: ['%documents_upload_directory%']
+
     # Обработчки событий
     appbundle.tblprefix_subscriber:
         class: AppBundle\Subscriber\TablePrefixSubscriber
@@ -22,3 +27,9 @@ services:
         autowire: true
         tags:
             - { name: kernel.event_subscriber }
+
+    app.doctrine_file_upload_listener:
+        class: AppBundle\Subscriber\OrderFileUploadSubscriber
+        arguments: ['@app.file_uploader']
+        tags:
+            - { name: doctrine.event_subscriber }

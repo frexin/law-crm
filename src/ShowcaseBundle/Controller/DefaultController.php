@@ -2,6 +2,7 @@
 
 namespace ShowcaseBundle\Controller;
 
+use AppBundle\Entity\OrderFile;
 use AppBundle\Entity\User;
 use Common\Entity\Service;
 use AppBundle\Entity\Order as OrderEntity;
@@ -49,24 +50,30 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $user = new User();
-            $user->setFirstName($formOrder->getFirstName());
-            $user->setSecondName($formOrder->getSecondName());
-            $user->setMiddleName($formOrder->getMiddleName());
-            $user->setEmail($formOrder->getEmail());
-            $user->setPlainPassword();
-            $user->setRole(UserRoles::ROLE_CLIENT);
-            $user->setPhone($formOrder->getPhone());
-            $user->setOtherContacts($formOrder->getOtherContacts());
+            $user->setFirstName($formOrder->getFirstName())
+                ->setSecondName($formOrder->getSecondName())
+                ->setMiddleName($formOrder->getMiddleName())
+                ->setEmail($formOrder->getEmail())
+                ->setPlainPassword()
+                ->setRole(UserRoles::ROLE_CLIENT)
+                ->setPhone($formOrder->getPhone())
+                ->setOtherContacts($formOrder->getOtherContacts());
             $em->persist($user);
 
             /** @var OrderEntity $order */
             $order = new OrderEntity();
-            $order->setUser($user);
-            $order->setServiceModification($formOrder->getServiceModification());
-            $order->setStatus(OrderStatuses::STATUS_WAITING_PAYMENT);
-            $order->setTitle($formOrder->getQuestion());
-            $order->setDescription($formOrder->getDescription());
+            $order->setUser($user)
+                ->setServiceModification($formOrder->getServiceModification())
+                ->setStatus(OrderStatuses::STATUS_WAITING_PAYMENT)
+                ->setTitle($formOrder->getQuestion())
+                ->setDescription($formOrder->getDescription());
             $em->persist($order);
+
+            /** @var OrderFile */
+            $orderFile = new OrderFile();
+            $orderFile->setFilePath($formOrder->getUploadedFiles())
+                ->setOrder($order);
+            $em->persist($orderFile);
 
             $em->flush();
             $this->addFlash('success', 'Ваша заявка принята. Ссылка для входа в личный кабинет отправлена на ваш email.');
