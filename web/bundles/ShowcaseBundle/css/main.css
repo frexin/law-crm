@@ -153,7 +153,7 @@
 }
 
 .form-user-info .form-group {
-    margin-bottom: 26px;
+    margin-bottom: 20px;
 }
 
 .order-form .service-modification-lable {
@@ -191,6 +191,12 @@
     height: 60px;
     font-size: 15px;
     font-weight: bold;
+}
+
+@media screen and (max-width: 1200px) {
+    .form-user-info .form-group {
+        margin-bottom: 30px;
+    }
 }
 
 @media screen and (max-width: 990px) {

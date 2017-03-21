@@ -36,10 +36,16 @@ class OrderFormType extends AbstractType
                 'label' => false, // лейбл определяется в order.html.twig, т.к. там нужно переопределять хитро блок
                 'class' => 'Common\Entity\ServiceModification',
                 'choices' => $serviceModifications,
+                'choice_label' => function($serviceModification) {
+                    $price = number_format($serviceModification->getPrice(), 0, '', '');
+                    return $serviceModification->getName() . ' (' . $price . ' р.)';
+                },
                 'data' => $serviceModifications[0],
                 'expanded' => true,
                 'multiple' => false,
-                'choice_label' => 'name',
+//                'attr' => [
+//                    'data-lol' =>12
+//                ]
             ])
             ->add('isAgree', CheckboxType::class);
     }

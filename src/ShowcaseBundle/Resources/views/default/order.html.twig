@@ -90,8 +90,8 @@
                                     <div class="col-xs-6">
                                         <p class="form-price-font">
                                             Стоимость: <br>
-                                            <span class="form-total-price">
-                                                3000 P
+                                            <span id="form-total-price" class="form-total-price">
+                                                {{ service.serviceModifications[0].price|number_format(0, ',', '') }} Р
                                             </span>
                                         </p>
                                     </div>
