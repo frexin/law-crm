@@ -20,3 +20,4 @@ parameters:
 
     # Base host, needed to create routes for sub-domains
     base_host: ~
+    email_from: ~

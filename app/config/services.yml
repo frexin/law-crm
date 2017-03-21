@@ -4,8 +4,21 @@ parameters:
     appbundle.db.table_prefix: law_
 
 services:
+    # Обработчки событий
     appbundle.tblprefix_subscriber:
         class: AppBundle\Subscriber\TablePrefixSubscriber
         arguments: ['%appbundle.db.table_prefix%']
         tags:
             - { name: doctrine.event_subscriber }
+
+    app.doctrine.hash_password_listener:
+        class: ShowcaseBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    app.event.order_form_submitted:
+        class: AppBundle\Subscriber\OrderFormSubmittedSubscriber
+        autowire: true
+        tags:
+            - { name: kernel.event_subscriber }

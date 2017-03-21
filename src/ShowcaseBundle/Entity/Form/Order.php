@@ -2,6 +2,7 @@
 
 namespace ShowcaseBundle\Entity\Form;
 
+use Common\Entity\ServiceModification;
 use Symfony\Component\Validator\Constraints as Assert;
 
 // todo добавить загрузку файлов
@@ -83,7 +84,7 @@ class Order
     private $description;
 
     /**
-     * @var string
+     * @var ServiceModification
      *
      * @Assert\NotBlank()
      */
@@ -99,7 +100,7 @@ class Order
     /**
      * @return string
      */
-    public function getSecondName(): string
+    public function getSecondName()
     {
         return $this->secondName;
     }
@@ -115,7 +116,7 @@ class Order
     /**
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName()
     {
         return $this->firstName;
     }
@@ -131,7 +132,7 @@ class Order
     /**
      * @return string
      */
-    public function getMiddleName(): string
+    public function getMiddleName()
     {
         return $this->middleName;
     }
@@ -147,7 +148,7 @@ class Order
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -163,7 +164,7 @@ class Order
     /**
      * @return string
      */
-    public function getPhone(): string
+    public function getPhone()
     {
         return $this->phone;
     }
@@ -179,7 +180,7 @@ class Order
     /**
      * @return string
      */
-    public function getOtherContacts(): string
+    public function getOtherContacts()
     {
         return $this->otherContacts;
     }
@@ -195,7 +196,7 @@ class Order
     /**
      * @return string
      */
-    public function getQuestion(): string
+    public function getQuestion()
     {
         return $this->question;
     }
@@ -211,7 +212,7 @@ class Order
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
@@ -227,15 +228,15 @@ class Order
     /**
      * @return string
      */
-    public function getServiceModification(): string
+    public function getServiceModification()
     {
         return $this->serviceModification;
     }
 
     /**
-     * @param string $serviceModification
+     * @param ServiceModification $serviceModification
      */
-    public function setServiceModification(string $serviceModification)
+    public function setServiceModification(ServiceModification $serviceModification)
     {
         $this->serviceModification = $serviceModification;
     }
@@ -243,7 +244,7 @@ class Order
     /**
      * @return boolean
      */
-    public function isIsAgree(): bool
+    public function isIsAgree()
     {
         return $this->isAgree;
     }

@@ -39,6 +39,12 @@
                 <h3>Заполнение заявки на услугу "{{ service.title }}"</h3>
                 <hr>
 
+                {% for msg in app.session.flashBag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ msg }}
+                    </div>
+                {% endfor %}
+
                 <div class="order-form">
                     {{ form_start(orderForm) }}
                     {{ form_errors(orderForm) }}
@@ -60,7 +66,7 @@
                             </fieldset>
                         </section>
 
-                        <section class="form-service-info col-md-4">
+                        <section class="form-service-info col-md-5">
                             <fieldset>
                                 <legend>Параметры услуги</legend>
                                 <p>
@@ -75,7 +81,13 @@
 
                                 <div class="checkbox">
                                     <label for="{{ orderForm.isAgree.vars.id }}" class="required">
-                                        <input type="checkbox" id="{{ orderForm.isAgree.vars.id }}" name="{{ orderForm.isAgree.vars.name }}" value="1">
+                                        <input type="checkbox" id="{{ orderForm.isAgree.vars.id }}"
+                                               name="order_form[{{ orderForm.isAgree.vars.name }}]"
+                                               value="1"
+                                               {% if orderForm.isAgree.vars.errors[0] is not defined %}
+                                                   checked
+                                               {% endif %}
+                                        >
                                         Я согласен с условиями <a href="/">соглашения</a>
                                     </label>
                                     <label class="error">{{ form_errors(orderForm.isAgree) }}</label>
@@ -84,7 +96,7 @@
                             </fieldset>
                         </section>
 
-                        <section class="form-payment-info col-md-4">
+                        <section class="form-payment-info col-md-5">
                             <fieldset>
                                 <div class="row">
                                     <div class="col-xs-6">
@@ -126,4 +138,5 @@
                 </div>
             </div>
         </div>
+    </div>
 {% endblock %}

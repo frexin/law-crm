@@ -43,9 +43,6 @@ class OrderFormType extends AbstractType
                 'data' => $serviceModifications[0],
                 'expanded' => true,
                 'multiple' => false,
-//                'attr' => [
-//                    'data-lol' =>12
-//                ]
             ])
             ->add('isAgree', CheckboxType::class);
     }
