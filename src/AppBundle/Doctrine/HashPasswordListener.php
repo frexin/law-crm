@@ -1,6 +1,6 @@
 <?php
 
-namespace ShowcaseBundle\Doctrine;
+namespace AppBundle\Doctrine;
 
 use AppBundle\Entity\User;
 use Doctrine\Common\EventSubscriber;

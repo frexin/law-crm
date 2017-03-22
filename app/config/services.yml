@@ -17,7 +17,7 @@ services:
             - { name: doctrine.event_subscriber }
 
     app.doctrine.hash_password_listener:
-        class: ShowcaseBundle\Doctrine\HashPasswordListener
+        class: AppBundle\Doctrine\HashPasswordListener
         autowire: true
         tags:
             - { name: doctrine.event_subscriber }
