@@ -1,9 +1,9 @@
 <?php
 
-namespace Common\Entity;
+namespace AppBundle\Entity;
 
-use Common\Traits\Sluggable;
-use Common\Traits\Timestampable;
+use AppBundle\Traits\Sluggable;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

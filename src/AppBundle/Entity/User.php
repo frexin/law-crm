@@ -2,8 +2,9 @@
 
 namespace AppBundle\Entity;
 
-use Common\Traits\Timestampable;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="email_UNIQUE", columns={"email"}), @ORM\UniqueConstraint(name="confirmation_token_UNIQUE", columns={"email_confirmation_token"}), @ORM\UniqueConstraint(name="phone_confirmation_token_UNIQUE", columns={"phone_confirmation_token"})})
  * @ORM\Entity
  */
-class User
+class User implements UserInterface
 {
     use Timestampable;
 
@@ -23,6 +24,11 @@ class User
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+    /**
+     * @var string
+     */
+    private $plainPassword;
 
     /**
      * @var string
@@ -352,6 +358,14 @@ class User
     }
 
     /**
+     * @return string
+     */
+    public function getRoles()
+    {
+        return $this->role;
+    }
+
+    /**
      * Set avatarUrl
      *
      * @param string $avatarUrl
@@ -373,5 +387,48 @@ class User
     public function getAvatarUrl()
     {
         return $this->avatarUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     * @return $this
+     */
+    public function setPlainPassword($plainPassword = null)
+    {
+        if (!$plainPassword) {
+            $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            $plainPassword = substr(str_shuffle($chars), 0, 10);
+        }
+
+        $this->plainPassword = $plainPassword;
+
+        // forces the object to look "dirty" to Doctrine. Avoids
+        // Doctrine *not* saving this entity, if only plainPassword changes
+        $this->password = null;
+
+        return $this;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
     }
 }

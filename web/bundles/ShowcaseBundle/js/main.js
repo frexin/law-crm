@@ -15,4 +15,11 @@ $(document).ready(function(){
                 .addClass('disabled');
         }
     });
+
+    $('input[type=radio][name="order_form[serviceModification]"]').change(function (e) {
+        var label = $(this).closest('label').text();
+        var price = label.match(/\((\d+)\sр\.\)/ui);
+
+        $('#form-total-price').text(price[1]+' Р');
+    });
 });

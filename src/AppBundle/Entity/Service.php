@@ -1,9 +1,9 @@
 <?php
 
-namespace Common\Entity;
+namespace AppBundle\Entity;
 
-use Common\Traits\Sluggable;
-use Common\Traits\Timestampable;
+use AppBundle\Traits\Sluggable;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,7 +67,7 @@ class Service
      * @ORM\OneToMany(targetEntity="ServiceModification", mappedBy="service", fetch="EAGER")
      * @ORM\OrderBy({"price" = "ASC"})
      */
-    private $modifications;
+    private $serviceModifications;
 
     /**
      * Get id
@@ -178,11 +178,11 @@ class Service
     /**
      * Set serviceCategory
      *
-     * @param \Common\Entity\ServiceCategory $serviceCategory
+     * @param \AppBundle\Entity\ServiceCategory $serviceCategory
      *
      * @return Service
      */
-    public function setServiceCategory(\Common\Entity\ServiceCategory $serviceCategory = null)
+    public function setServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory = null)
     {
         $this->serviceCategory = $serviceCategory;
 
@@ -192,7 +192,7 @@ class Service
     /**
      * Get serviceCategory
      *
-     * @return \Common\Entity\ServiceCategory
+     * @return \AppBundle\Entity\ServiceCategory
      */
     public function getServiceCategory()
     {
@@ -202,16 +202,16 @@ class Service
     /**
      * @return mixed
      */
-    public function getModifications()
+    public function getServiceModifications()
     {
-        return $this->modifications;
+        return $this->serviceModifications;
     }
 
     /**
-     * @param mixed $modifications
+     * @param mixed $serviceModifications
      */
-    public function setModifications($modifications)
+    public function setServiceModifications($serviceModifications)
     {
-        $this->modifications = $modifications;
+        $this->serviceModifications = $serviceModifications;
     }
 }

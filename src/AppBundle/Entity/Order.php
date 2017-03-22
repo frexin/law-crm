@@ -2,9 +2,9 @@
 
 namespace AppBundle\Entity;
 
-use Common\Traits\Timestampable;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
-use Common\Entity\ServiceModification;
+use AppBundle\Entity\ServiceModification;
 
 /**
  * Order
@@ -73,7 +73,7 @@ class Order
     /**
      * @var ServiceModification
      *
-     * @ORM\ManyToOne(targetEntity="Common\Entity\ServiceModification")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ServiceModification")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="service_modification_id", referencedColumnName="id", nullable=false)
      * })
@@ -249,11 +249,11 @@ class Order
     /**
      * Set serviceModification
      *
-     * @param \Common\Entity\ServiceModification $serviceModification
+     * @param \AppBundle\Entity\ServiceModification $serviceModification
      *
      * @return Order
      */
-    public function setServiceModification(\Common\Entity\ServiceModification $serviceModification = null)
+    public function setServiceModification(\AppBundle\Entity\ServiceModification $serviceModification = null)
     {
         $this->serviceModification = $serviceModification;
 
@@ -263,7 +263,7 @@ class Order
     /**
      * Get serviceModification
      *
-     * @return \Common\Entity\ServiceModification
+     * @return \AppBundle\Entity\ServiceModification
      */
     public function getServiceModification()
     {

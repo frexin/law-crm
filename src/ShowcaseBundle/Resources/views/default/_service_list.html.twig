@@ -11,7 +11,7 @@
                     <p class="service-short-description">{{ service.shortDescription }}</p>
 
                     <p>
-                        <span class="service-price">от {{ service.modifications[0].price|number_format(0, ',', '') }} P</span>
+                        <span class="service-price">от {{ service.serviceModifications[0].price|number_format(0, ',', '') }} P</span>
                         <a class="btn btn-md btn-default pull-right service-order-button" href="{{ path('showcase_service', {'slug' : service.slug}) }}" role="button">Заказать</a>
                     </p>
                 </div>

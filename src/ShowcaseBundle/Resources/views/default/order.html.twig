@@ -1,0 +1,143 @@
+{% extends '@showcase/base.html.twig' %}
+
+{% form_theme orderForm _self %}
+
+{# ПЕРЕОПРЕДЕЛЯЕМ СТАНДАРТНЫЕ БЛОКИ КОНКРЕТНО ДЛЯ ЭТОЙ ФОРМЫ #}
+{% block form_label_class -%}
+    col-sm-5
+{%- endblock form_label_class %}
+
+{% block form_group_class -%}
+    col-sm-6
+{%- endblock form_group_class %}
+{# ЗАКОНЧИЛИ ПЕРЕОПРЕДЕЛЯТЬ БЛОКИ #}
+
+{# ДОБАВЛЯЕМ КАСТОМНЫЙ БЛОК ДЛЯ orderForm.serviceModification #}
+{% block _order_form_serviceModification_row %}
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        <div class="col-sm-12 control-label required">
+            <label for="order_form_serviceModification" class="service-modification-lable">
+                Выбранный тип:
+            </label>
+        </div>
+        <div class="col-sm-12">
+            {{- form_widget(form) -}}
+        </div>
+        {{- form_errors(form) -}}
+    </div>
+{% endblock %}
+{# ДОБАВИЛИ НОВЫЙ БЛОК #}
+
+{% block title %}
+    {{ service.title }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Заполнение заявки на услугу "{{ service.title }}"</h3>
+                <hr>
+
+                {% for msg in app.session.flashBag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ msg }}
+                    </div>
+                {% endfor %}
+
+                <div class="order-form">
+                    {{ form_start(orderForm) }}
+                    {{ form_errors(orderForm) }}
+
+                    <div class="row">
+                        <section class="form-user-info col-md-7">
+                            <fieldset>
+                                <legend>Личные данные</legend>
+                                {{ form_row(orderForm.secondName) }}
+                                {{ form_row(orderForm.firstName) }}
+                                {{ form_row(orderForm.middleName) }}
+                                {{ form_row(orderForm.email) }}
+                                {{ form_row(orderForm.phone) }}
+                                {{ form_row(orderForm.otherContacts, {
+                                    'attr': {
+                                        'rows': 4,
+                                    }
+                                }) }}
+                            </fieldset>
+                        </section>
+
+                        <section class="form-service-info col-md-5">
+                            <fieldset>
+                                <legend>Параметры услуги</legend>
+                                <p>
+                                    Выбранная услуга: <br>
+                                    <span class="form-service-name">
+                                    "{{ service.title }}"
+                                </span>
+                                </p>
+                                <br>
+
+                                {{ form_row(orderForm.serviceModification) }}
+
+                                <div class="checkbox">
+                                    <label for="{{ orderForm.isAgree.vars.id }}" class="required">
+                                        <input type="checkbox" id="{{ orderForm.isAgree.vars.id }}"
+                                               name="order_form[{{ orderForm.isAgree.vars.name }}]"
+                                               value="1"
+                                               {% if orderForm.isAgree.vars.errors[0] is not defined %}
+                                                   checked
+                                               {% endif %}
+                                        >
+                                        Я согласен с условиями <a href="/">соглашения</a>
+                                    </label>
+                                    <label class="error">{{ form_errors(orderForm.isAgree) }}</label>
+                                </div>
+
+                            </fieldset>
+                        </section>
+
+                        <section class="form-payment-info col-md-5">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <p class="form-price-font">
+                                            Стоимость: <br>
+                                            <span id="form-total-price" class="form-total-price">
+                                                {{ service.serviceModifications[0].price|number_format(0, ',', '') }} Р
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button type="submit" class="btn btn-primary form-pay-button" formnovalidate>
+                                            Оплатить
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </section>
+                    </div>
+
+                    <div class="row">
+                        <section class="form-order-info col-md-7">
+                            <fieldset>
+                                <legend>Данные по вашему делу</legend>
+                                {{ form_row(orderForm.question) }}
+                                {{ form_row(orderForm.description, {
+                                    'attr': {
+                                        'rows': 5,
+                                    }
+                                }) }}
+                                {{ form_row(orderForm.uploadedFiles) }}
+                            </fieldset>
+                        </section>
+                    </div>
+
+                    {# Отмечаем, что эо поле уже выведено#}
+                    {% do orderForm.isAgree.setRendered %}
+
+                    {{ form_end(orderForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

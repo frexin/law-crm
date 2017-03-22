@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use Common\Traits\Timestampable;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,8 +47,6 @@ class OrderFile
      * })
      */
     private $order;
-
-
 
     /**
      * Get id
