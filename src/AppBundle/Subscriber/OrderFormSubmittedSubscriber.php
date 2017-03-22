@@ -2,7 +2,7 @@
 
 namespace AppBundle\Subscriber;
 
-use Common\Events\OrderFormSubmitted;
+use AppBundle\Events\OrderFormSubmitted;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Templating\EngineInterface;
 

@@ -2,7 +2,7 @@
 
 namespace ShowcaseBundle\Entity\Form;
 
-use Common\Entity\ServiceModification;
+use AppBundle\Entity\ServiceModification;
 use Symfony\Component\Validator\Constraints as Assert;
 
 // todo добавить загрузку файлов

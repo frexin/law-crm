@@ -4,12 +4,11 @@ namespace ShowcaseBundle\Controller;
 
 use AppBundle\Entity\OrderFile;
 use AppBundle\Entity\User;
-use Common\Entity\Service;
+use AppBundle\Entity\Service;
 use AppBundle\Entity\Order as OrderEntity;
-use Common\Enums\OrderStatuses;
-use Common\Enums\UserRoles;
-use Common\Events\OrderFormSubmitted;
-use ShowcaseBundle\Entity\Form\Order;
+use AppBundle\Enums\OrderStatuses;
+use AppBundle\Enums\UserRoles;
+use AppBundle\Events\OrderFormSubmitted;
 use ShowcaseBundle\Form\OrderFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +18,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $serviceCategories = $this->getDoctrine()
-            ->getRepository('Common:ServiceCategory')
+            ->getRepository('AppBundle:ServiceCategory')
             ->findAll();
 
         return $this->render('@showcase/default/index.html.twig', [

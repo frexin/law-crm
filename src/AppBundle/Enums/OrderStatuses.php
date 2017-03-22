@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Enums;
+namespace AppBundle\Enums;
 
 class OrderStatuses
 {

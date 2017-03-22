@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Events;
+namespace AppBundle\Events;
 
 use AppBundle\Entity\Order;
 use AppBundle\Entity\User;

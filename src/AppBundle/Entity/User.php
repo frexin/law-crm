@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use Common\Traits\Timestampable;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 

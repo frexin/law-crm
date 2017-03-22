@@ -2,7 +2,7 @@
 
 namespace ShowcaseBundle\Form;
 
-use Common\Entity\Service;
+use AppBundle\Entity\Service;
 use ShowcaseBundle\Entity\Form\Order;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -35,7 +35,7 @@ class OrderFormType extends AbstractType
             ->add('description', TextareaType::class, ['label' => 'Подробное описание'])
             ->add('serviceModification', EntityType::class, [
                 'label' => false, // лейбл определяется в order.html.twig, т.к. там нужно переопределять хитро блок
-                'class' => 'Common\Entity\ServiceModification',
+                'class' => 'AppBundle\Entity\ServiceModification',
                 'choices' => $serviceModifications,
                 'choice_label' => function($serviceModification) {
                     $price = number_format($serviceModification->getPrice(), 0, '', '');

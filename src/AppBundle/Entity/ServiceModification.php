@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Entity;
+namespace AppBundle\Entity;
 
-use Common\Traits\Timestampable;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -173,11 +173,11 @@ class ServiceModification
     /**
      * Set service
      *
-     * @param \Common\Entity\Service $service
+     * @param \AppBundle\Entity\Service $service
      *
      * @return ServiceModification
      */
-    public function setService(\Common\Entity\Service $service = null)
+    public function setService(\AppBundle\Entity\Service $service = null)
     {
         $this->service = $service;
 
@@ -187,7 +187,7 @@ class ServiceModification
     /**
      * Get service
      *
-     * @return \Common\Entity\Service
+     * @return \AppBundle\Entity\Service
      */
     public function getService()
     {

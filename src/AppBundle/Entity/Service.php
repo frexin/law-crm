@@ -1,9 +1,9 @@
 <?php
 
-namespace Common\Entity;
+namespace AppBundle\Entity;
 
-use Common\Traits\Sluggable;
-use Common\Traits\Timestampable;
+use AppBundle\Traits\Sluggable;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -178,11 +178,11 @@ class Service
     /**
      * Set serviceCategory
      *
-     * @param \Common\Entity\ServiceCategory $serviceCategory
+     * @param \AppBundle\Entity\ServiceCategory $serviceCategory
      *
      * @return Service
      */
-    public function setServiceCategory(\Common\Entity\ServiceCategory $serviceCategory = null)
+    public function setServiceCategory(\AppBundle\Entity\ServiceCategory $serviceCategory = null)
     {
         $this->serviceCategory = $serviceCategory;
 
@@ -192,7 +192,7 @@ class Service
     /**
      * Get serviceCategory
      *
-     * @return \Common\Entity\ServiceCategory
+     * @return \AppBundle\Entity\ServiceCategory
      */
     public function getServiceCategory()
     {
