@@ -91,7 +91,7 @@ class Order
     private $serviceModification;
 
     /**
-     * @Assert\File()
+     * @Assert\Type("array")
      */
     private $uploadedFiles;
 

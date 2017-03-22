@@ -46,7 +46,10 @@ class OrderFormType extends AbstractType
                 'multiple' => false,
             ])
             ->add('isAgree', CheckboxType::class)
-            ->add('uploadedFiles', FileType::class, ['label' => 'Добавьте файлы']);
+            ->add('uploadedFiles', FileType::class, [
+                'label' => 'Добавьте файлы',
+                'multiple' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -44,7 +44,6 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Order $formOrder */
             $formOrder = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
@@ -60,7 +59,6 @@ class DefaultController extends Controller
                 ->setOtherContacts($formOrder->getOtherContacts());
             $em->persist($user);
 
-            /** @var OrderEntity $order */
             $order = new OrderEntity();
             $order->setUser($user)
                 ->setServiceModification($formOrder->getServiceModification())
@@ -69,11 +67,13 @@ class DefaultController extends Controller
                 ->setDescription($formOrder->getDescription());
             $em->persist($order);
 
-            /** @var OrderFile */
-            $orderFile = new OrderFile();
-            $orderFile->setFilePath($formOrder->getUploadedFiles())
-                ->setOrder($order);
-            $em->persist($orderFile);
+
+            foreach ($formOrder->getUploadedFiles() as $uploadedFile) {
+                $orderFile = new OrderFile();
+                $orderFile->setFilePath($uploadedFile)
+                    ->setOrder($order);
+                $em->persist($orderFile);
+            }
 
             $em->flush();
             $this->addFlash('success', 'Ваша заявка принята. Ссылка для входа в личный кабинет отправлена на ваш email.');

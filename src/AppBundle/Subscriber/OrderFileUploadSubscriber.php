@@ -26,19 +26,6 @@ class OrderFileUploadSubscriber implements EventSubscriber
         return ['prePersist', 'preUpdate', 'postLoad'];
     }
 
-    public function postLoad(LifecycleEventArgs $args)
-    {
-        $entity = $args->getObject();
-
-        if (!$entity instanceof OrderFile) {
-            return;
-        }
-
-        if ($fileName = $entity->getFilePath()) {
-            $entity->setFilePath(new File($this->uploader->getTargetDir().'/'.$fileName));
-        }
-    }
-
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getObject();
@@ -51,6 +38,26 @@ class OrderFileUploadSubscriber implements EventSubscriber
         $entity = $args->getObject();
 
         $this->uploadFile($entity);
+    }
+
+    /**
+     * При редактировании форма будет ждать тип File,
+     * но в бд сохраняется string с названием файла.
+     * В этом методе мы переопределяем строку на File.
+     *
+     * @param LifecycleEventArgs $args
+     */
+    public function postLoad(LifecycleEventArgs $args)
+    {
+        $entity = $args->getObject();
+
+        if (!$entity instanceof OrderFile) {
+            return;
+        }
+
+        if ($fileName = $entity->getFilePath()) {
+            $entity->setFilePath(new File($this->uploader->getTargetDir().'/'.$fileName));
+        }
     }
 
     private function uploadFile($entity)
