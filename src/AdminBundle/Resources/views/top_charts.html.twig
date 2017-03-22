@@ -1,0 +1,252 @@
+{% if app.request.attributes.get('_route') == 'admin_app_shops_list' %}
+<div class="row">
+    <div class=" flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="tile-stats">
+            <div class="icon"><i class="fa fa-suitcase"></i></div>
+            <div class="count">1050</div>
+            <h3>All buyers</h3>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+    <div class=" flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="tile-stats">
+            <div class="icon"><i class="fa fa-suitcase"></i></div>
+            <div class="count">17 319K</div>
+            <h3>Best store</h3>
+            <p>Revenue best store</p>
+        </div>
+    </div>
+    <div class=" flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="tile-stats">
+            <div class="icon"><i class="fa fa-tags"></i></div>
+            <div class="count">41%</div>
+            <h3>The avarage conversion</h3>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Sales by week</h2>
+            <ul class="nav navbar-right panel_toolbox">
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <canvas id="mybarChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>The number of visitors</h2>
+            <ul class="nav navbar-right panel_toolbox">
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <canvas id="mybarChart2"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>New/returning customers</h2>
+            <ul class="nav navbar-right panel_toolbox">
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <canvas id="canvasDoughnut"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        new Chart(document.getElementById("mybarChart"), {
+            type: 'bar',
+            data: {
+                labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                datasets: [{
+                    label: 'Volume (million)',
+                    backgroundColor: "#26B99A",
+                    data: [7.5, 8.1, 7.9, 8.2, 8.8, 10.1, 10.5]
+                }]
+            },
+
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                }
+            }
+        });
+
+        new Chart(document.getElementById("mybarChart2"), {
+            type: 'bar',
+            data: {
+                labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                datasets: [{
+                    label: 'Customers',
+                    backgroundColor: "#26B99A",
+                    data: [3012, 2299, 2983, 3111, 3288, 4922, 4848]
+                }]
+            },
+
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                }
+            }
+        });
+
+        var canvasDoughnut = new Chart(document.getElementById("canvasDoughnut"), {
+            type: 'doughnut',
+            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+            data: {
+                labels: [
+                    "New",
+                    "Returning"
+                ],
+                datasets: [{
+                    data: [73, 27],
+                    backgroundColor: [
+                        "#455C73",
+                        "#9B59B6"
+                    ],
+                    hoverBackgroundColor: [
+                        "#34495E",
+                        "#B370CF"
+                    ]
+
+                }]
+            }
+        });
+    });
+</script>
+{% endif %}
+
+{% if app.request.attributes.get('_route') == 'admin_app_users_list' %}
+
+<div class="row">
+    <div class=" flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="tile-stats">
+            <div class="icon"><i class="fa fa-child"></i></div>
+            <div class="count">291K</div>
+            <h3>Best selling</h3>
+            <p>Andrey Egorov</p>
+        </div>
+    </div>
+    <div class=" flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="tile-stats">
+            <div class="icon"><i class="fa fa-bullseye"></i></div>
+            <div class="count">58%</div>
+            <h3>Better conversion</h3>
+            <p>Gerasim Seliverstov</p>
+        </div>
+    </div>
+    <div class=" flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="tile-stats">
+            <div class="icon"><i class="fa fa-rocket"></i></div>
+            <div class="count">83%</div>
+            <h3>Achieve KPI</h3>
+            <p>The average level for all sellers</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if app.request.attributes.get('_route') == 'admin_app_users_edit' %}
+    <div class="row top_tiles" style="margin: 10px 0;">
+
+        <div class="col-md-4 tile">
+            <span>All consultations</span>
+            <h2>514</h2>
+            <span class="sparkline_one" style="height: 160px;">
+                                      <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                  </span>
+        </div>
+        <div class="col-md-4 tile">
+            <span>Conversion rate</span>
+            <h2>27%</h2>
+            <span class="sparkline_two" style="height: 160px;">
+                                      <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                  </span>
+        </div>
+        <div class="col-md-4 dashboard-widget-content" >
+            <div class="sidebar-widget">
+                <h4>Achieve KPI</h4>
+                <canvas width="150" height="80" id="foo2" class="" style="width: 160px; height: 100px;"></canvas>
+                <div class="goal-wrapper">
+                    <span class="gauge-value pull-left"></span>
+                    <span id="gauge-text2" class="gauge-value pull-left">0</span>
+                    <span id="goal-text2" class="goal-value pull-right">6.5M</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $(".sparkline_one").sparkline([200, 400, 300, 400, 500, 400, 500, 400, 300, 400, 500, 350, 220, 500, 400, 300, 180, 450], {
+                type: 'bar',
+                height: '40',
+                barWidth: 9,
+                colorMap: {
+                    '7': '#a1a1a1'
+                },
+                barSpacing: 2,
+                barColor: '#26B99A'
+            });
+
+            $(".sparkline_two").sparkline([20, 40, 30, 40, 50, 40, 50, 40, 30, 40, 50, 33, 22, 50, 40, 30, 50, 22], {
+                type: 'line',
+                width: '200',
+                height: '40',
+                lineColor: '#26B99A',
+                fillColor: 'rgba(223, 223, 223, 0.57)',
+                lineWidth: 2,
+                spotColor: '#26B99A',
+                minSpotColor: '#26B99A'
+            });
+
+            var opts = {
+                lines: 12,
+                angle: 0,
+                lineWidth: 0.4,
+                pointer: {
+                    length: 0.75,
+                    strokeWidth: 0.042,
+                    color: '#1D212A'
+                },
+                limitMax: 'false',
+                colorStart: '#1ABC9C',
+                colorStop: '#1ABC9C',
+                strokeColor: '#F0F3F3',
+                generateGradient: true
+            };
+
+            var target = document.getElementById('foo2'),
+                    gauge = new Gauge(target).setOptions(opts);
+
+            gauge.maxValue = 6.5;
+            gauge.animationSpeed = 32;
+            gauge.set(4.5);
+            gauge.setTextField(document.getElementById("gauge-text2"));
+        })
+    </script>
+{% endif %}

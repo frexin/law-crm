@@ -1,0 +1,325 @@
+{% trans_default_domain "dashboard" %}
+<div class="row tile_count">
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        {% set BuyerStatistic = stat.buyerStatistics() %}
+
+        {% include '@gentellela/Including/stat.block.html.twig' with {
+            'statName': 'clients_all',
+            'statCount': BuyerStatistic.buyerChekins(),
+            'statDynamic': BuyerStatistic.buyerChekinsDynamic(),
+            'icon': 'user'
+        } %}
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        {% set SessionStatistic = stat.sessionStatistic() %}
+
+        {% include '@gentellela/Including/stat.block.html.twig' with {
+            'statName': 'sessions_all',
+            'statCount': SessionStatistic.totalSessionCount(),
+            'statDynamic': SessionStatistic.sessionDynamic(),
+            'icon': 'location-arrow'
+        } %}
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        {% include '@gentellela/Including/stat.block.html.twig' with {
+            'statName': 'sessions_avg',
+            'statCount': SessionStatistic.averageSessionLength()|scm,
+            'statDynamic': SessionStatistic.averageSessionDynamic(),
+            'icon': 'clock-o'
+        } %}
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        {% set SaleStatistics = stat.salesStatistics() %}
+
+        {% include '@gentellela/Including/stat.block.html.twig' with {
+            'statName': 'sales_volume',
+            'statCount': SaleStatistics.salesVolume()|vlm,
+            'statDynamic': SaleStatistics.salesVolumeDynamic(),
+            'icon': 'money'
+        } %}
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        {% include '@gentellela/Including/stat.block.html.twig' with {
+            'statName': 'conversion',
+            'statCount': SessionStatistic.conversion() ~ '%',
+            'statDynamic': SessionStatistic.conversionDynamic(),
+            'icon': 'hand-o-left'
+        } %}
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        {% set PinStatistics = stat.pinStatistics() %}
+
+        {% include '@gentellela/Including/stat.block.html.twig' with {
+            'statName': 'check_avg',
+            'statCount': PinStatistics.averagePin()|number_format(0, '.', ',') ~ 'р.',
+            'statDynamic': PinStatistics.dynamicPin(),
+            'icon': 'rub'
+        } %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="dashboard_graph x_panel">
+
+            <div class="row x_title">
+                <div class="col-md-6">
+                    <h3>{{ 'chart_sales_dinamyc'|trans }}</h3>
+                </div>
+                <div class="col-md-6">
+                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                        <span>3 Октября, 2016 - 9 Октября, 2016</span> <b class="caret"></b>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div id="placeholder33" style="height: 260px; display: none" class="demo-placeholder"></div>
+                <div style="width: 100%;">
+                    <div id="canvas_dahs" class="demo-placeholder" style="width: 100%; height:270px;"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% include '@gentellela/Including/chart.block.html.twig' with {
+    'title' : 'chart_top_shops', 'label' : 'chart_top_shops_label', 'container' : 'top_shops',
+    'items' : stat.salesStatistics.getStatisticListService().getTopSalesShop(),
+    } %}
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>{{ 'rating_top_salesman'|trans }}</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <h4>{{ 'rating_sales_sum'|trans }}</h4>
+                {% for user in stat.userStatistics.getUserListStatistics().userTopSales() %}
+                    <div class="widget_summary">
+                        <div class="w_left w_55">
+                            <span>{{ user.name }} {% if user.lastname is defined %}{{ user.lastname }}{% endif %}</span>
+                        </div>
+                        <div class="w_center w_25">
+                            <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: {{ user.percent }}%;">
+                                    <span class="sr-only">{{ user.percent }}% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w_right w_20">
+                            <span>{{ user.sale_volume|vlm }}</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>{{ 'rating_popular_products'|trans }}</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <h4>{{ 'rating_popular_products_best'|trans }}</h4>
+                {% for product in stat.salesStatistics.getProductStatisticsListService().productSalesTop() %}
+                    <div class="widget_summary">
+                        <div class="w_left w_55">
+                            <span>{{ product.name|slice(0, 20) }}..</span>
+                        </div>
+                        <div class="w_center w_25">
+                            <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: {{ product.percent }}%;">
+                                    <span class="sr-only">{{ product.percent }}% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w_right w_20">
+                            <span>{{ product.total_sale|vlm }}</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    {% include '@gentellela/Including/chart.block.html.twig' with {
+    'title' : 'chart_sales_categories', 'label' : 'chart_sales_categories_label', 'container' : 'top_cats',
+    'items' : stat.salesStatistics.getCategoryStatisticsListService().getCategorySalesTop(),
+    } %}
+
+    <div class="col-md-4 col-sm-4 col-xs-4">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>{{ 'task_list'|trans }} </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <div class="">
+                    <ul class="to_do">
+                        {% for task in stat.userStatistics().lastTasks() %}
+                        <li>
+                            <p>
+                                <input type="checkbox" class="flat"> {{ task.name }} </p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>{{ 'orders'|trans }}</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <h4>{{ 'orders_list'|trans }}</h4>
+                {% for order in stat.orderStatistics.getOrdersNumberOfAccordingStatuses() %}
+                    <div class="widget_summary">
+                        <div class="w_left w_25">
+                            <span>{{ order.name }}</span>
+                        </div>
+                        <div class="w_center w_55">
+                            <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: {{ order.percent }}%;">
+                                    <span class="sr-only">{{ order.percent }}% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w_right w_20">
+                            <span>{{ order.order_counts }}</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(function () {
+        var data1 = [
+        {% for item in stat.salesStatistics.getOfDaysVolume() %}
+            {% if item.created %}
+            [gd('{{ item.created }}'), {{ item.total_sale }}],
+            {% endif %}
+        {% endfor %}
+        ];
+
+        $.plot($("#canvas_dahs"), [
+            data1
+        ], {
+            series: {
+                lines: {
+                    show: false,
+                    fill: true
+                },
+                splines: {
+                    show: true,
+                    tension: 0.4,
+                    lineWidth: 1,
+                    fill: 0.4
+                },
+                points: {
+                    radius: 0,
+                    show: true
+                },
+                shadowSize: 2
+            },
+            grid: {
+                verticalLines: true,
+                hoverable: true,
+                clickable: true,
+                tickColor: "#d5d5d5",
+                borderWidth: 1,
+                color: '#fff'
+            },
+            colors: ["rgba(38, 185, 154, 0.38)", "rgba(3, 88, 106, 0.38)"],
+            xaxis: {
+                tickColor: "rgba(51, 51, 51, 0.06)",
+                mode: "time",
+                tickSize: [1, "day"],
+                //tickLength: 10,
+                axisLabel: "Date",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Verdana, Arial',
+                axisLabelPadding: 10
+            },
+            yaxis: {
+                ticks: 8,
+                tickColor: "rgba(51, 51, 51, 0.06)"
+            },
+            tooltip: false
+        });
+
+        function gd(date) {
+            var args = date.split('-');
+
+            return new Date(args[0], args[1] - 1, args[2]).getTime();
+        }
+
+        var optionSet1 = {
+            startDate: moment().subtract(29, 'days'),
+            endDate: moment(),
+            minDate: '01/01/2012',
+            maxDate: '12/31/2015',
+            dateLimit: {
+                days: 60
+            },
+            showDropdowns: true,
+            showWeekNumbers: true,
+            timePicker: false,
+            timePickerIncrement: 1,
+            timePicker12Hour: true,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            opens: 'left',
+            buttonClasses: ['btn btn-default'],
+            applyClass: 'btn-small btn-primary',
+            cancelClass: 'btn-small',
+            format: 'MM/DD/YYYY',
+            separator: ' to ',
+            locale: {
+                applyLabel: 'Submit',
+                cancelLabel: 'Clear',
+                fromLabel: 'From',
+                toLabel: 'To',
+                customRangeLabel: 'Custom',
+                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                firstDay: 1
+            }
+        };
+        var cb = function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        };
+
+        $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+        $('#reportrange').daterangepicker(optionSet1, cb);
+    });
+</script>

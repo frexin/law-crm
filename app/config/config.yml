@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@ShowcaseBundle/Resources/config/services.yml" }
+    - { resource: "@AdminBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -87,3 +88,30 @@ stof_doctrine_extensions:
         default:
             timestampable: true
             sluggable: true
+
+# see https://sonata-project.org/bundles/admin/3-x/doc/getting_started/installation.html
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+#        sonata.block.service.dashboard: ~
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+
+sonata_admin:
+    title: "Ammm this is title"
+    templates:
+        # default global templates
+        layout:  AdminBundle::standard_layout.html.twig
+        dashboard: AdminBundle::dashboard.html.twig
+        knp_menu_template: AdminBundle::menu.html.twig
+        list: AdminBundle::list.html.twig
+        edit: AdminBundle::edit.html.twig
+#        base_list_field: GentellelaBundle::list_field.html.twig
+
+#    dashboard:
+#        blocks:
+#            -
+#                position: right
+#                type: sonata.block.service.dashboard
+    security:
+        handler: sonata.admin.security.handler.role

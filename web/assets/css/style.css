@@ -1,0 +1,23 @@
+div.box {
+    height: inherit;
+}
+
+.profile_info {
+    padding: 20px 0 10px;
+}
+
+.nav.side-menu>li>a, .nav.child_menu>li>a {
+    font-size: 18px;
+}
+
+.dashboard-widget-content {
+    padding-top: 0;
+}
+.dashboard-widget-content .sidebar-widget {
+    margin-top: 0;
+}
+
+#languages img {
+    width: 24px;
+    margin-left: 25px;
+}

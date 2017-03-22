@@ -9,6 +9,15 @@ services:
         class: AppBundle\Services\FileUploader
         arguments: ['%documents_upload_directory%']
 
+    # для SonataAdminBundle
+#     sonata.block.service.dashboard:
+#       class: AdminBundle\Block\DashboardBlockService
+#       arguments: ['sonata.block.service.dashboard', '@templating']
+#       calls:
+#         - [setStatisticService, ['@app.statistics']]
+#       tags:
+#           - { name: sonata.block }
+
     # Обработчки событий
     appbundle.tblprefix_subscriber:
         class: AppBundle\Subscriber\TablePrefixSubscriber

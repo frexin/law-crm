@@ -1,0 +1,76 @@
+{% set colors = ["#BDC3C7", "#9B59B6", "#E74C3C", "#26B99A", "#3498DB"] %}
+{% set backgroundColors = ["#CFD4D8", "#B370CF", "#E95E4F", "#36CAAB", "#49A9EA"] %}
+{% set colorNames = ["aero", "purple", "red", "green", "blue"] %}
+
+<div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="x_panel tile fixed_height_320 overflow_hidden">
+        <div class="x_title">
+            <h2>{{ title|trans({}, 'dashboard') }}</h2>
+            <ul class="nav navbar-right panel_toolbox">
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <table class="" style="width:100%">
+                <tr>
+                    <th style="width:37%;">
+                        <p>{{ 'chart_top_5'|trans({}, 'dashboard') }}</p>
+                    </th>
+                    <th>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <p class="">{{ label|trans({}, 'dashboard') }}</p>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <canvas id="{{ container }}" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                    </td>
+                    <td>
+                        <table class="tile_info">
+                            {% for item in items %}
+                                <tr>
+                                    <td>
+                                        <p><i class="fa fa-square {{ colorNames[loop.index0] }}"></i>{{ item.name|slice(0, 17) }} </p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var labels = [];
+        var data = [];
+        var items = {{ items|json_encode()|raw }};
+
+        for (var i = 0; i < items.length; i++) {
+            var obj = items[i];
+            labels.push(obj.name.substring(0, 10));
+            data.push(obj.percent);
+        }
+
+        new Chart(document.getElementById("{{ container }}"), {
+            type: 'doughnut',
+            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: {{ colors|json_encode()|raw }},
+                    hoverBackgroundColor: {{ backgroundColors|json_encode()|raw }}
+                }]
+            },
+            options: {
+                legend: false,
+                responsive: false
+            }
+        });
+    });
+
+</script>

@@ -19,6 +19,17 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new ShowcaseBundle\ShowcaseBundle(),
+
+            // These are the other bundles the SonataAdminBundle relies on
+            new \Sonata\CoreBundle\SonataCoreBundle(),
+            new \Sonata\BlockBundle\SonataBlockBundle(),
+            new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
+
+            // SonataAdminBundle
+            new \Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new \Sonata\AdminBundle\SonataAdminBundle(),
+
+            new AdminBundle\AdminBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -2,6 +2,8 @@
 
 ## Требования
 1) PHP >= 7.1
+2) MySQL
+3) Symfony >= 3.2
 
 ## Wiki
 1. [Краткое описание структуры базы данных](http://git.devbrains.me/team/lawyers/wikis/db_tables)

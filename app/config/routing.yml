@@ -1,3 +1,11 @@
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+admin_area:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    host: admin.%base_host%
+
 showcase:
     resource: "@ShowcaseBundle/Resources/config/routing.yml"
     host: showcase.%base_host%

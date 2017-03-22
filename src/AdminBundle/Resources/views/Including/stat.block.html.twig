@@ -1,0 +1,6 @@
+<span class="count_top"><i class="fa fa-{{ icon }}"></i> {{ statName|trans({}, 'dashboard') }}</span>
+<div class="count">{{ statCount }}</div>
+<span class="count_bottom">
+    <i class="{{ statDynamic < 0 ? 'red' : 'green' }}">
+                <i class="fa fa-sort-{{ statDynamic < 0 ? 'desc' : 'asc' }}"></i>
+        {{ statDynamic }}% </i> {{ 'from_last_week'|trans({}, 'dashboard') }}</span>
