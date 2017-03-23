@@ -4,6 +4,23 @@ security:
     encoders:
         AppBundle\Entity\User: bcrypt
 
+#    role_hierarchy:
+#        ROLE_ADMIN_SERVICE_CATEGORY:
+#            - ROLE_ADMIN_SERVICE_CATEGORY_ALL
+#
+#        ROLE_ADMIN_SERVICE:
+#            - ROLE_ADMIN_SERVICE_ALL
+#
+#        ROLE_USER:
+#            - ROLE_ADMIN_SERVICE_CATEGORY
+#            - ROLE_ADMIN_SERVICE
+
+#        ROLE_ADMIN: ROLE_USER
+#        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+#    access_decision_manager:
+#        strategy: unanimous
+
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:

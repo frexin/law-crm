@@ -98,7 +98,7 @@ sonata_block:
             contexts: [admin]
 
 sonata_admin:
-    title: "Ammm this is title"
+    title: "Юристы"
     templates:
         # default global templates
         layout:  AdminBundle::standard_layout.html.twig
@@ -108,10 +108,18 @@ sonata_admin:
         edit: AdminBundle::edit.html.twig
 #        base_list_field: GentellelaBundle::list_field.html.twig
 
-#    dashboard:
-#        blocks:
-#            -
-#                position: right
-#                type: sonata.block.service.dashboard
-    security:
-        handler: sonata.admin.security.handler.role
+    dashboard:
+        blocks:
+            -
+                position: left
+                type: sonata.admin.block.admin_list
+                settings:
+                    groups: ["Витрина услуг"]
+            -
+                position: right
+                type: sonata.admin.block.admin_list
+                settings:
+                    groups: ["Витрина услуг"]
+
+#    security:
+#        handler: sonata.admin.security.handler.role

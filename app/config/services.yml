@@ -9,7 +9,7 @@ services:
         class: AppBundle\Services\FileUploader
         arguments: ['%documents_upload_directory%']
 
-    # для SonataAdminBundle
+    # SonataAdminBundle
 #     sonata.block.service.dashboard:
 #       class: AdminBundle\Block\DashboardBlockService
 #       arguments: ['sonata.block.service.dashboard', '@templating']
@@ -17,6 +17,32 @@ services:
 #         - [setStatisticService, ['@app.statistics']]
 #       tags:
 #           - { name: sonata.block }
+    admin.service_category:
+        class: AdminBundle\Admin\ServiceCategoryAdmin
+        arguments: [~, AppBundle\Entity\ServiceCategory, ~]
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              label: "Категории"
+              group: "Витрина услуг"
+
+    admin.service:
+        class: AdminBundle\Admin\ServiceAdmin
+        arguments: [~, AppBundle\Entity\Service, ~]
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              label: "Услуги"
+              group: "Витрина услуг"
+
+    admin.service_modification:
+        class: AdminBundle\Admin\ServiceModificationAdmin
+        arguments: [~, AppBundle\Entity\ServiceModification, ~]
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              label: "Модификации услуг"
+              group: "Витрина услуг"
 
     # Обработчки событий
     appbundle.tblprefix_subscriber:
