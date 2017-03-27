@@ -9,7 +9,7 @@ class UserRoles extends BaseEnum
     const ROLE_SECRETARY = 'ROLE_SECRETARY';
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
-    public static function getRoles(): array
+    public static function getValues(): array
     {
         return [
             self::ROLE_CLIENT => 'ROLE_CLIENT',

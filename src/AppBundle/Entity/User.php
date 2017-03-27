@@ -96,9 +96,9 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="role", type="string", length=180, nullable=false)
+     * @ORM\Column(name="roles", type="json_array", nullable=false)
      */
-    private $role;
+    private $roles;
 
     /**
      * @var string
@@ -336,13 +336,13 @@ class User implements UserInterface
     /**
      * Set role
      *
-     * @param string $role
+     * @param array $roles
      *
      * @return User
      */
-    public function setRole($role)
+    public function setRoles(array $roles)
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
@@ -352,17 +352,16 @@ class User implements UserInterface
      *
      * @return string
      */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @return string
-     */
     public function getRoles()
     {
-        return $this->role;
+        $roles = $this->roles;
+
+        // give everyone ROLE_USER!
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return $roles;
     }
 
     /**

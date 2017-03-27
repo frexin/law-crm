@@ -1,3 +1,13 @@
+# Юзеры
+AppBundle\Entity\User:
+    user_1:
+        plainPassword: 12345
+        firstName: 'Андрей'
+        secondName: 'Алференков'
+        middleName: 'Романович'
+        email: 'alferenkovandrei3373@gmail.com'
+        phone: '89045524671'
+
 # Категории услуг
 AppBundle\Entity\ServiceCategory:
     serviceCategory_{1..3}:

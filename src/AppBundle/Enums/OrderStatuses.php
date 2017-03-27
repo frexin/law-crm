@@ -9,7 +9,7 @@ class OrderStatuses extends BaseEnum
     const STATUS_FINISHED = 3;
     const STATUS_CANCELED = 4;
 
-    public static function getRoles(): array
+    public static function getValues(): array
     {
         return [
             self::STATUS_WAITING_PAYMENT => 'STATUS_WAITING_PAYMENT',

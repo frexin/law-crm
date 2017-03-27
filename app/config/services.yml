@@ -9,6 +9,10 @@ services:
         class: AppBundle\Services\FileUploader
         arguments: ['%documents_upload_directory%']
 
+    app.security.login_form_authenticator:
+        class: AppBundle\Security\LoginFormAuthenticator
+        arguments: ['@form.factory', '@doctrine.orm.default_entity_manager', '@security.password_encoder', '@router']
+
     # SonataAdminBundle
 #     sonata.block.service.dashboard:
 #       class: AdminBundle\Block\DashboardBlockService

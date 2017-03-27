@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                <div class="col-md-5 col-md-push-4" style="margin-top: 100px;">
+                    {{ form_start(form) }}
+                    {{ form_row(form._username) }}
+                    {{ form_row(form._password) }}
+                    <button type="submit" class="btn btn-success pull-right">Войти <span class="fa fa-lock"></span></button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -23,8 +23,10 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        our_users:
+            entity:
+                class: AppBundle\Entity\User
+                property: email
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -34,10 +36,20 @@ security:
 
         main:
             anonymous: ~
-            # activate different ways to authenticate
 
-            # http_basic: ~
+            guard:
+                authenticators:
+                    - app.security.login_form_authenticator
+
+            logout:
+                path: /logout
+
+         # http_basic: ~
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+    access_control:
+        - { host: ^admin\., path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { host: ^admin\., path: ^/, roles: ROLE_ADMIN }
