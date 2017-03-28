@@ -1,25 +1,49 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>Аутентификация</title>
 
-{% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
+    <!-- Bootstrap -->
+    <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="https://colorlib.com/polygon/gentelella/css/animate.min.css" rel="stylesheet">
 
-                {% if error %}
-                    <div class="alert alert-danger">
-                        {{ error.messageKey|trans(error.messageData, 'security') }}
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
+</head>
+
+<body class="login">
+<div>
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+            <section class="login_content">
+                    <h1>Аутентификация</h1>
+
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        {{ form_start(form) }}
+                        {{ form_widget(form._username) }}
+                        {{ form_widget(form._password) }}
+
+                        <button type="submit" class="btn btn-success submit">Войти <span class="fa fa-lock"></span></button>
+                        {{ form_end(form) }}
                     </div>
-                {% endif %}
-
-                <div class="col-md-5 col-md-push-4" style="margin-top: 100px;">
-                    {{ form_start(form) }}
-                    {{ form_row(form._username) }}
-                    {{ form_row(form._password) }}
-                    <button type="submit" class="btn btn-success pull-right">Войти <span class="fa fa-lock"></span></button>
-                    {{ form_end(form) }}
-                </div>
-            </div>
+            </section>
         </div>
     </div>
-{% endblock %}
+</div>
+</body>
+</html>

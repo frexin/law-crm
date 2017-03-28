@@ -7,6 +7,16 @@ AppBundle\Entity\User:
         middleName: 'Романович'
         email: 'alferenkovandrei3373@gmail.com'
         phone: '89045524671'
+        roles: ['ROLE_ADMIN']
+
+    user_2:
+        plainPassword: 12345
+        firstName: 'Секретарь'
+        secondName: 'Секретарь'
+        middleName: 'Секретарь'
+        email: 'test@test.com'
+        phone: '89045524671'
+        roles: ['ROLE_SECRETARY']
 
 # Категории услуг
 AppBundle\Entity\ServiceCategory:
