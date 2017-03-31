@@ -12,10 +12,10 @@ class OrderStatuses extends BaseEnum
     public static function getValues(): array
     {
         return [
-            self::STATUS_WAITING_PAYMENT => 'STATUS_WAITING_PAYMENT',
-            self::STATUS_IN_PROGRESS => 'STATUS_IN_PROGRESS',
-            self::STATUS_FINISHED => 'STATUS_FINISHED',
-            self::STATUS_CANCELED => 'STATUS_CANCELED',
+            'STATUS_WAITING_PAYMENT' => self::STATUS_WAITING_PAYMENT,
+            'STATUS_IN_PROGRESS' => self::STATUS_IN_PROGRESS,
+            'STATUS_FINISHED' => self::STATUS_FINISHED,
+            'STATUS_CANCELED' => self::STATUS_CANCELED,
         ];
     }
 }

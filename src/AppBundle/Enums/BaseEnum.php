@@ -9,6 +9,6 @@ abstract class BaseEnum
     public static function exists($value): bool
     {
         $values = static::getValues();
-        return array_key_exists($value, $values);
+        return array_search($value, $values);
     }
 }

@@ -48,6 +48,15 @@ services:
               label: "Модификации услуг"
               group: "Витрина услуг"
 
+    admin.users:
+        class: AdminBundle\Admin\UserAdmin
+        arguments: [~, AppBundle\Entity\User, ~]
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              label: "Сотрудники"
+              group: "Пользователи"
+
     # Обработчки событий
     appbundle.tblprefix_subscriber:
         class: AppBundle\Subscriber\TablePrefixSubscriber
@@ -61,9 +70,9 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-    app.event.order_form_submitted:
-        class: AppBundle\Subscriber\OrderFormSubmittedSubscriber
-        autowire: true
+    app.event.user_password_changed:
+        class: AppBundle\Subscriber\UserPasswordChangedSubscriber
+        arguments: ['@mailer', '@templating', '%email_from%']
         tags:
             - { name: kernel.event_subscriber }
 

@@ -18,6 +18,15 @@ AppBundle\Entity\User:
         phone: '89045524671'
         roles: ['ROLE_SECRETARY']
 
+    user_3:
+        plainPassword: 12345
+        firstName: 'Обычный'
+        secondName: 'Человек'
+        middleName: 'Пользователь'
+        email: 'user@user.com'
+        phone: '12345678'
+#        roles: ['ROLE_USER']
+
 # Категории услуг
 AppBundle\Entity\ServiceCategory:
     serviceCategory_{1..3}:

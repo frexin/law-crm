@@ -18,16 +18,10 @@ class OrderFormSubmitted extends Event
      */
     private $order;
 
-    /**
-     * @var string
-     */
-    private $emailFrom;
-
-    public function __construct(User $user, Order $order, string $email)
+    public function __construct(User $user, Order $order)
     {
         $this->user = $user;
         $this->order = $order;
-        $this->emailFrom = $email;
     }
 
     /**
@@ -44,13 +38,5 @@ class OrderFormSubmitted extends Event
     public function getOrder(): Order
     {
         return $this->order;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmailFrom(): string
-    {
-        return $this->emailFrom;
     }
 }

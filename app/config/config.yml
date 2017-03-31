@@ -94,22 +94,28 @@ sonata_block:
     default_contexts: [cms]
     blocks:
 #        sonata.block.service.dashboard: ~
+#        sonata.block.service.text: ~
         sonata.admin.block.admin_list:
             contexts: [admin]
 
 sonata_admin:
     title: "Юристы"
-    templates:
+    show_mosaic_button: false
+#    templates:
         # default global templates
-        layout:  AdminBundle::standard_layout.html.twig
-        dashboard: AdminBundle::dashboard.html.twig
-        knp_menu_template: AdminBundle::menu.html.twig
-        list: AdminBundle::list.html.twig
-        edit: AdminBundle::edit.html.twig
+#        layout:  AdminBundle::standard_layout.html.twig
+#        dashboard: AdminBundle::dashboard.html.twig
+#        knp_menu_template: AdminBundle::menu.html.twig
+#        list: AdminBundle::list.html.twig
+#        edit: AdminBundle::edit.html.twig
 #        base_list_field: GentellelaBundle::list_field.html.twig
 
     dashboard:
         blocks:
+        # Если выше применять кастомные шаблоны какой-то там темы
+        # надо разбиратья почему нихера не работает. Например,
+        # тут будет работать position: right. А вот left работать
+        # уже не будет.
             -
                 position: left
                 type: sonata.admin.block.admin_list
@@ -119,7 +125,12 @@ sonata_admin:
                 position: right
                 type: sonata.admin.block.admin_list
                 settings:
-                    groups: ["Витрина услуг"]
+                    groups: ["Пользователи"]
+#            -
+#                position: right
+#                type: sonata.admin.block.admin_list
+#                settings:
+#                    groups: ["Пользователи"]
 
 #    security:
 #        handler: sonata.admin.security.handler.role

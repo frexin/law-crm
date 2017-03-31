@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Enums\UserRoles;
 use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -98,7 +99,7 @@ class User implements UserInterface
      *
      * @ORM\Column(name="roles", type="json_array", nullable=false)
      */
-    private $roles;
+    private $roles = [UserRoles::ROLE_CLIENT];
 
     /**
      * @var string
@@ -355,11 +356,6 @@ class User implements UserInterface
     public function getRoles()
     {
         $roles = $this->roles;
-
-        // give everyone ROLE_USER!
-        if (!in_array('ROLE_USER', $roles)) {
-            $roles[] = 'ROLE_USER';
-        }
 
         return $roles;
     }

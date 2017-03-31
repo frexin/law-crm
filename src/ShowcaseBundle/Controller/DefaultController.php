@@ -83,8 +83,8 @@ class DefaultController extends Controller
             ]);
 
             // триггерим событие успешного оформления заказа
-            $event = new OrderFormSubmitted($user, $order, $this->container->getParameter('email_from'));
-            $this->get('event_dispatcher')->dispatch('app.event.order_form_submitted', $event);
+            $event = new OrderFormSubmitted($user, $order);
+            $this->get('event_dispatcher')->dispatch('app.event.user_password_changed', $event);
         }
 
         return $this->render('@showcase/default/order.html.twig', [

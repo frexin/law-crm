@@ -12,10 +12,19 @@ class UserRoles extends BaseEnum
     public static function getValues(): array
     {
         return [
-            self::ROLE_CLIENT => 'ROLE_CLIENT',
-            self::ROLE_LAWYER => 'ROLE_LAWYER',
-            self::ROLE_SECRETARY => 'ROLE_SECRETARY',
-            self::ROLE_ADMIN => 'ROLE_ADMIN',
+             'Клиент' => self::ROLE_CLIENT,
+             'Юрист' => self::ROLE_LAWYER,
+             'Секретарь' => self::ROLE_SECRETARY,
+             'Администратор' => self::ROLE_ADMIN,
+        ];
+    }
+
+    public static function getAvailableRoles(): array
+    {
+        return [
+            'Юрист' => self::ROLE_LAWYER,
+            'Секретарь' => self::ROLE_SECRETARY,
+            'Администратор' => self::ROLE_ADMIN,
         ];
     }
 }
