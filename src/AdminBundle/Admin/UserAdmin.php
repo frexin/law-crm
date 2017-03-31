@@ -44,6 +44,9 @@ class UserAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
+
+        $image = $this->getSubject()->getAvatarUrl();
+
         $formMapper
             ->add('secondName', null, [
                 'label' => 'Фамилия'
@@ -83,7 +86,8 @@ class UserAdmin extends AbstractAdmin
                 'multiple' => true
             ])
             ->add('avatarUrl', null, [
-                'label' => 'Аватар'
+                'label' => 'Аватар',
+                'help' => '<img src="'.$image.'" class="admin-preview" style="max-height:200px; max-width:200px"/>',
             ]);
     }
 
@@ -93,7 +97,10 @@ class UserAdmin extends AbstractAdmin
             ->add('firstName')
             ->add('secondName')
             ->add('middleName')
-            ->add('email');
+            ->add('email')
+            ->add('roles', null, [], 'choice', [
+                'choices' => UserRoles::getAvailableRoles(),
+            ]);
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -110,6 +117,9 @@ class UserAdmin extends AbstractAdmin
             ])
             ->add('email', null, [
                 'label' => 'E-mail'
+            ])
+            ->add('roles', 'array', [
+                'label' => 'Роль'
             ])
 //            ->add('imageUrl', null, [
 //                'label' => 'URL изображения'
