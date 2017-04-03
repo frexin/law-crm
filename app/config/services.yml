@@ -55,7 +55,16 @@ services:
             - name: sonata.admin
               manager_type: orm
               label: "Сотрудники"
-              group: "Пользователи"
+              group: "Дела и пользователи"
+
+    admin.orders:
+        class: AdminBundle\Admin\OrderAdmin
+        arguments: [~, AppBundle\Entity\Order, ~]
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              label: "Дела"
+              group: "Дела и пользователи"
 
     # Обработчки событий
     appbundle.tblprefix_subscriber:

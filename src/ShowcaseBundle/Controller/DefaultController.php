@@ -53,7 +53,7 @@ class DefaultController extends Controller
                 ->setMiddleName($formOrder->getMiddleName())
                 ->setEmail($formOrder->getEmail())
                 ->setPlainPassword()
-                ->setRole(UserRoles::ROLE_CLIENT)
+                ->setRoles([UserRoles::ROLE_CLIENT])
                 ->setPhone($formOrder->getPhone())
                 ->setOtherContacts($formOrder->getOtherContacts());
             $em->persist($user);

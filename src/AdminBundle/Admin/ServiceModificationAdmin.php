@@ -29,29 +29,29 @@ class ServiceModificationAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Информация', ['class' => 'col-md-9'])
-            ->add('name', null, [
-                'label' => 'Название'
-            ])
-            ->add('price', null, [
-                'label' => 'Цена'
-            ])
-            ->add('description', TextareaType::class, [
-                'attr' => [
-                    'rows' => 8
-                ],
-                'label' => 'Описание'
-            ])
-            ->add('timeLimit', null, [
-                'label' => 'Лимит времени'
-            ])
+                ->add('name', null, [
+                    'label' => 'Название'
+                ])
+                ->add('price', null, [
+                    'label' => 'Цена'
+                ])
+                ->add('description', TextareaType::class, [
+                    'attr' => [
+                        'rows' => 8
+                    ],
+                    'label' => 'Описание'
+                ])
+                ->add('timeLimit', null, [
+                    'label' => 'Лимит времени'
+                ])
             ->end()
 
             ->with('Услуга', ['class' => 'col-md-3'])
-            ->add('service', 'sonata_type_model', [
-                'class' => Service::class,
-                'property' => 'title',
-                'label' => 'Название услуги'
-            ])
+                ->add('service', 'sonata_type_model', [
+                    'class' => Service::class,
+                    'property' => 'title',
+                    'label' => 'Название услуги'
+                ])
             ->end();
     }
 

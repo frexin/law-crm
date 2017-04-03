@@ -452,4 +452,9 @@ class User implements UserInterface
     {
         return $this->avatar;
     }
+
+    public function getFullName()
+    {
+        return sprintf("%s %s %s", $this->getSecondName(), $this->getFirstName(), $this->getMiddleName());
+    }
 }

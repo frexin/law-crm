@@ -41,6 +41,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
+        - SonataCoreBundle:Form:datepicker.html.twig
         - bootstrap_3_horizontal_layout.html.twig
         - _formTheme.html.twig
     paths:
@@ -99,6 +100,9 @@ sonata_block:
             contexts: [admin]
 
 sonata_admin:
+#    assets:
+#        stylesheets:
+#            - test.css
     title: "Юристы"
     show_mosaic_button: false
 #    templates:
@@ -125,7 +129,7 @@ sonata_admin:
                 position: right
                 type: sonata.admin.block.admin_list
                 settings:
-                    groups: ["Пользователи"]
+                    groups: ["Дела и пользователи"]
 #            -
 #                position: right
 #                type: sonata.admin.block.admin_list
