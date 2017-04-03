@@ -14,6 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ServiceModificationAdmin extends AbstractAdmin
 {
+    protected $datagridValues = [
+        '_sort_by' => 'service.title',
+    ];
+
     public function toString($object)
     {
         return $object instanceof ServiceModification
@@ -54,10 +58,10 @@ class ServiceModificationAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
-            ->add('price')
-            ->add('timeLimit')
-            ->add('service', null, [], EntityType::class, [
+            ->add('name', null, ['label' => 'Название'])
+            ->add('service', null, [
+                'label' => 'Услуга'
+            ], EntityType::class, [
                 'class' => Service::class,
                 'choice_label' => 'title',
             ]);
@@ -70,10 +74,13 @@ class ServiceModificationAdmin extends AbstractAdmin
                 'label' => 'Название'
             ])
             ->add('service.title', null, [
-                'label' => 'Название услуги'
+                'label' => 'Услуга'
             ])
             ->add('description', null, [
                 'label' => 'Описание'
+            ])
+            ->add('timeLimit', null, [
+                'label' => 'Лимит времени'
             ])
             ->add('price', null, [
                 'label' => 'Цена'

@@ -63,7 +63,6 @@ class UserAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-
         $image = $this->getSubject()->getAvatarUrl();
 
         if ($image) {
@@ -121,11 +120,13 @@ class UserAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('firstName')
-            ->add('secondName')
-            ->add('middleName')
-            ->add('email')
-            ->add('roles', null, [], 'choice', [
+            ->add('firstName', null, ['label' => 'Имя'])
+            ->add('secondName', null, ['label' => 'Фамилия'])
+            ->add('middleName', null, ['label' => 'Отчество'])
+            ->add('email', null, ['label' => 'E-mail'])
+            ->add('roles', null, [
+                'label' => 'Роль'
+            ], 'choice', [
                 'choices' => UserRoles::getAvailableRoles(),
             ]);
     }

@@ -4,16 +4,34 @@ namespace AdminBundle\Admin;
 
 use AppBundle\Entity\Service;
 use AppBundle\Entity\ServiceCategory;
+use AppBundle\Services\FileUploader;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ServiceAdmin extends AbstractAdmin
 {
+    /**
+     * @var FileUploader
+     */
+    private $uploadService;
+    /**
+     * @var Packages
+     */
+    private $assetsHelper;
+
+    public function __construct($code, $class, $baseControllerName, $uploadService, $assetsHelper)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->uploadService = $uploadService;
+        $this->assetsHelper = $assetsHelper;
+    }
+
     public function toString($object)
     {
         return $object instanceof Service
@@ -23,6 +41,15 @@ class ServiceAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $image = $this->getSubject()->getImageUrl();
+
+        if ($image) {
+            $image = $this->assetsHelper->getUrl($this->uploadService->getPublicTargetDir().'/'.$image);
+            $help = '<img src="'.$image.'" class="admin-preview" style="max-height:200px; max-width:200px"/>';
+        } else {
+            $help = '';
+        }
+
         $formMapper
             ->with('Информация', ['class' => 'col-md-9'])
                 ->add('title', null, [
@@ -37,8 +64,9 @@ class ServiceAdmin extends AbstractAdmin
                     ],
                     'label' => 'Описание'
                 ])
-                ->add('imageUrl', null, [
-                    'label' => 'URL изображения'
+                ->add('image', 'file', [
+                    'label' => 'Изображение',
+                    'help' => $help,
                 ])
             ->end()
 
@@ -54,8 +82,10 @@ class ServiceAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('title')
-            ->add('serviceCategory', null, [], EntityType::class, [
+            ->add('title', null, ['label' => 'Название'])
+            ->add('serviceCategory', null, [
+                'label' => 'Категория'
+            ], EntityType::class, [
                 'class' => ServiceCategory::class,
                 'choice_label' => 'title',
             ]);
@@ -73,9 +103,6 @@ class ServiceAdmin extends AbstractAdmin
             ->add('serviceCategory.title', null, [
                 'label' => 'Категория'
             ])
-            ->add('imageUrl', null, [
-                'label' => 'URL изображения'
-            ])
             ->add('_action', null, [
                 'label' => 'Действия',
                 'actions' => [
@@ -83,5 +110,32 @@ class ServiceAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
+    }
+
+    /**
+     * @param Service $service
+     */
+    public function prePersist($service)
+    {
+        $this->uploadImage($service);
+    }
+
+    /**
+     * @param Service $service
+     */
+    public function preUpdate($service)
+    {
+        $this->uploadImage($service);
+    }
+
+    protected function uploadImage(Service $service)
+    {
+        if (!$service->getImage()) {
+            return;
+        }
+
+        $fileName = $this->uploadService->upload($service->getImage());
+        $service->setImageUrl($fileName);
+        $service->setImage(null);
     }
 }

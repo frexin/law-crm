@@ -19,14 +19,25 @@ class ServiceCategoryAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('title', 'text', [
-            'label' => 'Название'
-        ]);
+        $formMapper
+            ->add('title', 'text', [
+                'label' => 'Название'
+            ])
+            ->add('isAvailable', 'checkbox', [
+                'label' => 'Доступно на сайте',
+                'required' => false
+            ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('title');
+        $datagridMapper
+            ->add('title', null, [
+                'label' => 'Название'
+            ])
+            ->add('isAvailable', 'doctrine_orm_boolean', [
+                'label' => 'Доступно на сайте'
+            ]);
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -34,6 +45,9 @@ class ServiceCategoryAdmin extends AbstractAdmin
         $listMapper
             ->add('title', null, [
                 'label' => 'Название',
+            ])
+            ->add('isAvailable', null, [
+                'label' => 'Доступно на сайте',
             ])
             ->add('_action', null, [
                 'label' => 'Действия',

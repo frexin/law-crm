@@ -3,7 +3,7 @@
         <article class="col-md-4 col-sm-6 service-card-wrapper">
             <div class="service-card">
                 <div class="service-icon">
-                    <img src="{{ service.imageUrl }}" class="img-responsive" alt="Изображение услуги">
+                    <img src="{{ asset('/uploads/files/'~service.imageUrl) }}" class="img-responsive" alt="Изображение услуги">
                 </div>
                 <div class="service-info">
                     <h3>{{ service.title }}</h3>

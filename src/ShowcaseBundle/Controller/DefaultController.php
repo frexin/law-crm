@@ -19,7 +19,7 @@ class DefaultController extends Controller
     {
         $serviceCategories = $this->getDoctrine()
             ->getRepository('AppBundle:ServiceCategory')
-            ->findAll();
+            ->findAllAvailable();
 
         return $this->render('@showcase/default/index.html.twig', [
             'serviceCategories' => $serviceCategories

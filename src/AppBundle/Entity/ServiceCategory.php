@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ServiceCategory
  *
  * @ORM\Table(name="services_categories")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ServiceCategoryRepository")
  */
 class ServiceCategory
 {
@@ -36,6 +36,13 @@ class ServiceCategory
      * @ORM\OneToMany(targetEntity="Service", mappedBy="serviceCategory")
      */
     private $services;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_available", type="boolean", nullable=false)
+     */
+    private $isAvailable = 1;
 
     /**
      * Get id
@@ -80,5 +87,21 @@ class ServiceCategory
     public function setServices($service)
     {
         $this->services = $service;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIsAvailable(): bool
+    {
+        return $this->isAvailable;
+    }
+
+    /**
+     * @param boolean $isAvailable
+     */
+    public function setIsAvailable(bool $isAvailable)
+    {
+        $this->isAvailable = $isAvailable;
     }
 }

@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\Traits\Sluggable;
 use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Service
@@ -15,6 +16,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Service
 {
     use Timestampable, Sluggable;
+
+    /**
+     * Unmapped property to handle file uploads
+     */
+    private $image;
 
     /**
      * @var integer
@@ -213,5 +219,25 @@ class Service
     public function setServiceModifications($serviceModifications)
     {
         $this->serviceModifications = $serviceModifications;
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setImage(UploadedFile $file = null)
+    {
+        $this->image = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }
