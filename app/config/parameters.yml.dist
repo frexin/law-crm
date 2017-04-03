@@ -24,3 +24,7 @@ parameters:
 
     # Директория, куда будут загружаться файлы, прикрепляемые к заданию
     documents_upload_directory: '%kernel.root_dir%/../web/uploads/files'
+
+    # То же самое, что и выше, только относительно каталога web.
+    # Используется для генерирования урлов к assets в сервисах
+    documents_upload_directory_relative_from_web: '/uploads/files'

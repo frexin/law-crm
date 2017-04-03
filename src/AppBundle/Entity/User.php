@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\Enums\UserRoles;
 use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -16,6 +17,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     use Timestampable;
+
+    /**
+     * Unmapped property to handle file uploads
+     */
+    private $avatar;
 
     /**
      * @var integer
@@ -426,4 +432,25 @@ class User implements UserInterface
     {
         $this->plainPassword = null;
     }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setAvatar(UploadedFile $file = null)
+    {
+        $this->avatar = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
 }

@@ -4,16 +4,35 @@ namespace AdminBundle\Admin;
 
 use AppBundle\Entity\User;
 use AppBundle\Enums\UserRoles;
+use AppBundle\Services\FileUploader;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserAdmin extends AbstractAdmin
 {
+    /**
+     * @var FileUploader
+     */
+    private $uploadService;
+    /**
+     * @var Packages
+     */
+    private $assetsHelper;
+
+    public function __construct($code, $class, $baseControllerName, $uploadService, $assetsHelper)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->uploadService = $uploadService;
+        $this->assetsHelper = $assetsHelper;
+    }
+
     public function toString($object)
     {
         return $object instanceof User
@@ -25,8 +44,8 @@ class UserAdmin extends AbstractAdmin
     {
         $query = parent::createQuery($context);
 
-        $query->add('select', 'm', false );
-        $query->add('from', 'AppBundle\Entity\User m', false );
+        $query->add('select', 'm', false);
+        $query->add('from', 'AppBundle\Entity\User m', false);
 
         $query->andWhere(
             $query->expr()->orX(
@@ -46,6 +65,13 @@ class UserAdmin extends AbstractAdmin
     {
 
         $image = $this->getSubject()->getAvatarUrl();
+
+        if ($image) {
+            $image = $this->assetsHelper->getUrl($this->uploadService->getPublicTargetDir().'/'.$image);
+            $help = '<img src="'.$image.'" class="admin-preview" style="max-height:200px; max-width:200px"/>';
+        } else {
+            $help = '';
+        }
 
         $formMapper
             ->add('secondName', null, [
@@ -85,9 +111,10 @@ class UserAdmin extends AbstractAdmin
                 'choices' => UserRoles::getAvailableRoles(),
                 'multiple' => true
             ])
-            ->add('avatarUrl', null, [
+            ->add('avatar', FileType::class, [
                 'label' => 'Аватар',
-                'help' => '<img src="'.$image.'" class="admin-preview" style="max-height:200px; max-width:200px"/>',
+                'help' => $help,
+                'required' => false,
             ]);
     }
 
@@ -121,9 +148,6 @@ class UserAdmin extends AbstractAdmin
             ->add('roles', 'array', [
                 'label' => 'Роль'
             ])
-//            ->add('imageUrl', null, [
-//                'label' => 'URL изображения'
-//            ])
             ->add('_action', null, [
                 'label' => 'Действия',
                 'actions' => [
@@ -131,5 +155,32 @@ class UserAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
+    }
+
+    /**
+     * @param User $user
+     */
+    public function prePersist($user)
+    {
+        $this->uploadAvatar($user);
+    }
+
+    /**
+     * @param User $user
+     */
+    public function preUpdate($user)
+    {
+        $this->uploadAvatar($user);
+    }
+
+    protected function uploadAvatar(User $user)
+    {
+        if (!$user->getAvatar()) {
+            return;
+        }
+
+        $fileName = $this->uploadService->upload($user->getAvatar());
+        $user->setAvatarUrl($fileName);
+        $user->setAvatar(null);
     }
 }
