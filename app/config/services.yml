@@ -90,3 +90,9 @@ services:
         arguments: ['@app.file_uploader']
         tags:
             - { name: doctrine.event_subscriber }
+
+    app.event.order_update_activity:
+        class: AppBundle\Subscriber\OrderRecentActivitySubscriber
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_subscriber }

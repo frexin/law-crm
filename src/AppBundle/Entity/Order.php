@@ -61,6 +61,13 @@ class Order
     private $endDate;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="recent_activity", type="datetime", nullable=true)
+     */
+    private $recentActivity;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -292,5 +299,21 @@ class Order
     public function getLawyer()
     {
         return $this->lawyer;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getRecentActivity(): \DateTime
+    {
+        return $this->recentActivity;
+    }
+
+    /**
+     * @param \DateTime $recentActivity
+     */
+    public function setRecentActivity(\DateTime $recentActivity)
+    {
+        $this->recentActivity = $recentActivity;
     }
 }

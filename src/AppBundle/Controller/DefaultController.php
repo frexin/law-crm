@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\Order;
+use AppBundle\Events\OrderRecentActivityUpdated;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DefaultController extends Controller
 {
@@ -15,6 +17,17 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $order = $em->createQueryBuilder()->select('sub')
+            ->from(Order::class, 'sub')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        $event = new OrderRecentActivityUpdated($order);
+        $this->get('event_dispatcher')->dispatch('app.event.order_update_activity', $event);
+
 //        $test = $this->getDoctrine()
 //            ->getRepository('AppBundle:ServiceCategory')
 //            ->findAll();

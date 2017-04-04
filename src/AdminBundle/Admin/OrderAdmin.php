@@ -8,7 +8,9 @@ use AppBundle\Enums\OrderStatuses;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class OrderAdmin extends AbstractAdmin
 {
@@ -21,6 +23,12 @@ class OrderAdmin extends AbstractAdmin
         return $object instanceof Order
             ? $object->getTitle()
             : 'Дело'; // shown in the breadcrumb on the create view
+    }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('create');
+        $collection->remove('edit');
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
@@ -45,6 +53,10 @@ class OrderAdmin extends AbstractAdmin
                 ])
                 ->add('order.lawyer.fullName', null, [
                     'label' => 'ФИО адвоката',
+                ])
+                ->add('recentActivity', null, [
+                    'label' => 'Последнее обновление',
+                    'format' => 'd-m-Y H:m',
                 ])
             ->end()
 
@@ -92,12 +104,14 @@ class OrderAdmin extends AbstractAdmin
                 'advanced_filter' => false
             ], 'choice', [
                 'choices' => OrderStatuses::getValues(),
+            ])
+            ->add('serviceModification.service.serviceCategory', null, [
+                'label' => 'Категория',
+                'advanced_filter' => false
+            ], EntityType::class, [
+                'class' => ServiceCategory::class,
+                'choice_label' => 'title',
             ]);
-//            ->add('serviceModification.service.serviceCategory', null, [], 'sonata_type_model', [
-//                'class' => ServiceCategory::class,
-//                'property' => 'title',
-//                'label' => 'Название услуги'
-//            ]);
     }
 
     protected function configureListFields(ListMapper $listMapper)
