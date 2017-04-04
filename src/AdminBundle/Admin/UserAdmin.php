@@ -122,6 +122,7 @@ class UserAdmin extends AbstractAdmin
             ->add('firstName', null, ['label' => 'Имя'])
             ->add('secondName', null, ['label' => 'Фамилия'])
             ->add('middleName', null, ['label' => 'Отчество'])
+            ->add('fullName', 'doctrine_orm_string', ['label' => 'ФИО'])
             ->add('email', null, ['label' => 'E-mail'])
             ->add('roles', null, [
                 'label' => 'Роль'

@@ -304,7 +304,7 @@ class Order
     /**
      * @return \DateTime
      */
-    public function getRecentActivity(): \DateTime
+    public function getRecentActivity()
     {
         return $this->recentActivity;
     }

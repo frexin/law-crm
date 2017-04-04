@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="email_UNIQUE", columns={"email"}), @ORM\UniqueConstraint(name="confirmation_token_UNIQUE", columns={"email_confirmation_token"}), @ORM\UniqueConstraint(name="phone_confirmation_token_UNIQUE", columns={"phone_confirmation_token"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -57,6 +58,17 @@ class User implements UserInterface
      * @ORM\Column(name="middle_name", type="string", length=180, nullable=false)
      */
     private $middleName;
+
+    /**
+     * Это коннкатенация имени, фамилии и отчества.
+     * Это поле нужно для фильтрации в админке сразу по трем столбцам.
+     * Не придумал ничего лучше, чем сделать это поле.
+     *
+     * @var string
+     *
+     * @ORM\Column(name="full_name", type="string", length=250, nullable=false)
+     */
+    private $fullName;
 
     /**
      * @var string
@@ -113,6 +125,11 @@ class User implements UserInterface
      * @ORM\Column(name="avatar_url", type="string", length=512, nullable=true)
      */
     private $avatarUrl;
+
+    public function __toString()
+    {
+        return (string) $this->getId();
+    }
 
     /**
      * Get id
@@ -453,8 +470,22 @@ class User implements UserInterface
         return $this->avatar;
     }
 
+    public function setFullName()
+    {
+        $this->fullName = sprintf("%s %s %s", $this->getSecondName(), $this->getFirstName(), $this->getMiddleName());
+    }
+
     public function getFullName()
     {
-        return sprintf("%s %s %s", $this->getSecondName(), $this->getFirstName(), $this->getMiddleName());
+        return $this->fullName;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setCreatedAtValue()
+    {
+        $this->setFullName();
     }
 }
