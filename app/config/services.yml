@@ -14,6 +14,7 @@ services:
         arguments: ['@form.factory', '@doctrine.orm.default_entity_manager', '@security.password_encoder', '@router']
 
     # SonataAdminBundle
+
 #     sonata.block.service.dashboard:
 #       class: AdminBundle\Block\DashboardBlockService
 #       arguments: ['sonata.block.service.dashboard', '@templating']

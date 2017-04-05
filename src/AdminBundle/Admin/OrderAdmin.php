@@ -13,7 +13,6 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class OrderAdmin extends AbstractAdmin
@@ -29,6 +28,28 @@ class OrderAdmin extends AbstractAdmin
             : 'Дело'; // shown in the breadcrumb on the create view
     }
 
+    public function createQuery($context = 'list')
+    {
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+        $query = parent::createQuery($context);
+
+        if (!$user->isActive()) {
+            // такой вот костылик, чтобы не показывать список дел
+            $query->andWhere('o.id = -1');
+            return $query;
+        }
+
+        if ($user->hasRole(UserRoles::ROLE_LAWYER)) {
+            $query->add('select', 'o', false);
+            $query->add('from', 'AppBundle\Entity\Order o', false);
+
+            $query->andWhere($query->expr()->eq('o.lawyer', '?1'));
+            $query->setParameter('1', $user);
+        }
+
+        return $query;
+    }
+
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->remove('create');
@@ -37,31 +58,27 @@ class OrderAdmin extends AbstractAdmin
 
     protected function configureShowFields(ShowMapper $showMapper)
     {
-        $showMapper
-            ->with('Информация о деле', ['class' => 'col-md-9'])
-                ->add('id', null, [
-                    'label' => 'Идентификатор'
-                ])
-                ->add('title', null, [
-                    'label' => 'Название'
-                ])
-                ->add('description', null, [
-                    'label' => 'Описание',
-                ])
-                ->add('status', 'choice', [
-                    'label' => 'Статус',
-                    'choices' => array_flip(OrderStatuses::getValues()),
-                ])
-                ->add('user.fullName', null, [
-                    'label' => 'ФИО клиента',
-                ])
-                ->add('lawyer.fullName', null, [
-                    'label' => 'ФИО адвоката',
-                ])
-                ->add('recentActivity', null, [
-                    'label' => 'Последнее обновление',
-                    'format' => 'd-m-Y H:m',
-                ])
+        $roleChecker = $this->getConfigurationPool()->getContainer()->get('security.authorization_checker');
+
+        if ($roleChecker->isGranted('ROLE_LAWYER')) {
+            $showMapper
+                ->with('Информация о деле', ['class' => 'col-md-9'])
+                    ->add('id', null, [
+                        'label' => 'Идентификатор'
+                    ])
+                    ->add('title', null, [
+                        'label' => 'Название'
+                    ])
+                    ->add('description', null, [
+                        'label' => 'Описание',
+                    ])
+                    ->add('status', 'choice', [
+                        'label' => 'Статус',
+                        'choices' => array_flip(OrderStatuses::getValues()),
+                    ])
+                    ->add('user.fullName', null, [
+                        'label' => 'ФИО клиента',
+                    ])
             ->end()
 
             ->with('Информация по услуге', ['class' => 'col-md-3'])
@@ -80,20 +97,67 @@ class OrderAdmin extends AbstractAdmin
                 ->add('createdAt', 'datetime', [
                     'format' => 'd-m-Y H:m',
                     'label' => 'Дата создания',
-//                    'format' => 'dd-MM-yyyy HH:mm',
-//                    'dp_side_by_side' => true,
-//                    'required' => false,
-//                    'dp_use_current' => false,
-                ])
-                ->add('startDate', 'datetime', [
-                    'format' => 'd-m-Y H:m',
-                    'label' => 'Дата начала работы',
-                ])
-                ->add('endDate', 'datetime', [
-                    'format' => 'd-m-Y H:m',
-                    'label' => 'Дата окончания работы',
                 ])
             ->end();
+        } else {
+            $showMapper
+                ->with('Информация о деле', ['class' => 'col-md-9'])
+                    ->add('id', null, [
+                        'label' => 'Идентификатор'
+                    ])
+                    ->add('title', null, [
+                        'label' => 'Название'
+                    ])
+                    ->add('description', null, [
+                        'label' => 'Описание',
+                    ])
+                    ->add('status', 'choice', [
+                        'label' => 'Статус',
+                        'choices' => array_flip(OrderStatuses::getValues()),
+                    ])
+                    ->add('user.fullName', null, [
+                        'label' => 'ФИО клиента',
+                    ])
+                    ->add('lawyer.fullName', null, [
+                        'label' => 'ФИО адвоката',
+                    ])
+                    ->add('recentActivity', null, [
+                        'label' => 'Последнее обновление',
+                        'format' => 'd-m-Y H:m',
+                    ])
+                ->end()
+
+                ->with('Информация по услуге', ['class' => 'col-md-3'])
+                    ->add('serviceModification.service.serviceCategory.title', null, [
+                        'label' => 'Категория',
+                    ])
+                    ->add('serviceModification.service.title', null, [
+                        'label' => 'Услуга',
+                    ])
+                    ->add('serviceModification.name', null, [
+                        'label' => 'Модификация',
+                    ])
+                ->end()
+
+                ->with('Сроки', ['class' => 'col-md-3'])
+                    ->add('createdAt', 'datetime', [
+                        'format' => 'd-m-Y H:m',
+                        'label' => 'Дата создания',
+    //                    'format' => 'dd-MM-yyyy HH:mm',
+    //                    'dp_side_by_side' => true,
+    //                    'required' => false,
+    //                    'dp_use_current' => false,
+                    ])
+                    ->add('startDate', 'datetime', [
+                        'format' => 'd-m-Y H:m',
+                        'label' => 'Дата начала работы',
+                    ])
+                    ->add('endDate', 'datetime', [
+                        'format' => 'd-m-Y H:m',
+                        'label' => 'Дата окончания работы',
+                    ])
+                ->end();
+        }
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -229,6 +293,9 @@ class OrderAdmin extends AbstractAdmin
             ])
             ->add('serviceModification.name', null, [
                 'label' => 'Модификация',
+            ])
+            ->add('user.fullName', null, [
+                'label' => 'ФИО клиента',
             ])
             ->add('createdAt', 'datetime', [
                 'format' => 'd-m-Y H:m',

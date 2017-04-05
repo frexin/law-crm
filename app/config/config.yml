@@ -121,12 +121,12 @@ sonata_admin:
         # тут будет работать position: right. А вот left работать
         # уже не будет.
             -
-                position: left
+                position: right
                 type: sonata.admin.block.admin_list
                 settings:
                     groups: ["Витрина услуг"]
             -
-                position: right
+                position: left
                 type: sonata.admin.block.admin_list
                 settings:
                     groups: ["Дела и пользователи"]
@@ -136,5 +136,5 @@ sonata_admin:
 #                settings:
 #                    groups: ["Пользователи"]
 
-#    security:
-#        handler: sonata.admin.security.handler.role
+    security:
+        handler: sonata.admin.security.handler.role

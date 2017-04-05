@@ -126,6 +126,13 @@ class User implements UserInterface
      */
     private $avatarUrl;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_active", type="boolean", nullable=false)
+     */
+    private $isActive = 1;
+
     public function __toString()
     {
         return (string) $this->getId();
@@ -383,6 +390,11 @@ class User implements UserInterface
         return $roles;
     }
 
+    public function hasRole($role)
+    {
+        return array_search($role, $this->roles) !== false ? true : false;
+    }
+
     /**
      * Set avatarUrl
      *
@@ -487,5 +499,21 @@ class User implements UserInterface
     public function setCreatedAtValue()
     {
         $this->setFullName();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param boolean $isActive
+     */
+    public function setIsActive(bool $isActive)
+    {
+        $this->isActive = $isActive;
     }
 }

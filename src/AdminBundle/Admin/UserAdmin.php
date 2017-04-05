@@ -109,6 +109,10 @@ class UserAdmin extends AbstractAdmin
                 'choices' => UserRoles::getAvailableRoles(),
                 'multiple' => true
             ])
+            ->add('isActive', 'checkbox', [
+                'label' => 'Активен',
+                'required' => false,
+            ])
             ->add('avatar', FileType::class, [
                 'label' => 'Аватар',
                 'help' => $help,
@@ -128,7 +132,8 @@ class UserAdmin extends AbstractAdmin
                 'label' => 'Роль'
             ], 'choice', [
                 'choices' => UserRoles::getAvailableRoles(),
-            ]);
+            ])
+            ->add('isActive', null, ['label' => 'Активен']);
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -148,6 +153,9 @@ class UserAdmin extends AbstractAdmin
             ])
             ->add('roles', 'array', [
                 'label' => 'Роль'
+            ])
+            ->add('isActive', null, [
+                'label' => 'Активен'
             ])
             ->add('_action', null, [
                 'label' => 'Действия',
