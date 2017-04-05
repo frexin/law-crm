@@ -96,3 +96,9 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_subscriber }
+
+    order_listener:
+        class: AppBundle\Listener\OrderListener
+        arguments: ['@mailer', '@templating', '%email_from%']
+        tags:
+            - { name: doctrine.orm.entity_listener }

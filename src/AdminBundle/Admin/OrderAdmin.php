@@ -6,12 +6,14 @@ use AppBundle\Entity\Order;
 use AppBundle\Entity\ServiceCategory;
 use AppBundle\Entity\User;
 use AppBundle\Enums\OrderStatuses;
+use AppBundle\Enums\UserRoles;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class OrderAdmin extends AbstractAdmin
@@ -133,6 +135,14 @@ class OrderAdmin extends AbstractAdmin
                 'required' => false,
                 'to_string_callback' => function($entity, $property) {
                     return $entity->getFullName();
+                },
+                'callback' => function ($admin, $property, $value) {
+                    $query = $admin->getDatagrid()->getQuery();
+
+                    $query->andWhere($query->expr()->like('m.roles', '?1'));
+                    $query->andWhere($query->expr()->like('m.fullName', '?2'));
+                    $query->setParameter('1', '%'.UserRoles::ROLE_LAWYER.'%');
+                    $query->setParameter('2', '%'.$value.'%');
                 }
             ]);
         }

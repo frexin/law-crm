@@ -11,6 +11,7 @@ use AppBundle\Entity\ServiceModification;
  *
  * @ORM\Table(name="orders", indexes={@ORM\Index(name="orders_status_idx", columns={"status"}), @ORM\Index(name="fk_law_orders_1_idx", columns={"user_id"}), @ORM\Index(name="fk_law_orders_2_idx", columns={"service_modification_id"}), @ORM\Index(name="fk_law_orders_3_idx", columns={"lawyer_id"})})
  * @ORM\Entity
+ * @ORM\EntityListeners({"AppBundle\Listener\OrderListener"})
  */
 class Order
 {

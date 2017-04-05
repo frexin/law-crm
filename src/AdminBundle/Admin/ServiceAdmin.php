@@ -12,7 +12,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ServiceAdmin extends AbstractAdmin
 {
@@ -36,7 +35,7 @@ class ServiceAdmin extends AbstractAdmin
     {
         return $object instanceof Service
             ? $object->getTitle()
-            : 'Категория услуг'; // shown in the breadcrumb on the create view
+            : 'Услуга'; // shown in the breadcrumb on the create view
     }
 
     protected function configureFormFields(FormMapper $formMapper)
