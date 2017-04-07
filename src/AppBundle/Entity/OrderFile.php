@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * OrderFile
@@ -27,6 +28,13 @@ class OrderFile
     /**
      * @var string
      *
+     * @ORM\Column(name="name", type="string", length=512, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="file_path", type="string", length=512, nullable=false)
      */
     private $filePath;
@@ -41,12 +49,17 @@ class OrderFile
     /**
      * @var Order
      *
-     * @ORM\ManyToOne(targetEntity="Order")
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderFiles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $order;
+
+    /**
+     * @var File
+     */
+    private $fileObject;
 
     /**
      * Get id
@@ -128,5 +141,37 @@ class OrderFile
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return File
+     */
+    public function getFileObject(): File
+    {
+        return $this->fileObject;
+    }
+
+    /**
+     * @param File $fileObject
+     */
+    public function setFileObject(File $fileObject)
+    {
+        $this->fileObject = $fileObject;
     }
 }

@@ -4,6 +4,7 @@ namespace AppBundle\Subscriber;
 
 use AppBundle\Entity\OrderFile;
 use AppBundle\Services\FileUploader;
+use AppBundle\Services\FileUploaderInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\File\File;
@@ -16,7 +17,7 @@ class OrderFileUploadSubscriber implements EventSubscriber
      */
     private $uploader;
 
-    public function __construct(FileUploader $uploader)
+    public function __construct(FileUploaderInterface $uploader)
     {
         $this->uploader = $uploader;
     }
@@ -56,7 +57,7 @@ class OrderFileUploadSubscriber implements EventSubscriber
         }
 
         if ($fileName = $entity->getFilePath()) {
-            $entity->setFilePath(new File($this->uploader->getTargetDir().'/'.$fileName));
+            $entity->setFileObject(new File($this->uploader->getAbsoluteTargetDir().'/'.$fileName));
         }
     }
 
@@ -74,5 +75,6 @@ class OrderFileUploadSubscriber implements EventSubscriber
 
         $fileName = $this->uploader->upload($file);
         $entity->setFilePath($fileName);
+        $entity->setName($file->getFilename());
     }
 }

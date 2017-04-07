@@ -9,9 +9,18 @@ services:
         class: AppBundle\Services\FileUploader
         arguments: ['%documents_upload_directory%', '%documents_upload_directory_relative_from_web%']
 
+    app.file_downloader:
+        class: AppBundle\Services\FileDownloader
+        autowire: true
+
     app.security.login_form_authenticator:
         class: AppBundle\Security\LoginFormAuthenticator
         arguments: ['@form.factory', '@doctrine.orm.default_entity_manager', '@security.password_encoder', '@router']
+
+    # Service Layer
+    app.sl.order:
+       class: AppBundle\ServiceLayer\OrderService
+       arguments: ["@doctrine.orm.entity_manager", "@app.file_downloader"]
 
     # SonataAdminBundle
 

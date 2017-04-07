@@ -5,6 +5,7 @@ namespace AdminBundle\Admin;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\ServiceCategory;
 use AppBundle\Services\FileUploader;
+use AppBundle\Services\FileUploaderInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -24,7 +25,7 @@ class ServiceAdmin extends AbstractAdmin
      */
     private $assetsHelper;
 
-    public function __construct($code, $class, $baseControllerName, $uploadService, $assetsHelper)
+    public function __construct($code, $class, $baseControllerName, FileUploaderInterface $uploadService, $assetsHelper)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->uploadService = $uploadService;

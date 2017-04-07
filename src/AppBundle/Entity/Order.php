@@ -105,6 +105,12 @@ class Order
     private $orderChatMessages;
 
     /**
+     * @ORM\OneToMany(targetEntity="OrderFile", mappedBy="order", fetch="EAGER")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     */
+    private $orderFiles;
+
+    /**
      * Get id
      *
      * @return integer
@@ -336,5 +342,21 @@ class Order
     public function setOrderChatMessages($orderChatMessages)
     {
         $this->orderChatMessages = $orderChatMessages;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderFiles()
+    {
+        return $this->orderFiles;
+    }
+
+    /**
+     * @param mixed $orderFiles
+     */
+    public function setOrderFiles($orderFiles)
+    {
+        $this->orderFiles = $orderFiles;
     }
 }

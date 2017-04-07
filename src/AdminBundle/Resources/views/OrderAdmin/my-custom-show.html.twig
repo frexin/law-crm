@@ -60,7 +60,7 @@
             list-style: none;
             padding: 20px 10px 0 10px;
             margin: 0;
-            height: 347px;
+            height: 500px;
             overflow-y: scroll;
         }
         .messages .message {
@@ -315,6 +315,28 @@
                             {% for field_name in show_group.fields %}
                                 {{ block('show_field') }}
                             {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            Документы в деле
+                        </h4>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table">
+                            <tbody>
+                                {% for file in object.orderFiles %}
+                                    <tr class="sonata-ba-view-container">
+                                        <td><a href="{{ admin.generateUrl('download-file', {'fileId': file.id}) }}">{{ file.name }}</a></td>
+                                    </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

@@ -65,6 +65,7 @@ class OrderAdmin extends AbstractAdmin
     {
         $collection->remove('create');
         $collection->add('send-message', 'send-message');
+        $collection->add('download-file', 'download-file/{fileId}');
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
