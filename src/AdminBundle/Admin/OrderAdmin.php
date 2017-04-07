@@ -28,6 +28,17 @@ class OrderAdmin extends AbstractAdmin
             : 'Дело'; // shown in the breadcrumb on the create view
     }
 
+    public function getTemplate($name)
+    {
+        $roleChecker = $this->getConfigurationPool()->getContainer()->get('security.authorization_checker');
+
+        if ($roleChecker->isGranted('ROLE_LAWYER') && $name === 'show') {
+            return 'AdminBundle:OrderAdmin:my-custom-show.html.twig';
+        }
+
+        return parent::getTemplate($name);
+    }
+
     public function createQuery($context = 'list')
     {
         $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
@@ -53,7 +64,7 @@ class OrderAdmin extends AbstractAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->remove('create');
-//        $collection->remove('edit');
+        $collection->add('send-message', 'send-message');
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
@@ -62,7 +73,7 @@ class OrderAdmin extends AbstractAdmin
 
         if ($roleChecker->isGranted('ROLE_LAWYER')) {
             $showMapper
-                ->with('Информация о деле', ['class' => 'col-md-9'])
+                ->with('Информация о деле', ['class' => 'col-md-3'])
                     ->add('id', null, [
                         'label' => 'Идентификатор'
                     ])
@@ -76,9 +87,16 @@ class OrderAdmin extends AbstractAdmin
                         'label' => 'Статус',
                         'choices' => array_flip(OrderStatuses::getValues()),
                     ])
-                    ->add('user.fullName', null, [
-                        'label' => 'ФИО клиента',
+                    ->add('createdAt', 'datetime', [
+                        'format' => 'd-m-Y H:m',
+                        'label' => 'Дата создания',
                     ])
+            ->end()
+
+            ->with('Ваш клиент', ['class' => 'col-md-3'])
+                ->add('user.fullName', null, [
+                    'label' => 'ФИО',
+                ])
             ->end()
 
             ->with('Информация по услуге', ['class' => 'col-md-3'])
@@ -90,13 +108,6 @@ class OrderAdmin extends AbstractAdmin
                 ])
                 ->add('serviceModification.name', null, [
                     'label' => 'Модификация',
-                ])
-            ->end()
-
-            ->with('Сроки', ['class' => 'col-md-3'])
-                ->add('createdAt', 'datetime', [
-                    'format' => 'd-m-Y H:m',
-                    'label' => 'Дата создания',
                 ])
             ->end();
         } else {

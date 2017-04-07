@@ -98,7 +98,11 @@ class Order
      */
     private $lawyer;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="OrderChatMessage", mappedBy="order", fetch="EAGER")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     */
+    private $orderChatMessages;
 
     /**
      * Get id
@@ -316,5 +320,21 @@ class Order
     public function setRecentActivity(\DateTime $recentActivity)
     {
         $this->recentActivity = $recentActivity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderChatMessages()
+    {
+        return $this->orderChatMessages;
+    }
+
+    /**
+     * @param mixed $orderChatMessages
+     */
+    public function setOrderChatMessages($orderChatMessages)
+    {
+        $this->orderChatMessages = $orderChatMessages;
     }
 }

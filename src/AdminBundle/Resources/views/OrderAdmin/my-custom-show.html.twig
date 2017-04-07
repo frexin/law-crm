@@ -1,0 +1,326 @@
+{% extends 'SonataAdminBundle:CRUD:show.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #edeff2;
+            font-family: "Calibri", "Roboto", sans-serif;
+        }
+
+        .chat_window {
+            left: 50%;
+            top: 50%;
+            background-color: #f8f8f8;
+            overflow: hidden;
+            border: 1px solid #b9b9b9;
+            border-top: 3px solid #3c8dbc;
+        }
+
+        .top_menu {
+            background-color: #fff;
+            width: 100%;
+            padding: 6px 0 6px;
+            border-bottom: 1px solid #e3e3e3;
+        }
+
+        .top_menu .buttons {
+            margin: 3px 0 0 20px;
+            position: absolute;
+        }
+        .top_menu .buttons .button {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+        }
+        .top_menu .buttons .button.close {
+            background-color: #f5886e;
+        }
+        .top_menu .buttons .button.minimize {
+            background-color: #fdbf68;
+        }
+        .top_menu .buttons .button.maximize {
+            background-color: #a3d063;
+        }
+        .top_menu .title {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .messages {
+            position: relative;
+            list-style: none;
+            padding: 20px 10px 0 10px;
+            margin: 0;
+            height: 347px;
+            overflow-y: scroll;
+        }
+        .messages .message {
+            clear: both;
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: all 0.5s linear;
+            opacity: 0;
+        }
+        .messages .message.left .avatar {
+            background-color: #f5886e;
+            float: left;
+        }
+        .messages .message.left .text_wrapper {
+            background-color: rgba(31, 253, 98, 0.36);
+            margin-left: 20px;
+        }
+        .messages .message.left .text_wrapper::after, .messages .message.left .text_wrapper::before {
+            right: 100%;
+            border-right-color: rgba(31, 253, 98, 0.17);
+        }
+        .messages .message.left .text {
+            color: #228516;
+        }
+        .messages .message.right .avatar {
+            background-color: #fdbf68;
+            float: right;
+        }
+        .messages .message.right .text_wrapper {
+            background-color: #c7eafc;
+            margin-right: 20px;
+            float: right;
+        }
+        .messages .message.right .text_wrapper::after, .messages .message.right .text_wrapper::before {
+            left: 100%;
+            border-left-color: #c7eafc;
+        }
+        .messages .message.right .text {
+            color: #45829b;
+        }
+        .messages .message.appeared {
+            opacity: 1;
+        }
+        .messages .message .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .messages .message .text_wrapper {
+            display: inline-block;
+            padding: 20px;
+            border-radius: 6px;
+            width: calc(100% - 85px);
+            min-width: 100px;
+            position: relative;
+        }
+        .messages .message .text_wrapper::after, .messages .message .text_wrapper:before {
+            top: 18px;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+        .messages .message .text_wrapper::after {
+            border-width: 13px;
+            margin-top: 0px;
+        }
+        .messages .message .text_wrapper::before {
+            border-width: 15px;
+            margin-top: -2px;
+        }
+        .messages .message .text_wrapper .text {
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        .bottom_wrapper {
+            width: 100%;
+            background-color: #fff;
+            padding: 20px 20px;
+            margin-top: 15px;
+            border: 1px solid #b9b9b9;
+        }
+        .bottom_wrapper .message_input_wrapper {
+            display: inline-block;
+            height: 50px;
+            border-radius: 5px;
+            border: 1px solid #bcbdc0;
+            width: calc(100% - 160px);
+            position: relative;
+            padding: 0 20px;
+        }
+        .bottom_wrapper .message_input_wrapper .message_input {
+            border: none;
+            height: 100%;
+            box-sizing: border-box;
+            width: calc(100% - 40px);
+            position: absolute;
+            outline-width: 0;
+            color: gray;
+        }
+        .bottom_wrapper .send_message {
+            width: 140px;
+            height: 50px;
+            display: inline-block;
+            border-radius: 5px;
+            background-color: #a3d063;
+            border: 2px solid #a3d063;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s linear;
+            text-align: center;
+            float: right;
+            font-size: 18px;
+            font-weight: 300;
+        }
+        .bottom_wrapper .send_message:hover {
+            color: #a3d063;
+            background-color: #fff;
+        }
+
+        .message_template {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block show %}
+    <div class="sonata-ba-view">
+        {{ sonata_block_render_event('sonata.admin.show.top', { 'admin': admin, 'object': object }) }}
+
+        {% set has_tab = (admin.showtabs|length == 1 and admin.showtabs|keys[0] != 'default') or admin.showtabs|length > 1 %}
+
+        {% if has_tab %}
+
+        {% elseif admin.showtabs is iterable %}
+            {% set groups = admin.showtabs.default.groups %}
+            {{ block('show_groups') }}
+        {% endif %}
+
+    </div>
+
+    {{ sonata_block_render_event('sonata.admin.show.bottom', { 'admin': admin, 'object': object }) }}
+{% endblock %}
+
+{% block show_title %}
+    {{ show_group.name|trans({}, show_group.translation_domain|default(admin.translationDomain)) }}
+{% endblock %}
+
+{% block show_field %}
+    <tr class="sonata-ba-view-container">
+        {% if elements[field_name] is defined %}
+            {{ elements[field_name]|render_view_element(object)}}
+        {% endif %}
+    </tr>
+{% endblock %}
+
+{% block show_groups %}
+    <div class="row">
+        {% block field_row %}
+            {% set show_group = admin.showgroups["Информация о деле"] %}
+
+            <div class="{{ show_group.class|default('col-md-12') }} {{ no_padding|default(false) ? 'nopadding' }}">
+                <div class="{{ show_group.box_class }}">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            {{ block('show_title') }}
+                        </h4>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table">
+                            <tbody>
+                            {% for field_name in show_group.fields %}
+                                {{ block('show_field') }}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="chat_window">
+                    <div class="top_menu">
+                        <div class="title">Общение с клиентом</div>
+                    </div>
+                    <ul class="messages">
+                        {% for message in object.orderChatMessages %}
+                            <li class="message appeared {{ app.user is same as(message.userFrom) ? 'right' : 'left' }}">
+                                <div class="text_wrapper">
+                                    <div class="text">{{ message.text }}</div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="bottom_wrapper clearfix">
+                    <form action="{{ admin.generateUrl('send-message') }}" method="post" name="chat-message">
+                        <div class="message_input_wrapper">
+                            <input type="text" class="message_input" placeholder="Ваше сообщение..." name="message">
+                            <input type="hidden" class="message_input" name="order_id" value="{{ object.id }}">
+                        </div>
+                        <input type="submit" class="send_message" value="Отправить">
+                    </form>
+                </div>
+                {#<div class="message_template">#}
+                    {#<li class="message">#}
+                        {#<div class="avatar"></div>#}
+                        {#<div class="text_wrapper">#}
+                            {#<div class="text"></div>#}
+                        {#</div>#}
+                    {#</li>#}
+                {#</div>#}
+            </div>
+
+            {% set show_group = admin.showgroups["Ваш клиент"] %}
+
+            <div class="{{ show_group.class|default('col-md-12') }} {{ no_padding|default(false) ? 'nopadding' }}">
+                <div class="{{ show_group.box_class }}">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            {{ block('show_title') }}
+                        </h4>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table">
+                            <tbody>
+                            {% for field_name in show_group.fields %}
+                                {{ block('show_field') }}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            {% set show_group = admin.showgroups["Информация по услуге"] %}
+
+            <div class="{{ show_group.class|default('col-md-12') }} {{ no_padding|default(false) ? 'nopadding' }}">
+                <div class="{{ show_group.box_class }}">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            {{ block('show_title') }}
+                        </h4>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table">
+                            <tbody>
+                            {% for field_name in show_group.fields %}
+                                {{ block('show_field') }}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+
+    </div>
+{% endblock %}

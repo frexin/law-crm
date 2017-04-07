@@ -60,12 +60,15 @@ services:
 
     admin.orders:
         class: AdminBundle\Admin\OrderAdmin
-        arguments: [~, AppBundle\Entity\Order, ~]
         tags:
             - name: sonata.admin
               manager_type: orm
               label: "Дела"
               group: "Дела и пользователи"
+        arguments:
+            - null
+            - AppBundle\Entity\Order
+            - AdminBundle:OrderCRUD
 
     # Обработчки событий
     appbundle.tblprefix_subscriber:
