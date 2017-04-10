@@ -29,27 +29,6 @@
             border-bottom: 1px solid #e3e3e3;
         }
 
-        .top_menu .buttons {
-            margin: 3px 0 0 20px;
-            position: absolute;
-        }
-        .top_menu .buttons .button {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 10px;
-            position: relative;
-        }
-        .top_menu .buttons .button.close {
-            background-color: #f5886e;
-        }
-        .top_menu .buttons .button.minimize {
-            background-color: #fdbf68;
-        }
-        .top_menu .buttons .button.maximize {
-            background-color: #a3d063;
-        }
         .top_menu .title {
             text-align: center;
             font-size: 20px;
@@ -70,10 +49,20 @@
             transition: all 0.5s linear;
             opacity: 0;
         }
-        .messages .message.left .avatar {
-            background-color: #f5886e;
-            float: left;
+
+        .messages .message.center .text_wrapper {
+            background-color: rgba(253, 156, 166, 0.65);
+            width: 100%;
         }
+
+        .center_fio {
+            font-weight: 800;
+        }
+
+        .center_file {
+            text-decoration: underline;
+        }
+
         .messages .message.left .text_wrapper {
             background-color: rgba(31, 253, 98, 0.36);
             margin-left: 20px;
@@ -84,10 +73,6 @@
         }
         .messages .message.left .text {
             color: #228516;
-        }
-        .messages .message.right .avatar {
-            background-color: #fdbf68;
-            float: right;
         }
         .messages .message.right .text_wrapper {
             background-color: #c7eafc;
@@ -103,12 +88,6 @@
         }
         .messages .message.appeared {
             opacity: 1;
-        }
-        .messages .message .avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: inline-block;
         }
         .messages .message .text_wrapper {
             display: inline-block;
@@ -191,6 +170,11 @@
     </style>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/ShowcaseBundle/js/bootstrap-filestyle.js') }}"> </script>
+{% endblock %}
+
 {% block show %}
     <div class="sonata-ba-view">
         {{ sonata_block_render_event('sonata.admin.show.top', { 'admin': admin, 'object': object }) }}
@@ -252,9 +236,18 @@
                     </div>
                     <ul class="messages">
                         {% for message in object.orderChatMessages %}
-                            <li class="message appeared {{ app.user is same as(message.userFrom) ? 'right' : 'left' }}">
+
+                            {% if message.userTo is null %}
+                                {% set class = 'center' %}
+                            {% elseif app.user is same as(message.userFrom) %}
+                                {% set class = 'right' %}
+                            {% else %}
+                                {% set class = 'left' %}
+                            {% endif %}
+
+                            <li class="message appeared {{ class }}">
                                 <div class="text_wrapper">
-                                    <div class="text">{{ message.text }}</div>
+                                    <div class="text">{{ message.text|raw }}</div>
                                 </div>
                             </li>
                         {% endfor %}
@@ -341,6 +334,14 @@
                         </table>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-md-3">
+                <form action="{{ admin.generateUrl('upload-file') }}" method="POST" enctype="multipart/form-data">
+                    <input type="file" class="filestyle" data-input="false" name="order-files[]" multiple>
+                    <input type="hidden" name="order-id" value="{{ object.id }}">
+                    <input type="submit">
+                </form>
             </div>
         {% endblock %}
 

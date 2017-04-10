@@ -20,7 +20,7 @@ services:
     # Service Layer
     app.sl.order:
        class: AppBundle\ServiceLayer\OrderService
-       arguments: ["@doctrine.orm.entity_manager", "@app.file_downloader"]
+       arguments: ["@doctrine.orm.entity_manager", "@app.file_downloader", "@app.file_uploader"]
 
     # SonataAdminBundle
 
@@ -97,6 +97,12 @@ services:
         arguments: ['@mailer', '@templating', '%email_from%']
         tags:
             - { name: kernel.event_subscriber }
+
+    app.event.order_file_uploaded:
+        class: AppBundle\Listener\OrderFileUploadedListener
+        arguments: ["@app.sl.order", "@router"]
+        tags:
+            - { name: kernel.event_listener, event: 'app.event.order_file_uploaded', method: 'onOrderFileUploaded'}
 
     app.doctrine_file_upload_listener:
         class: AppBundle\Subscriber\OrderFileUploadSubscriber

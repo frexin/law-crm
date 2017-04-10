@@ -75,6 +75,6 @@ class OrderFileUploadSubscriber implements EventSubscriber
 
         $fileName = $this->uploader->upload($file);
         $entity->setFilePath($fileName);
-        $entity->setName($file->getFilename());
+        $entity->setName($file->getClientOriginalName());
     }
 }
