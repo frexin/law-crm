@@ -26,7 +26,7 @@ class OrderFileUploadedListener
         ]);
 
         $message = '<span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                   <span class="center_fio">'.$user->getFullName().'</span> добавил в дело документ: 
+                   <span class="center_fio">'.$user->getFullName().'</span> добавил документ: 
                    <span class="center_file"><a href="'.$downloadUrl.'">'.$file->getName().'</a></span>';
 
         $this->orderService->createMessage($user, $file->getOrder(), $message, true);
