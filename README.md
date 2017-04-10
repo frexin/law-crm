@@ -1,9 +1,9 @@
 # Lawyers
 
 ## Требования
-1) PHP >= 7.1
-2) MySQL
-3) Symfony >= 3.2
+1. PHP >= 7.1
+2. MySQL
+3. Symfony >= 3.2
 
 ## Wiki
 1. [Краткое описание структуры базы данных](http://git.devbrains.me/team/lawyers/wikis/db_tables)
@@ -14,6 +14,7 @@
 3. [AliceBundle](https://github.com/hautelook/AliceBundle/tree/1.x) - для генерации фикстур
 4. [StofDoctrineExtensionsBundle](https://symfony.com/doc/current/bundles/StofDoctrineExtensionsBundle/index.html) - полезные дополнения для Doctrine ORM (timestampable, sluggable, etc.)
 5. [SonataAdminBundle](https://sonata-project.org/bundles/admin/3-x/doc/getting_started/installation.html) - для админки
+
 
 ## Автогенерация базы данных с Entities
 `php bin/console doctrine:migrations:diff` - проверяет различия между базой данных и Entities в проекте. Создает миграцию, если они есть.
@@ -28,4 +29,4 @@
 
 ## TODO
 - Админка. Список документов в деле. Пагинация?
-- При создании заказа через витрину постоянно согздается новый пользователь. Авторизация юзеров?
+- При создании заказа через витрину постоянно создается новый пользователь. Авторизация юзеров?
