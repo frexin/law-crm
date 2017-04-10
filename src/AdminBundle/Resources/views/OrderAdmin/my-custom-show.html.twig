@@ -173,6 +173,17 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/ShowcaseBundle/js/bootstrap-filestyle.js') }}"> </script>
+    <script>
+        $(document).ready(function(){
+            var chat = $('.messages');
+            var height = chat[0].scrollHeight;
+            chat.scrollTop(height);
+
+            $('#order-file-upload').change(function (e) {
+                this.form.submit();
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block show %}
@@ -338,9 +349,8 @@
 
             <div class="col-md-3">
                 <form action="{{ admin.generateUrl('upload-file') }}" method="POST" enctype="multipart/form-data">
-                    <input type="file" class="filestyle" data-input="false" name="order-files[]" multiple>
+                    <input id="order-file-upload" type="file" class="filestyle" data-input="false" name="order-files[]" multiple>
                     <input type="hidden" name="order-id" value="{{ object.id }}">
-                    <input type="submit">
                 </form>
             </div>
         {% endblock %}
