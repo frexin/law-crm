@@ -114,7 +114,6 @@ class UserClientAdmin extends BaseUserAdmin
             ->add('firstName', null, ['label' => 'Имя'])
             ->add('secondName', null, ['label' => 'Фамилия'])
             ->add('middleName', null, ['label' => 'Отчество'])
-            ->add('fullName', 'doctrine_orm_string', ['label' => 'ФИО'])
             ->add('email', null, ['label' => 'E-mail'])
             ->add('isActive', null, ['label' => 'Активен']);
     }
@@ -128,8 +127,8 @@ class UserClientAdmin extends BaseUserAdmin
             ->add('firstName', null, [
                 'label' => 'Имя'
             ])
-            ->add('middlename', null, [
-                'label' => 'Отчество'
+            ->add('middleName', null, [
+                'label' => 'Отчество',
             ])
             ->add('email', null, [
                 'label' => 'E-mail'

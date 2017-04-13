@@ -148,7 +148,6 @@ class UserAdmin extends BaseUserAdmin
             ->add('firstName', null, ['label' => 'Имя'])
             ->add('secondName', null, ['label' => 'Фамилия'])
             ->add('middleName', null, ['label' => 'Отчество'])
-            ->add('fullName', 'doctrine_orm_string', ['label' => 'ФИО'])
             ->add('email', null, ['label' => 'E-mail'])
             ->add('roles', null, [
                 'label' => 'Роль'
@@ -167,7 +166,7 @@ class UserAdmin extends BaseUserAdmin
             ->add('firstName', null, [
                 'label' => 'Имя'
             ])
-            ->add('middlename', null, [
+            ->add('middleName', null, [
                 'label' => 'Отчество'
             ])
             ->add('email', null, [
