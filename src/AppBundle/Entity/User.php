@@ -381,13 +381,25 @@ class User implements UserInterface
     /**
      * Get role
      *
-     * @return string
+     * @return array
      */
     public function getRoles()
     {
         $roles = $this->roles;
 
         return $roles;
+    }
+
+    public function getRolesString()
+    {
+        $roles = $this->getRoles();
+        $list = array_flip(UserRoles::getValues());
+
+        foreach ($roles as $key => $role) {
+            $roles[$key] = $list[$role];
+        }
+
+        return trim(implode(', ', $roles), ', ');
     }
 
     public function hasRole($role)

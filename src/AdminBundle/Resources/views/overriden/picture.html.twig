@@ -1,0 +1,15 @@
+<th>{% block name %}{{ admin.trans(field_description.label) }}{% endblock %}</th>
+
+{% if object.imageUrl is defined %}
+    {% set image = object.imageUrl %}
+{% else %}
+    {% set image = object.avatarUrl %}
+{% endif %}
+
+<td>
+    {% if image is not null %}
+        <img style="max-height: 200px;" src="{{ asset('/uploads/files/'~image) }}">
+    {% else %}
+        <p>Нет изображения</p>
+    {% endif %}
+</td>

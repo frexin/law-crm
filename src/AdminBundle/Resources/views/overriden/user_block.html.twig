@@ -1,0 +1,11 @@
+{% block user_block %}
+    <div class="container-fluid">
+        <li><p>Вы зашли как: </p></li>
+        <li><p><b>{{ app.user.fullName }}</b></p></li>
+        <li style="margin-bottom: 10px">
+            <a href="{{ url('security_logout') }}" role="menuitem">
+                <button class="btn btn-default">Выйти</button>
+            </a>
+        </li>
+    </div>
+{% endblock %}

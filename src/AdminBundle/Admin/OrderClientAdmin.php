@@ -2,32 +2,49 @@
 
 namespace AdminBundle\Admin;
 
-use AppBundle\Entity\User;
 use AppBundle\Enums\OrderStatuses;
-use AppBundle\Enums\UserRoles;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class OrderAdmin extends BaseOrderAdmin
+class OrderClientAdmin extends BaseOrderAdmin
 {
     protected function getBaseRoutePatternValue(): string
     {
-        return 'order';
+        return 'order-client';
     }
 
     protected function getBaseRouteNameValue(): string
     {
-        return 'admin_app_order';
+        return 'admin_app_order_client';
     }
 
     public function getTemplate($name)
     {
         if ($name === 'show') {
-            return 'AdminBundle:OrderAdmin:my-custom-show-for-admins.html.twig';
+            return 'AdminBundle:OrderAdmin:my-custom-show.html.twig';
         }
 
         return parent::getTemplate($name);
+    }
+
+    public function createQuery($context = 'list')
+    {
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+        $query = parent::createQuery($context);
+
+        if (!$user->isActive()) {
+            // такой вот костылик, чтобы не показывать список дел
+            $query->andWhere('o.id = -1');
+            return $query;
+        }
+
+        $query->add('select', 'o', false);
+        $query->add('from', 'AppBundle\Entity\Order o', false);
+        $query->andWhere($query->expr()->eq('o.user', '?1'));
+        $query->setParameter('1', $user);
+
+        return $query;
     }
 
     protected function configureShowFields(ShowMapper $showMapper)
@@ -53,12 +70,9 @@ class OrderAdmin extends BaseOrderAdmin
                 ])
             ->end()
 
-            ->with('Участники', ['class' => 'col-md-3'])
-                ->add('user.fullName', null, [
-                    'label' => 'Клиент',
-                ])
+            ->with('Ваш юрист', ['class' => 'col-md-3'])
                 ->add('lawyer.fullName', null, [
-                    'label' => '>Юрист',
+                    'label' => 'ФИО',
                 ])
             ->end()
 
@@ -85,45 +99,21 @@ class OrderAdmin extends BaseOrderAdmin
                 ])
                 ->add('title', null, [
                     'label' => 'Название',
+                    'disabled'  => true,
                 ])
                 ->add('description', null, [
                     'label' => 'Описание',
+                    'disabled'  => true,
                 ])
                 ->add('status', 'choice', [
                     'label' => 'Статус',
                     'choices' => OrderStatuses::getValues(),
+                    'disabled'  => true,
                 ])
-                ->add('user.fullName', 'text', [
-                    'label' => 'ФИО клиента',
+                ->add('lawyer.fullName', 'text', [
+                    'label' => 'ФИО юриста',
                     'disabled'  => true,
                 ]);
-
-        if ($this->getSubject()->getLawyer()) {
-            $formMapper->add('lawyer.fullName', 'text', [
-                'label' => 'ФИО юриста',
-                'disabled'  => true,
-            ]);
-        } else {
-            $formMapper->add('lawyer', 'sonata_type_model_autocomplete', [
-                'class' => User::class,
-                'property' => 'fullName',
-                'label' => 'ФИО юриста',
-                'required' => false,
-                'to_string_callback' => function($entity, $property) {
-                    return $entity->getFullName();
-                },
-                'callback' => function ($admin, $property, $value) {
-                    $query = $admin->getDatagrid()->getQuery();
-
-                    $query->andWhere($query->expr()->like('m.roles', '?1'));
-                    $query->andWhere($query->expr()->like('m.fullName', '?2'));
-                    $query->setParameter('1', '%'.UserRoles::ROLE_LAWYER.'%');
-                    $query->setParameter('2', '%'.$value.'%');
-                }
-            ], [
-                'admin_code' => 'admin.users'
-            ]);
-        }
 
         $formMapper
                 ->add('recentActivity', 'sonata_type_datetime_picker', [
@@ -157,10 +147,12 @@ class OrderAdmin extends BaseOrderAdmin
                 ->add('startDate', 'sonata_type_datetime_picker', [
                     'format' => 'd-m-Y H:m',
                     'label' => 'Дата начала работы',
+                    'disabled'  => true,
                 ])
                 ->add('endDate', 'sonata_type_datetime_picker', [
                     'format' => 'd-m-Y H:m',
                     'label' => 'Дата окончания работы',
+                    'disabled'  => true,
                 ])
             ->end();
     }
@@ -187,9 +179,6 @@ class OrderAdmin extends BaseOrderAdmin
             ->add('lawyer.fullName', null, [
                 'label' => 'ФИО юриста',
             ])
-            ->add('user.fullName', null, [
-                'label' => 'ФИО клиента',
-            ])
             ->add('createdAt', 'datetime', [
                 'format' => 'd-m-Y H:m',
                 'label' => 'Дата создания'
@@ -198,7 +187,6 @@ class OrderAdmin extends BaseOrderAdmin
                 'label' => 'Действия',
                 'actions' => [
                     'show' => [],
-                    'edit' => [],
                 ],
             ]);
     }

@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -55,6 +56,36 @@ class ServiceModificationAdmin extends AbstractAdmin
             ->end();
     }
 
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->with('Информация', ['class' => 'col-md-9'])
+                ->add('name', null, [
+                    'label' => 'Название'
+                ])
+                ->add('price', null, [
+                    'label' => 'Цена'
+                ])
+                ->add('description', TextareaType::class, [
+                    'attr' => [
+                        'rows' => 8
+                    ],
+                    'label' => 'Описание'
+                ])
+                ->add('timeLimit', null, [
+                    'label' => 'Лимит времени'
+                ])
+            ->end()
+
+            ->with('Услуга', ['class' => 'col-md-3'])
+                ->add('service', 'sonata_type_model', [
+                    'class' => Service::class,
+                    'associated_property' => 'title',
+                    'label' => 'Название услуги'
+                ])
+            ->end();
+    }
+
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -88,6 +119,7 @@ class ServiceModificationAdmin extends AbstractAdmin
             ->add('_action', null, [
                 'label' => 'Действия',
                 'actions' => [
+                    'show' => [],
                     'edit' => [],
                     'delete' => [],
                 ],

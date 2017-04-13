@@ -58,6 +58,15 @@ services:
               label: "Модификации услуг"
               group: "Витрина услуг"
 
+    admin.users.clients:
+        class: AdminBundle\Admin\UserClientAdmin
+        arguments: [~, AppBundle\Entity\User, ~, '@app.file_uploader', '@assets.packages']
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              label: "Клиенты"
+              group: "Дела и пользователи"
+
     admin.users:
         class: AdminBundle\Admin\UserAdmin
         arguments: [~, AppBundle\Entity\User, ~, '@app.file_uploader', '@assets.packages']
@@ -69,6 +78,30 @@ services:
 
     admin.orders:
         class: AdminBundle\Admin\OrderAdmin
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              label: "Дела"
+              group: "Дела и пользователи"
+        arguments:
+            - null
+            - AppBundle\Entity\Order
+            - AdminBundle:OrderCRUD
+
+    admin.orders.lawyer:
+        class: AdminBundle\Admin\OrderLawyerAdmin
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              label: "Дела"
+              group: "Дела и пользователи"
+        arguments:
+            - null
+            - AppBundle\Entity\Order
+            - AdminBundle:OrderCRUD
+
+    admin.orders.client:
+        class: AdminBundle\Admin\OrderClientAdmin
         tags:
             - name: sonata.admin
               manager_type: orm

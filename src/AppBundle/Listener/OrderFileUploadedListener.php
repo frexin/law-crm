@@ -21,7 +21,7 @@ class OrderFileUploadedListener
     {
         $file = $event->getFile();
         $user = $event->getUser();
-        $downloadUrl = $this->router->generate('admin_app_order_download-file', [
+        $downloadUrl = $this->router->generate('admin_app_order_lawyer_download-file', [
             'fileId' => $file->getId(),
         ]);
 

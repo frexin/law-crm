@@ -243,11 +243,7 @@
             <div class="col-md-6">
                 <div class="chat_window">
                     <div class="top_menu">
-                        {% if admin.showgroups["Ваш клиент"] is defined %}
-                            <div class="title">Общение с клиентом</div>
-                        {% elseif admin.showgroups["Ваш юрист"] is defined %}
-                            <div class="title">Общение с юристом</div>
-                        {% endif %}
+                        <div class="title">Общение</div>
                     </div>
                     <ul class="messages">
                         {% for message in object.orderChatMessages %}
@@ -268,30 +264,9 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="bottom_wrapper clearfix">
-                    <form action="{{ admin.generateUrl('send-message') }}" method="post" name="chat-message">
-                        <div class="message_input_wrapper">
-                            <input type="text" class="message_input" placeholder="Ваше сообщение..." name="message">
-                            <input type="hidden" class="message_input" name="order_id" value="{{ object.id }}">
-                        </div>
-                        <input type="submit" class="send_message" value="Отправить">
-                    </form>
-                </div>
-                {#<div class="message_template">#}
-                    {#<li class="message">#}
-                        {#<div class="avatar"></div>#}
-                        {#<div class="text_wrapper">#}
-                            {#<div class="text"></div>#}
-                        {#</div>#}
-                    {#</li>#}
-                {#</div>#}
             </div>
 
-            {% if admin.showgroups["Ваш клиент"] is defined %}
-                {% set show_group = admin.showgroups["Ваш клиент"] %}
-            {% elseif admin.showgroups["Ваш юрист"] is defined %}
-                {% set show_group = admin.showgroups["Ваш юрист"] %}
-            {% endif %}
+            {% set show_group = admin.showgroups["Участники"] %}
 
             <div class="{{ show_group.class|default('col-md-12') }} {{ no_padding|default(false) ? 'nopadding' }}">
                 <div class="{{ show_group.box_class }}">
@@ -353,10 +328,6 @@
                         </table>
                     </div>
                 </div>
-                <form action="{{ admin.generateUrl('upload-file') }}" method="POST" enctype="multipart/form-data">
-                    <input id="order-file-upload" type="file" class="filestyle" data-input="false" name="order-files[]" multiple>
-                    <input type="hidden" name="order-id" value="{{ object.id }}">
-                </form>
             </div>
         {% endblock %}
 

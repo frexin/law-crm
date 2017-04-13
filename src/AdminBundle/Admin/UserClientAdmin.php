@@ -9,45 +9,30 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class UserAdmin extends BaseUserAdmin
+class UserClientAdmin extends BaseUserAdmin
 {
     protected function getBaseRoutePatternValue(): string
     {
-        return 'user';
+        return 'user-client';
     }
 
     protected function getBaseRouteNameValue(): string
     {
-        return 'admin_app_user';
+        return 'admin_app_user_client';
     }
 
     public function createQuery($context = 'list')
     {
-        $roleChecker = $this->getConfigurationPool()->getContainer()->get('security.authorization_checker');
         $query = parent::createQuery($context);
 
         $query->add('select', 'm', false);
         $query->add('from', 'AppBundle\Entity\User m', false);
 
         $query->andWhere(
-            $query->expr()->orX(
-                $query->expr()->like('m.roles', '?1'),
-                $query->expr()->like('m.roles', '?2'),
-                $query->expr()->like('m.roles', '?3')
-            )
+            $query->expr()->like('m.roles', '?1')
         );
-
-        $query->setParameter('1', '%'.UserRoles::ROLE_LAWYER.'%');
-        $query->setParameter('2', '%'.UserRoles::ROLE_SECRETARY.'%');
-
-        // немного костыльно, но запрещаем секретарю видеть администриатора
-        if ($roleChecker->isGranted(UserRoles::ROLE_SECRETARY)) {
-            $query->setParameter('3', '%'.UserRoles::ROLE_LAWYER.'%');
-        } else {
-            $query->setParameter('3', '%'.UserRoles::ROLE_ADMIN.'%');
-        }
+        $query->setParameter('1', '%'.UserRoles::ROLE_CLIENT.'%');
 
         return $query;
     }
@@ -70,17 +55,6 @@ class UserAdmin extends BaseUserAdmin
                 'label' => 'E-mail'
             ]);
 
-        if ($this->id($this->getSubject())) {
-            $formMapper->add('plainPassword', TextType::class, [
-                'label' => 'Пароль',
-                'required' => false,
-            ]);
-        } else {
-            $formMapper->add('plainPassword', TextType::class, [
-                'label' => 'Пароль',
-            ]);
-        }
-
         $formMapper
             ->add('phone', null, [
                 'label' => 'Телефон'
@@ -88,11 +62,6 @@ class UserAdmin extends BaseUserAdmin
             ->add('otherContacts', TextareaType::class, [
                 'label' => 'Другие контакты',
                 'required' => false,
-            ])
-            ->add('roles', 'choice', [
-                'label' => 'Роль',
-                'choices' => UserRoles::getAvailableRoles(),
-                'multiple' => true
             ])
             ->add('isActive', 'checkbox', [
                 'label' => 'Активен',
@@ -129,9 +98,6 @@ class UserAdmin extends BaseUserAdmin
                 'label' => 'Другие контакты',
                 'required' => false,
             ])
-            ->add('rolesString', null, [
-                'label' => 'Роль',
-            ])
             ->add('isActive', null, [
                 'label' => 'Активен',
                 'required' => false,
@@ -150,11 +116,6 @@ class UserAdmin extends BaseUserAdmin
             ->add('middleName', null, ['label' => 'Отчество'])
             ->add('fullName', 'doctrine_orm_string', ['label' => 'ФИО'])
             ->add('email', null, ['label' => 'E-mail'])
-            ->add('roles', null, [
-                'label' => 'Роль'
-            ], 'choice', [
-                'choices' => UserRoles::getAvailableRoles(),
-            ])
             ->add('isActive', null, ['label' => 'Активен']);
     }
 
@@ -172,9 +133,6 @@ class UserAdmin extends BaseUserAdmin
             ])
             ->add('email', null, [
                 'label' => 'E-mail'
-            ])
-            ->add('rolesString', null, [
-                'label' => 'Роль'
             ])
             ->add('isActive', null, [
                 'label' => 'Активен'

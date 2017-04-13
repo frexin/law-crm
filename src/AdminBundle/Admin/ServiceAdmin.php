@@ -10,6 +10,8 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -79,6 +81,37 @@ class ServiceAdmin extends AbstractAdmin
             ->end();
     }
 
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->with('Информация', ['class' => 'col-md-9'])
+                ->add('title', null, [
+                    'label' => 'Название'
+                ])
+                ->add('shortDescription', null, [
+                    'label' => 'Короткое описание'
+                ])
+                ->add('description', TextareaType::class, [
+                    'attr' => [
+                        'rows' => 8
+                    ],
+                    'label' => 'Описание'
+                ])
+                ->add('imageUrl', null, [
+                    'label' => 'Изображение',
+                    'template' => 'AdminBundle:overriden:picture.html.twig'
+                ])
+            ->end()
+
+            ->with('Категория', ['class' => 'col-md-3'])
+                ->add('serviceCategory', ModelType::class, [
+                    'class' => ServiceCategory::class,
+                    'associated_property' => 'title',
+                    'label' => 'Категория услуг'
+                ])
+            ->end();
+    }
+
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -106,6 +139,7 @@ class ServiceAdmin extends AbstractAdmin
             ->add('_action', null, [
                 'label' => 'Действия',
                 'actions' => [
+                    'show' => [],
                     'edit' => [],
                     'delete' => [],
                 ],

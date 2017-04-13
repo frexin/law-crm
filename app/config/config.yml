@@ -105,9 +105,9 @@ sonata_admin:
 #            - test.css
     title: "Юристы"
     show_mosaic_button: false
-#    templates:
-        # default global templates
-#        layout:  AdminBundle::standard_layout.html.twig
+    templates:
+        user_block: AdminBundle:overriden:user_block.html.twig
+        layout:  AdminBundle:overriden:standard_layout.html.twig
 #        dashboard: AdminBundle::dashboard.html.twig
 #        knp_menu_template: AdminBundle::menu.html.twig
 #        list: AdminBundle::list.html.twig
