@@ -6,12 +6,17 @@ use AppBundle\Traits\Sluggable;
 use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use JMS\Serializer\Annotation as JMS;
+
+use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * Service
  *
  * @ORM\Table(name="services", indexes={@ORM\Index(name="fk_law_services_1_idx", columns={"service_category_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ServiceRepository")
  */
 class Service
 {
@@ -28,6 +33,7 @@ class Service
      * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned":true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @JMS\Groups({"detail", "list"})
      */
     private $id;
 
@@ -35,6 +41,7 @@ class Service
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=180, nullable=false)
+     * @JMS\Groups({"detail", "list"})
      */
     private $title;
 
@@ -42,6 +49,7 @@ class Service
      * @var string
      *
      * @ORM\Column(name="short_description", type="text", length=65535, nullable=false)
+     * @JMS\Groups({"detail", "list"})
      */
     private $shortDescription;
 
@@ -49,6 +57,7 @@ class Service
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=16777215, nullable=true)
+     * @JMS\Groups({"detail"})
      */
     private $description;
 
@@ -56,6 +65,7 @@ class Service
      * @var string
      *
      * @ORM\Column(name="image_url", type="string", length=512, nullable=true)
+     * @JMS\Groups({"detail", "list"})
      */
     private $imageUrl;
 
@@ -66,12 +76,15 @@ class Service
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="service_category_id", referencedColumnName="id")
      * })
+     *
+     * @JMS\Exclude
      */
     private $serviceCategory;
 
     /**
      * @ORM\OneToMany(targetEntity="ServiceModification", mappedBy="service", fetch="EAGER")
      * @ORM\OrderBy({"price" = "ASC"})
+     * @JMS\Groups({"detail"})
      */
     private $serviceModifications;
 
@@ -239,5 +252,50 @@ class Service
     public function getImage()
     {
         return $this->image;
+    }
+
+    // Следующие методы используются для ApiController
+    // Нужна такиех бессмысленных методов возникла из-за того
+    // что временные метки и слаг вынесены в трейты.
+    // к ним не получится написать "универсальные" аннотации
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("service_category")
+     * @JMS\Groups({"detail", "list"})
+     */
+    public function getCategoryId()
+    {
+        return $this->getServiceCategory()->getId();
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("created_at")
+     * @JMS\Groups({"detail", "list"})
+     */
+    public function getCreatedAtValue()
+    {
+        return $this->getCreatedAt();
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("updated_at")
+     * @JMS\Groups({"detail", "list"})
+     */
+    public function getUpdatedAtValue()
+    {
+        return $this->getUpdatedAt();
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("slug")
+     * @JMS\Groups({"detail", "list"})
+     */
+    public function getSlugValue()
+    {
+        return $this->getSlug();
     }
 }

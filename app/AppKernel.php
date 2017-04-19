@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new \Sonata\AdminBundle\SonataAdminBundle(),
 
             new AdminBundle\AdminBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

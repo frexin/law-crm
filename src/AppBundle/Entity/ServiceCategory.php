@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\Traits\Sluggable;
 use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * ServiceCategory
@@ -34,6 +35,7 @@ class ServiceCategory
 
     /**
      * @ORM\OneToMany(targetEntity="Service", mappedBy="serviceCategory")
+     * @JMS\Exclude
      */
     private $services;
 
