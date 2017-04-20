@@ -85,11 +85,20 @@ class DefaultController extends Controller
             // триггерим событие успешного оформления заказа
             $event = new OrderFormSubmitted($user, $order);
             $this->get('event_dispatcher')->dispatch('app.event.user_password_changed', $event);
+
+            return $this->render('@showcase/default/payment.html.twig', [
+                'order' => $order,
+            ]);
         }
 
         return $this->render('@showcase/default/order.html.twig', [
             'service' => $service,
             'orderForm' => $form->createView(),
         ]);
+    }
+
+    public function successPaymentAction()
+    {
+        return $this->render('@showcase/default/successPayment.html.twig');
     }
 }

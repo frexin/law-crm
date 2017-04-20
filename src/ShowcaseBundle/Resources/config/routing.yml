@@ -6,6 +6,10 @@ showcase_service:
     path: /service/{slug}
     defaults: { _controller: ShowcaseBundle:Default:service }
 
+showcase_success_payment:
+    path: /order/paid
+    defaults: { _controller: ShowcaseBundle:Default:successPayment }
+
 showcase_order:
     path: /order/{slug}
     defaults: { _controller: ShowcaseBundle:Default:order }

@@ -28,3 +28,5 @@ parameters:
     # То же самое, что и выше, только относительно каталога web.
     # Используется для генерирования урлов к assets в сервисах
     documents_upload_directory_relative_from_web: '/uploads/files'
+
+    yandex.money.secret: 'Xi1yJaU3+ZltPsIoIR7NYgsA'

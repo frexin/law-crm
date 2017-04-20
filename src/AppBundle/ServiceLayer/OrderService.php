@@ -6,6 +6,7 @@ use AppBundle\DTO\SavedFileDto;
 use AppBundle\Entity\OrderChatMessage;
 use AppBundle\Entity\OrderFile;
 use AppBundle\Entity\User;
+use AppBundle\Enums\OrderStatuses;
 use AppBundle\Enums\UserRoles;
 use AppBundle\Services\FileDownloaderInterface;
 use AppBundle\Services\FileUploaderInterface;
@@ -80,5 +81,13 @@ class OrderService extends BaseService
         $this->em->flush();
 
         return $orderFile;
+    }
+
+    public function changeStatus($orderId, $status)
+    {
+        $order = $this->getModelById($orderId, 'AppBundle:Order');
+        $order->setStatus($status);
+        $this->em->persist($order);
+        $this->em->flush();
     }
 }

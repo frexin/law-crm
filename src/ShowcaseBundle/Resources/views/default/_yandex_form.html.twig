@@ -1,0 +1,19 @@
+<form method="POST" class="text-center" action="https://money.yandex.ru/quickpay/confirm.xml">
+    <input type="hidden" name="receiver" value="410015164414164">
+    <input type="hidden" name="quickpay-form" value="shop">
+    <input type="hidden" name="need-fio" value="false">
+    <input type="hidden" name="need-email" value="false">
+    <input type="hidden" name="need-phone" value="false">
+    <input type="hidden" name="need-address" value="false">
+
+    <input type="hidden" name="successURL" value="{{ absolute_url(path('showcase_success_payment')) }}">
+    <input type="hidden" name="formcomment" value="Название компании юристов">
+    <input type="hidden" name="short-dest" value="Оплата услуги: {{ order.serviceModification.service.title }} ({{ order.serviceModification.name }})">
+    <input type="hidden" name="label" value="{{ order.id }}">
+    <input type="hidden" name="targets" value="Оплата юридической услуги">
+    <input type="hidden" name="sum" value="{{ order.serviceModification.price }}" data-type="number">
+
+    <label class="radio-inline"><input type="radio" value="PC" name="paymentType">Яндекс.Деньгами</label>
+    <label class="radio-inline"><input type="radio" value="AC" name="paymentType">Банковской картой</label>
+    <input type="submit" class="btn btn-primary" value="Оплатить">
+</form>

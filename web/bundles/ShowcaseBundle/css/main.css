@@ -216,3 +216,22 @@ label[class="error"] .help-block {
         margin-bottom: 15px;
     }
 }
+
+/* ******************* */
+/* Форма оплаты услуги */
+/* ******************* */
+.payment-info td {
+    text-align: right;
+}
+
+.payment-info form input[type="submit"] {
+    margin-left: 10px;
+}
+
+.payment-info .payment-from {
+    margin-top: 25px;
+}
+
+.payment-result {
+    margin-top: 50px;
+}

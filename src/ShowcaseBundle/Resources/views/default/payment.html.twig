@@ -1,0 +1,43 @@
+{% extends '@showcase/base.html.twig' %}
+
+{% block title %}
+    Оплата услуги
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://money.yandex.ru/b/desktop/_common.css?v=zD0AQ4F6mQxtxqsyXh82q3Y7AtQ">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="payment-info col-md-6 col-md-push-3">
+                    <h3>Оплата услуги</h3>
+
+                    <div class="table payment-from">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Назначение перевода</th>
+                                    <td>Оплата юридической услуги</td>
+                                </tr>
+                                <tr>
+                                    <th>Услуга</th>
+                                    <td>{{ order.serviceModification.service.title }} ({{ order.serviceModification.name }})</td>
+                                </tr>
+                                <tr>
+                                    <th>Сумма</th>
+                                    <td>{{ order.serviceModification.price }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{ include('@showcase/default/_yandex_form.html.twig', {'order': order}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

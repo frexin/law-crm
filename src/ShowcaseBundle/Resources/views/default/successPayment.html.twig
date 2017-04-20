@@ -1,0 +1,20 @@
+{% extends '@showcase/base.html.twig' %}
+
+{% block title %}
+    Услуга успешно оплачена
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="payment-result">
+                    <div class="alert alert-success">
+                        <strong>Услуга успешно оплачена!</strong> <br>
+                        Следить за выполнением дела можно в <a href="{{ path('admin_app_order_list') }}">личном кабинете</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
