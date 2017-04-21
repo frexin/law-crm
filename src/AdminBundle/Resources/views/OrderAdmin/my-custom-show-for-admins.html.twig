@@ -250,7 +250,7 @@
 
                             {% if message.userTo is null %}
                                 {% set class = 'center' %}
-                            {% elseif app.user is same as(message.userFrom) %}
+                            {% elseif object.lawyer is same as(message.userFrom) %}
                                 {% set class = 'right' %}
                             {% else %}
                                 {% set class = 'left' %}
