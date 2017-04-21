@@ -21,6 +21,11 @@ class OrderLawyerAdmin extends BaseOrderAdmin
         return 'admin_app_order_lawyer';
     }
 
+    protected function getRemovedActions(): array
+    {
+        return ['create'];
+    }
+
     public function getTemplate($name)
     {
         if ($name === 'show') {
@@ -150,99 +155,6 @@ class OrderLawyerAdmin extends BaseOrderAdmin
                     ])
                 ->end();
         }
-    }
-
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        $formMapper
-            ->with('Информация о деле', ['class' => 'col-md-9'])
-                ->add('id', null, [
-                    'label' => 'Идентификатор',
-                    'disabled'  => true,
-                ])
-                ->add('title', null, [
-                    'label' => 'Название',
-                    'disabled'  => true,
-                ])
-                ->add('description', null, [
-                    'label' => 'Описание',
-                    'disabled'  => true,
-                ])
-                ->add('status', 'choice', [
-                    'label' => 'Статус',
-                    'choices' => OrderStatuses::getValues(),
-                    'disabled'  => true,
-                ])
-                ->add('user.fullName', 'text', [
-                    'label' => 'ФИО клиента',
-                    'disabled'  => true,
-                ]);
-
-        if ($this->getSubject()->getLawyer()) {
-            $formMapper->add('lawyer.fullName', 'text', [
-                'label' => 'ФИО адвоката',
-                'disabled'  => true,
-            ]);
-        } else {
-            $formMapper->add('lawyer', 'sonata_type_model_autocomplete', [
-                'class' => User::class,
-                'property' => 'fullName',
-                'label' => 'ФИО адвоката',
-                'required' => false,
-                'to_string_callback' => function($entity, $property) {
-                    return $entity->getFullName();
-                },
-                'callback' => function ($admin, $property, $value) {
-                    $query = $admin->getDatagrid()->getQuery();
-
-                    $query->andWhere($query->expr()->like('m.roles', '?1'));
-                    $query->andWhere($query->expr()->like('m.fullName', '?2'));
-                    $query->setParameter('1', '%'.UserRoles::ROLE_LAWYER.'%');
-                    $query->setParameter('2', '%'.$value.'%');
-                }
-            ]);
-        }
-
-        $formMapper
-                ->add('recentActivity', 'sonata_type_datetime_picker', [
-                    'label' => 'Последнее обновление',
-                    'format' => 'd-m-Y H:m',
-                    'disabled'  => true,
-                ])
-            ->end()
-
-            ->with('Информация по услуге', ['class' => 'col-md-3'])
-                ->add('serviceModification.service.serviceCategory.title', null, [
-                    'label' => 'Категория',
-                    'disabled'  => true,
-                ])
-                ->add('serviceModification.service.title', null, [
-                    'label' => 'Услуга',
-                    'disabled'  => true,
-                ])
-                ->add('serviceModification.name', null, [
-                    'label' => 'Модификация',
-                    'disabled'  => true,
-                ])
-            ->end()
-
-            ->with('Сроки', ['class' => 'col-md-3'])
-                ->add('createdAt', 'sonata_type_datetime_picker', [
-                    'format' => 'd-m-Y H:m',
-                    'label' => 'Дата создания',
-                    'disabled'  => true,
-                ])
-                ->add('startDate', 'sonata_type_datetime_picker', [
-                    'format' => 'd-m-Y H:m',
-                    'label' => 'Дата начала работы',
-                    'disabled'  => true,
-                ])
-                ->add('endDate', 'sonata_type_datetime_picker', [
-                    'format' => 'd-m-Y H:m',
-                    'label' => 'Дата окончания работы',
-                    'disabled'  => true,
-                ])
-            ->end();
     }
 
     protected function configureListFields(ListMapper $listMapper)

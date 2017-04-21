@@ -15,6 +15,7 @@ security:
             - ROLE_ADMIN_USERS_LIST
             - ROLE_ADMIN_USERS_VIEW
             - ROLE_ADMIN_USERS_EDIT
+            - ROLE_ADMIN_USERS_CREATE
             - ROLE_ADMIN_ORDERS_LIST
             - ROLE_ADMIN_ORDERS_VIEW
             - ROLE_ADMIN_ORDERS_EDIT
@@ -22,6 +23,7 @@ security:
             - ROLE_ADMIN_USERS_CLIENTS_LIST
             - ROLE_ADMIN_USERS_CLIENTS_VIEW
             - ROLE_ADMIN_USERS_CLIENTS_EDIT
+            - ROLE_ADMIN_USERS_CLIENTS_CREATE
 
         ROLE_SONATA_ADMIN:
             - ROLE_ADMIN_SERVICE_CATEGORY_ALL
