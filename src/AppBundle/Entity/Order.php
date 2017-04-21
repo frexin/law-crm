@@ -5,12 +5,14 @@ namespace AppBundle\Entity;
 use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\ServiceModification;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Order
  *
  * @ORM\Table(name="orders", indexes={@ORM\Index(name="orders_status_idx", columns={"status"}), @ORM\Index(name="fk_law_orders_1_idx", columns={"user_id"}), @ORM\Index(name="fk_law_orders_2_idx", columns={"service_modification_id"}), @ORM\Index(name="fk_law_orders_3_idx", columns={"lawyer_id"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  * @ORM\EntityListeners({"AppBundle\Listener\OrderListener"})
  */
 class Order
@@ -105,7 +107,7 @@ class Order
     private $orderChatMessages;
 
     /**
-     * @ORM\OneToMany(targetEntity="OrderFile", mappedBy="order", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="OrderFile", mappedBy="order", fetch="EAGER", cascade={"persist"})
      * @ORM\OrderBy({"createdAt" = "ASC"})
      */
     private $orderFiles;
@@ -358,5 +360,24 @@ class Order
     public function setOrderFiles($orderFiles)
     {
         $this->orderFiles = $orderFiles;
+    }
+
+    /** @ORM\PrePersist */
+    public function doStuffOnPrePersist()
+    {
+        $array = [];
+
+        foreach ($this->orderFiles as $orderFile) {
+            if (!$orderFile instanceof UploadedFile) {
+                continue;
+            }
+
+            $orderFileModel = new OrderFile();
+            $orderFileModel->setFilePath($orderFile);
+            $orderFileModel->setOrder($this);
+            $array[] = $orderFileModel;
+        }
+
+        $this->setOrderFiles($array);
     }
 }

@@ -28,10 +28,26 @@ abstract class BaseOrderAdmin extends AbstractAdmin
 
     protected function configureRoutes(RouteCollection $collection)
     {
-        $collection->remove('create');
+        foreach ($this->getRemovedActions() as $action) {
+            $collection->remove($action);
+        }
+
         $collection->add('send-message', 'send-message');
         $collection->add('download-file', 'download-file/{fileId}');
         $collection->add('upload-file', 'upload-file');
+    }
+
+    /**
+     * Метод для переопределения.
+     *
+     * Должен возвращать массив стринговых названий действий,
+     * которе нужно убрать для конкретного класса.
+     *
+     * @return array
+     */
+    protected function getRemovedActions(): array
+    {
+        return [];
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

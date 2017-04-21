@@ -74,7 +74,7 @@ class OrderFile
     /**
      * Set filePath
      *
-     * @param string $filePath
+     * @param $filePath
      *
      * @return OrderFile
      */
