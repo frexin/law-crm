@@ -2,6 +2,8 @@
 
 namespace AdminBundle\Admin;
 
+use AppBundle\Entity\Service;
+use AppBundle\Entity\ServiceModification;
 use AppBundle\Entity\Order;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\ServiceModification;
