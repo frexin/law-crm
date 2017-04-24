@@ -2,10 +2,12 @@
 
 namespace AdminBundle\Admin;
 
+use AppBundle\Entity\Order;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\ServiceModification;
 use AppBundle\Entity\User;
 use AppBundle\Enums\OrderStatuses;
+use AppBundle\Enums\PaymentTypes;
 use AppBundle\Enums\UserRoles;
 use Doctrine\ORM\EntityRepository;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -282,5 +284,17 @@ class OrderAdmin extends BaseOrderAdmin
                     'edit' => [],
                 ],
             ]);
+    }
+
+    /**
+     * @param Order $object
+     */
+    public function postPersist($object)
+    {
+        $container = $this->getConfigurationPool()->getContainer();
+        $orderService = $container->get('app.sl.order');
+
+        $amount = $object->getServiceModification()->getPrice();
+        $orderService->createPaymentIssue($object->getId(), $amount, PaymentTypes::TYPE_CASH_PAYMENT);
     }
 }

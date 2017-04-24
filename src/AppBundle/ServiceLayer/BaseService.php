@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 abstract class BaseService
 {
-    protected function getModelById($id, $repositoryName)
+    public function getModelById($id, $repositoryName)
     {
         $model = $this->em->getRepository($repositoryName)->find($id);
 

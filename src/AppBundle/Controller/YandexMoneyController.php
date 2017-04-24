@@ -29,17 +29,11 @@ class YandexMoneyController extends Controller
             return (new Response())->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
 
+        $orderService = $this->get('app.sl.order');
         $orderId = $request->request->get('label');
-        $this->get('app.sl.order')->changeStatus($orderId, OrderStatuses::STATUS_PAID);
 
-        $orderPayment = new OrderPaymentInfo();
-        $orderPayment->setAmount($request->request->get('amount'));
-        $orderPayment->setPaymentType(PaymentTypes::TYPE_YANDEX_PAYMENT);
-        $orderPayment->setIsMoneyback(false);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($orderPayment);
-        $em->flush();
+        $orderService->changeStatus($orderId, OrderStatuses::STATUS_PAID);
+        $orderService->createPaymentIssue($orderId, $request->request->get('amount'), PaymentTypes::TYPE_YANDEX_PAYMENT);
 
         return (new Response())->setStatusCode(Response::HTTP_OK);
     }

@@ -34,7 +34,7 @@ class OrderPaymentInfo
     /**
      * @var boolean
      *
-     * @ORM\Column(name="payment_type", type="boolean", nullable=true)
+     * @ORM\Column(name="payment_type", type="integer", nullable=true)
      */
     private $paymentType;
 

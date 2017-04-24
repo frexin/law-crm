@@ -3,8 +3,10 @@
 namespace AppBundle\ServiceLayer;
 
 use AppBundle\DTO\SavedFileDto;
+use AppBundle\Entity\Order;
 use AppBundle\Entity\OrderChatMessage;
 use AppBundle\Entity\OrderFile;
+use AppBundle\Entity\OrderPaymentInfo;
 use AppBundle\Entity\User;
 use AppBundle\Enums\OrderStatuses;
 use AppBundle\Enums\UserRoles;
@@ -88,6 +90,20 @@ class OrderService extends BaseService
         $order = $this->getModelById($orderId, 'AppBundle:Order');
         $order->setStatus($status);
         $this->em->persist($order);
+        $this->em->flush();
+    }
+
+    public function createPaymentIssue($orderId, $amount, $type, $isMoneyback = false)
+    {
+        $order = $this->getModelById($orderId, 'AppBundle:Order');
+
+        $orderPayment = new OrderPaymentInfo();
+        $orderPayment->setOrder($order);
+        $orderPayment->setAmount($amount);
+        $orderPayment->setPaymentType($type);
+        $orderPayment->setIsMoneyback($isMoneyback);
+
+        $this->em->persist($orderPayment);
         $this->em->flush();
     }
 }
