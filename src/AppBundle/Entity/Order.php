@@ -113,6 +113,12 @@ class Order
     private $orderFiles;
 
     /**
+     * @ORM\OneToMany(targetEntity="PrivateOrderComment", mappedBy="order", fetch="EAGER")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
+     */
+    private $privateOrderComments;
+
+    /**
      * Get id
      *
      * @return integer
@@ -360,6 +366,22 @@ class Order
     public function setOrderFiles($orderFiles)
     {
         $this->orderFiles = $orderFiles;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrivateOrderComments()
+    {
+        return $this->privateOrderComments;
+    }
+
+    /**
+     * @param mixed $privateOrderComments
+     */
+    public function setPrivateOrderComments($privateOrderComments)
+    {
+        $this->privateOrderComments = $privateOrderComments;
     }
 
     /** @ORM\PrePersist */

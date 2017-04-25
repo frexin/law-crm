@@ -7,6 +7,7 @@ use AppBundle\Entity\Order;
 use AppBundle\Entity\OrderChatMessage;
 use AppBundle\Entity\OrderFile;
 use AppBundle\Entity\OrderPaymentInfo;
+use AppBundle\Entity\PrivateOrderComment;
 use AppBundle\Entity\User;
 use AppBundle\Enums\OrderStatuses;
 use AppBundle\Enums\UserRoles;
@@ -104,6 +105,19 @@ class OrderService extends BaseService
         $orderPayment->setIsMoneyback($isMoneyback);
 
         $this->em->persist($orderPayment);
+        $this->em->flush();
+    }
+
+    public function addPrivateMessage($orderId, $userId, $message)
+    {
+        $user = $this->getModelById($userId, 'AppBundle:User');
+
+        $commentModel = new PrivateOrderComment();
+        $commentModel->setOrder($this->getModelById($orderId, 'AppBundle:Order'));
+        $commentModel->setIsFromLawyer($user->hasRole(UserRoles::ROLE_LAWYER));
+        $commentModel->setText($message);
+
+        $this->em->persist($commentModel);
         $this->em->flush();
     }
 }

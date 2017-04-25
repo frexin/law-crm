@@ -173,6 +173,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/ShowcaseBundle/js/bootstrap-filestyle.js') }}"> </script>
+    <script type="text/javascript" src="{{ asset('assets/js/comments.js') }}"> </script>
     <script>
         $(document).ready(function(){
             var chat = $('.messages');
@@ -238,7 +239,11 @@
                         </table>
                     </div>
                 </div>
-            </div>
+
+
+                {%  if is_granted('ROLE_ADMIN') %}
+                    {% include('@Admin/OrderAdmin/_private_comments.html.twig') %}
+                {%  endif %}            </div>
 
             <div class="col-md-6">
                 <div class="chat_window">

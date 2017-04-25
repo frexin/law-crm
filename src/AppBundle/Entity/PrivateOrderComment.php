@@ -41,13 +41,12 @@ class PrivateOrderComment
     /**
      * @var Order
      *
-     * @ORM\ManyToOne(targetEntity="Order")
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="privateOrderComments")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $order;
-
 
 
     /**

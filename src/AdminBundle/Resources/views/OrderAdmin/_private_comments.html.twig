@@ -1,0 +1,59 @@
+<div class="box box-primary">
+    <div class="box-header">
+        <h4 class="box-title">
+            Комментарии к делу
+        </h4>
+    </div>
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Сообщение</th>
+                <th>Дата</th>
+                <th>Роль</th>
+            </tr>
+            </thead>
+            {% for comment in object.privateOrderComments %}
+            <tbody>
+            <tr>
+                <td>{{ comment.text }}</td>
+                <td>{{ comment.createdAt.format('d.m.y H:i') }}</td>
+                <td>
+                    {% if (comment.isFromLawyer) %}
+                        Юрист
+                    {% else %}
+                        Админ.
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Добавить комментарий</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Добавление комментария к делу</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="5" id="private-comment-message" autofocus></textarea>
+                <input type="hidden" id="private-comment-user-id" value="{{ app.user.id }}">
+                <input type="hidden" id="private-comment-order-id" value="{{ object.id }}">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="private-comment-submit">Добавить</button>
+            </div>
+        </div>
+
+    </div>
+</div>
