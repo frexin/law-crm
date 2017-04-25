@@ -183,6 +183,21 @@
             $('#order-file-upload').change(function (e) {
                 this.form.submit();
             });
+
+            // завершение дела по клику
+            $('#finish-task').on('click', function () {
+                var orderId = $(this).data('order-id');
+
+                $.ajax({
+                    url: '/order/change-status',
+                    method: 'post',
+                    data: {
+                        'order-id': orderId
+                    }
+                }).done(function() {
+                    location.reload();
+                });
+            });
         });
     </script>
 {% endblock %}
@@ -235,6 +250,14 @@
                             {% for field_name in show_group.fields %}
                                 {{ block('show_field') }}
                             {% endfor %}
+                            {%  if is_granted('ROLE_LAWYER') %}
+                                <tr class="">
+                                    <td>
+                                        <button data-order-id="{{ object.id }}" style="float: right;" type="button" class="btn btn-primary" id="finish-task">Завершить дело</button>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            {%  endif %}
                             </tbody>
                         </table>
                     </div>

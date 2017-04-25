@@ -131,6 +131,12 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    app.event.order_status_changed:
+        class: AppBundle\Subscriber\OrderStatusChangedSubscriber
+        arguments: ['@mailer', '@templating', '%email_from%']
+        tags:
+            - { name: kernel.event_subscriber }
+
     app.event.order_file_uploaded:
         class: AppBundle\Listener\OrderFileUploadedListener
         arguments: ["@app.sl.order", "@router"]
