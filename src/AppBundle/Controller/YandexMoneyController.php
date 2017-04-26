@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\OrderPaymentInfo;
 use AppBundle\Enums\OrderStatuses;
 use AppBundle\Enums\PaymentTypes;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -25,15 +24,20 @@ class YandexMoneyController extends Controller
      */
     public function orderPaidAction(Request $request)
     {
-        if (!$this->isHashValid($request) || $request->request->get('unaccepted')) {
-            return (new Response())->setStatusCode(Response::HTTP_BAD_REQUEST);
+        if (!$this->isHashValid($request)) {
+            return (new Response('Не сошелся хеш'))->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
 
         $orderService = $this->get('app.sl.order');
         $orderId = $request->request->get('label');
+        $amount = $request->request->get('amount');
+
+        if (!$orderId || !$amount) {
+            return (new Response('Отсутствует номер оплаченного заказа или сумма'))->setStatusCode(Response::HTTP_OK);
+        }
 
         $orderService->changeStatus($orderId, OrderStatuses::STATUS_PAID);
-        $orderService->createPaymentIssue($orderId, $request->request->get('amount'), PaymentTypes::TYPE_YANDEX_PAYMENT);
+        $orderService->createPaymentIssue($orderId, $amount, PaymentTypes::TYPE_YANDEX_PAYMENT);
 
         return (new Response())->setStatusCode(Response::HTTP_OK);
     }
