@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Enums\UserRoles;
 use AppBundle\Traits\Timestampable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -132,6 +133,11 @@ class User implements UserInterface
      * @ORM\Column(name="is_active", type="boolean", nullable=false)
      */
     private $isActive = 1;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ScheduleEvent", mappedBy="user")
+     */
+    private $events;
 
     public function __toString()
     {
@@ -527,5 +533,21 @@ class User implements UserInterface
     public function setIsActive(bool $isActive)
     {
         $this->isActive = $isActive;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param mixed $events
+     */
+    public function setEvents($events)
+    {
+        $this->events = $events;
     }
 }

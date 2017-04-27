@@ -1,0 +1,125 @@
+{% extends '@Admin/overriden/standard_layout.html.twig' %}
+
+{% form_theme eventForm 'bootstrap_3_layout.html.twig' %}
+
+ {% block side_bar_after_nav %}
+     {% if app.user and is_granted('ROLE_LAWYER') %}
+         <ul class="sidebar-menu">
+             <li class="active first last treeview">
+                 <a href="{{ path('sonata_admin_calendar') }}">
+                     <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                     Календарь
+                 </a>
+             </li>
+         </ul>
+     {% endif %}
+ {% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="{{ url('sonata_admin_dashboard') }}">{% trans %}Dashboard{% endtrans %}</a><span class="divider">/</span></li>
+    <li class="active">Custom Page</li>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker12').datetimepicker({
+                inline: true,
+                sideBySide: true,
+                format: 'DD/MM/YYYY'
+            });
+
+            $('#schedule_event_form_startDate').datetimepicker({
+//                sideBySide: true,
+                format: 'DD-MM-YYYY H:mm'
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .calendar .bootstrap-datetimepicker-widget, .form-block {
+            background: #fafafa;
+            border: 1px solid #c0c0c0;
+        }
+
+        .form-block {
+            padding: 15px;
+        }
+
+        .tasks-block h3 {
+            margin-top: 0;
+        }
+
+        .tasks-block table {
+            background-color: #fafafa;
+            border-color: #c0c0c0;
+        }
+
+        .tasks-block table > thead > tr > th,
+        .tasks-block table > tbody > tr > th,
+        .tasks-block table > tfoot > tr > th,
+        .tasks-block table > thead > tr > td,
+        .tasks-block table > tbody > tr > td,
+        .tasks-block table > tfoot > tr > td {
+            border-color: #c0c0c0;
+        }
+    </style>
+{% endblock %}
+
+{% block sonata_page_content_header %}
+    {{ parent() }}
+        <div class="sticky-wrapper"><nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">
+                            Мой календарь
+                        </a>
+                    </div>
+                </div>
+            </nav></div>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="calendar" id="datetimepicker12"></div>
+            </div>
+            <div class="col-md-6 tasks-block">
+                <h3>Мои задачи на 3 сентября</h3>
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Время</th>
+                        <th>Тип</th>
+                        <th>Описание</th>
+                        <th>Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.date|date('H:i') }}</td>
+                            <td>{{ event.type.name }}</td>
+                            <td>{{ event.description }}</td>
+                            <td><input type="checkbox" value=""></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3 form-block">
+                {{ form_start(eventForm) }}
+                {{ form_widget(eventForm) }}
+                <button type="submit" class="btn btn-primary pull-right">Добавить</button>
+                {{ form_end(eventForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
