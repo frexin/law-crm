@@ -17,15 +17,15 @@ class ScheduleEventsService extends BaseService
     }
 
     /**
-     * @param \DateTime|null $date
+     * @param int|null $timestamp - timestamp
      */
-    public function getEventsForDate(\DateTime $date = null)
+    public function getEventsForDate($timestamp = null)
     {
-        if (!$date) {
-            $date = new \DateTime();
+        if (!$timestamp) {
+            $timestamp = time();
         }
 
-        $dateArg = $date->format('d.m.Y');
+        $dateArg = date('d.m.Y', $timestamp);
 
         $user = $this->token_storage->getToken()->getUser();
         $events = $user->getEvents()->filter(

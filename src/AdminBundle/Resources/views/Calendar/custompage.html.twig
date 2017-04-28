@@ -23,52 +23,12 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker12').datetimepicker({
-                inline: true,
-                sideBySide: true,
-                format: 'DD/MM/YYYY'
-            });
-
-            $('#schedule_event_form_startDate').datetimepicker({
-//                sideBySide: true,
-                format: 'DD-MM-YYYY H:mm'
-            });
-        });
-    </script>
+    <script src="{{ asset('bundles/AdminBundle/js/calendar.js') }}"></script>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <style>
-        .calendar .bootstrap-datetimepicker-widget, .form-block {
-            background: #fafafa;
-            border: 1px solid #c0c0c0;
-        }
-
-        .form-block {
-            padding: 15px;
-        }
-
-        .tasks-block h3 {
-            margin-top: 0;
-        }
-
-        .tasks-block table {
-            background-color: #fafafa;
-            border-color: #c0c0c0;
-        }
-
-        .tasks-block table > thead > tr > th,
-        .tasks-block table > tbody > tr > th,
-        .tasks-block table > tfoot > tr > th,
-        .tasks-block table > thead > tr > td,
-        .tasks-block table > tbody > tr > td,
-        .tasks-block table > tfoot > tr > td {
-            border-color: #c0c0c0;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('bundles/AdminBundle/css/calendar.css') }}">
 {% endblock %}
 
 {% block sonata_page_content_header %}
@@ -88,10 +48,10 @@
     <div>
         <div class="row">
             <div class="col-md-2">
-                <div class="calendar" id="datetimepicker12"></div>
+                <div class="calendar" id="datetimepicker12" data-date="{{ date|date('m.d.Y') }}"></div>
             </div>
             <div class="col-md-6 tasks-block">
-                <h3>Мои задачи на 3 сентября</h3>
+                <h3>Мои задачи на {{ date|date('d.m.Y') }}</h3>
 
                 <table class="table table-bordered">
                     <thead>
@@ -108,7 +68,7 @@
                             <td>{{ event.date|date('H:i') }}</td>
                             <td>{{ event.type.name }}</td>
                             <td>{{ event.description }}</td>
-                            <td><input type="checkbox" value=""></td>
+                            <td><input class="event-done" data-url="{{ path('sonata_admin_calendar_delete', {'id': event.id}) }}" type="checkbox" value=""></td>
                         </tr>
                     {% endfor %}
                     </tbody>

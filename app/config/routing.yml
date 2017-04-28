@@ -8,9 +8,15 @@ _sonata_admin:
     prefix: /
 
 sonata_admin_calendar:
-    path:  /calendar
+    path:  /calendar/{timestamp}
     host: admin.%base_host%
-    defaults: { _controller: AdminBundle:Calendar:index }
+    defaults: { _controller: AdminBundle:Calendar:index, timestamp: null}
+
+sonata_admin_calendar_delete:
+    path:  /calendar/delete/{id}
+    host: admin.%base_host%
+    defaults: { _controller: AdminBundle:Calendar:delete }
+    methods: [POST]
 
 admin_area:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"

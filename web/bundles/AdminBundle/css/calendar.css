@@ -1,0 +1,27 @@
+.calendar .bootstrap-datetimepicker-widget, .form-block {
+    background: #fafafa;
+    border: 1px solid #c0c0c0;
+}
+
+.form-block {
+    padding: 15px;
+    margin-left: 15px;
+}
+
+.tasks-block h3 {
+    margin-top: 0;
+}
+
+.tasks-block table {
+    background-color: #fafafa;
+    border-color: #c0c0c0;
+}
+
+.tasks-block table > thead > tr > th,
+.tasks-block table > tbody > tr > th,
+.tasks-block table > tfoot > tr > th,
+.tasks-block table > thead > tr > td,
+.tasks-block table > tbody > tr > td,
+.tasks-block table > tfoot > tr > td {
+    border-color: #c0c0c0;
+}

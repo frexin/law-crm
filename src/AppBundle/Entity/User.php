@@ -136,6 +136,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="ScheduleEvent", mappedBy="user")
+     * @ORM\OrderBy({"date" = "ASC"})
      */
     private $events;
 
