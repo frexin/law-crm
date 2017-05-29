@@ -106,4 +106,11 @@ class ServiceCategory
     {
         $this->isAvailable = $isAvailable;
     }
+
+    /**
+     * @JMS\VirtualProperty()
+     */
+    public function getServicesCount() {
+        return count($this->services);
+    }
 }

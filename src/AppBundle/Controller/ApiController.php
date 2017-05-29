@@ -91,7 +91,7 @@ class ApiController extends Controller
         }
 
         $serializer = $this->get('jms_serializer');
-        $data = $serializer->serialize($data, 'json', $groupName);
+        $data = $serializer->serialize($data, 'json');
 
         return ApiHelper::getJsonResponse($data);
     }
