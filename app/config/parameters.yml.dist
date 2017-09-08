@@ -30,3 +30,8 @@ parameters:
     documents_upload_directory_relative_from_web: '/uploads/files'
 
     yandex.money.secret: 'Xi1yJaU3+ZltPsIoIR7NYgsA'
+
+    # Параметры для формирования подписанного договора
+    doc_ssn: '01D2FBDE726663B00000101603790002'
+    doc_tpl_path: 'D:\docs\sogl_template.docx'
+    doc_service_url: 'http://localhost:8080/cgi-bin/DocSign.exe'

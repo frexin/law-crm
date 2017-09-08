@@ -164,3 +164,10 @@ services:
         arguments: ['@mailer', '@templating', '%email_from%']
         tags:
             - { name: doctrine.orm.entity_listener }
+
+    app.http_client:
+        class: GuzzleHttp\Client
+
+    app.contract_creator:
+        class: AppBundle\Services\ContractCreator
+        arguments: ['@app.http_client', '%doc_ssn%', '%doc_tpl_path%', '%doc_service_url%']

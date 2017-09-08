@@ -23,23 +23,16 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $filename = $this->container->getParameter('documents_upload_directory') . DIRECTORY_SEPARATOR . uniqid() . '.docx';
+        $params = [
+            'client' => 'Титов Кирилл Сергеевич', 'subject' => 'Составление искового заявления',
+            'amount' => '30000', 'contacts' => 'Перов Татьяна Александровна, Санкт-Петербург, ул. Железнодорожная дом 17.',
+            'email' => 'sks89@mail.ru', 'phone' => '+79312406922'
+        ];
 
-        $order = $em->createQueryBuilder()->select('sub')
-            ->from(Order::class, 'sub')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-
-        $event = new OrderRecentActivityUpdated($order);
-        $this->get('event_dispatcher')->dispatch('app.event.order_update_activity', $event);
-
-//        $test = $this->getDoctrine()
-//            ->getRepository('AppBundle:ServiceCategory')
-//            ->findAll();
-//
-//        dump($test);
-//        die();
+        $contractCreator = $this->container->get('app.contract_creator');
+        $contractCreator->setTemplatePlaceholders($params);
+        $contractCreator->downloadSignedContract($filename);
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
