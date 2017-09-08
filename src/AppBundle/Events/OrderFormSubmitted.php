@@ -18,10 +18,21 @@ class OrderFormSubmitted extends Event
      */
     private $order;
 
-    public function __construct(User $user, Order $order)
+    private $filepath;
+
+    public function __construct(User $user, Order $order, $filepath = null)
     {
         $this->user = $user;
         $this->order = $order;
+        $this->filepath = $filepath;
+    }
+
+    /**
+     * @return null
+     */
+    public function getFilepath()
+    {
+        return $this->filepath;
     }
 
     /**

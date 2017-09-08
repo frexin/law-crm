@@ -20,7 +20,7 @@ services:
     # Service Layer
     app.sl.order:
        class: AppBundle\ServiceLayer\OrderService
-       arguments: ["@doctrine.orm.entity_manager", "@app.file_downloader", "@app.file_uploader"]
+       arguments: ["@doctrine.orm.entity_manager", "@app.file_downloader", "@app.file_uploader", "@service_container"]
 
     app.sl.schedule:
        class: AppBundle\ServiceLayer\ScheduleEventsService
@@ -143,7 +143,7 @@ services:
 
     app.event.order_file_uploaded:
         class: AppBundle\Listener\OrderFileUploadedListener
-        arguments: ["@app.sl.order", "@router"]
+        arguments: ["@app.sl.order", "@router", "@service_container"]
         tags:
             - { name: kernel.event_listener, event: 'app.event.order_file_uploaded', method: 'onOrderFileUploaded'}
 

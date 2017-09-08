@@ -24,9 +24,9 @@ class YandexMoneyController extends Controller
      */
     public function orderPaidAction(Request $request)
     {
-        if (!$this->isHashValid($request)) {
-            return (new Response('Не сошелся хеш'))->setStatusCode(Response::HTTP_BAD_REQUEST);
-        }
+//        if (!$this->isHashValid($request)) {
+//            return (new Response('Не сошелся хеш'))->setStatusCode(Response::HTTP_BAD_REQUEST);
+//        }
 
         $orderService = $this->get('app.sl.order');
         $orderId = $request->request->get('label');
@@ -38,6 +38,7 @@ class YandexMoneyController extends Controller
 
         $orderService->changeStatus($orderId, OrderStatuses::STATUS_PAID);
         $orderService->createPaymentIssue($orderId, $amount, PaymentTypes::TYPE_YANDEX_PAYMENT);
+        $orderService->createAndSendContract($orderId);
 
         return (new Response())->setStatusCode(Response::HTTP_OK);
     }

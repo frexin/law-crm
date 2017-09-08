@@ -11,9 +11,12 @@ use AppBundle\Entity\PrivateOrderComment;
 use AppBundle\Entity\User;
 use AppBundle\Enums\OrderStatuses;
 use AppBundle\Enums\UserRoles;
+use AppBundle\Events\OrderFormSubmitted;
+use AppBundle\Services\ContractCreator;
 use AppBundle\Services\FileDownloaderInterface;
 use AppBundle\Services\FileUploaderInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class OrderService extends BaseService
@@ -22,11 +25,18 @@ class OrderService extends BaseService
     protected $fileDownloader;
     protected $fileUploader;
 
-    public function __construct(EntityManagerInterface $em, FileDownloaderInterface $fileDownloader, FileUploaderInterface $fileUploader)
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    public function __construct(EntityManagerInterface $em, FileDownloaderInterface $fileDownloader,
+                                FileUploaderInterface $fileUploader, ContainerInterface $container)
     {
         $this->em = $em;
         $this->fileDownloader = $fileDownloader;
         $this->fileUploader = $fileUploader;
+        $this->container = $container;
     }
 
     /**
@@ -106,6 +116,35 @@ class OrderService extends BaseService
 
         $this->em->persist($orderPayment);
         $this->em->flush();
+    }
+
+    public function createAndSendContract($orderId)
+    {
+        $order = $this->getModelById($orderId, 'AppBundle:Order');
+
+        /**
+         * @var ContractCreator $contractCreator
+         */
+        $contractCreator = $this->container->get('app.contract_creator');
+        $contractCreator->fillFromOrder($order);
+
+        $filename = uniqid() . '.docx';
+        $path = $this->container->getParameter('documents_upload_directory') . DIRECTORY_SEPARATOR . $filename;
+
+        if ($contractCreator->downloadSignedContract($path)) {
+            $uploadedFile = new UploadedFile($path, $filename);
+
+            $orderFile = new OrderFile();
+            $orderFile->setName($uploadedFile->getClientOriginalName());
+            $orderFile->setOrder($order);
+            $orderFile->setFilePath($filename);
+
+            $this->em->persist($orderFile);
+            $this->em->flush();
+
+            $event = new OrderFormSubmitted($order->getUser(), $order, $path);
+            $this->container->get('event_dispatcher')->dispatch('app.event.user_success_payment', $event);
+        }
     }
 
     public function addPrivateMessage($orderId, $userId, $message)

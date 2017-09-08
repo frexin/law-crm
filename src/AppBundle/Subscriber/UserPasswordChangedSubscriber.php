@@ -2,6 +2,7 @@
 
 namespace AppBundle\Subscriber;
 
+use AppBundle\Entity\Order;
 use AppBundle\Entity\User;
 use AppBundle\Events\OrderFormSubmitted;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,9 +25,16 @@ class UserPasswordChangedSubscriber implements EventSubscriberInterface
     {
         return [
             'app.event.user_password_changed' => 'sendEmailFromFrontAfterCreate',
+            'app.event.user_success_payment' => 'sendEmailWithContract',
             'sonata.admin.event.persistence.post_update' => 'sendEmailFromAdminAfterEdit',
             'sonata.admin.event.persistence.post_persist' => 'sendEmailFromAdminAfterCreate',
         ];
+    }
+
+    public function sendEmailWithContract(OrderFormSubmitted $event)
+    {
+        $user = $event->getUser();
+        $this->sendEmailWithAttach('Успешная оплата вашей заявки', $user, $event->getOrder(), $event->getFilepath());
     }
 
     public function sendEmailFromFrontAfterCreate(OrderFormSubmitted $event)
@@ -69,6 +77,27 @@ class UserPasswordChangedSubscriber implements EventSubscriberInterface
                     [
                         'email' => $user->getEmail(),
                         'password' => $user->getPlainPassword(),
+                    ]
+                ),
+                'text/html'
+            );
+
+        $this->mailer->send($message);
+    }
+
+    protected function sendEmailWithAttach($subject, User $user, Order $order, $filepath)
+    {
+        $message = \Swift_Message::newInstance()
+            ->setSubject($subject)
+            ->setFrom($this->emailForm)
+            ->setTo($user->getEmail())
+            ->attach(\Swift_Attachment::fromPath($filepath))
+            ->setBody(
+                $this->twig->render(
+                    'emails/sendContract.html.twig',
+                    [
+                        'username' => $user->getFullName(),
+                        'service_name' => $order->getServiceModification()->getService()->getTitle(),
                     ]
                 ),
                 'text/html'

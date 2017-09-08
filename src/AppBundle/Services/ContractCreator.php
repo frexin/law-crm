@@ -9,6 +9,7 @@
 namespace AppBundle\Services;
 
 
+use AppBundle\Entity\Order;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 
@@ -45,6 +46,11 @@ class ContractCreator
     protected $template_placeholders;
 
     /**
+     * @var Order
+     */
+    protected $order;
+
+    /**
      * ContractCreator constructor.
      * @param ClientInterface $http_client
      * @param string $ssn
@@ -57,6 +63,22 @@ class ContractCreator
         $this->ssn = $ssn;
         $this->doc_template_path = $doc_template_path;
         $this->doc_service_url = $doc_service_url;
+    }
+
+    public function fillFromOrder(Order $order)
+    {
+        $this->order = $order;
+
+        $props = [
+            'client'   => $order->getUser()->getFullName(),
+            'subject'  => $order->getServiceModification()->getService()->getTitle(),
+            'amount'   => $order->getServiceModification()->getPrice(),
+            'contacts' => $order->getUser()->getOtherContacts(),
+            'email'    => $order->getUser()->getEmail(),
+            'phone'    => $order->getUser()->getPhone(),
+        ];
+
+        $this->setTemplatePlaceholders($props);
     }
 
     public function setTemplatePlaceholders(array $options)

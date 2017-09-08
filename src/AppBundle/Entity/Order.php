@@ -110,7 +110,7 @@ class Order
      * @ORM\OneToMany(targetEntity="OrderFile", mappedBy="order", fetch="EAGER", cascade={"persist"})
      * @ORM\OrderBy({"createdAt" = "ASC"})
      */
-    private $orderFiles;
+    private $orderFiles = [];
 
     /**
      * @ORM\OneToMany(targetEntity="PrivateOrderComment", mappedBy="order", fetch="EAGER")
