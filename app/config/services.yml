@@ -44,6 +44,15 @@ services:
               label: "Категории"
               group: "Витрина услуг"
 
+    admin.finance:
+        class: AdminBundle\Admin\FinanceAdmin
+        arguments: [~, AppBundle\Entity\Finance, ~]
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              label: "Финансы"
+              group: "Дела и пользователи"
+
     admin.service:
         class: AdminBundle\Admin\ServiceAdmin
         arguments: [~, AppBundle\Entity\Service, ~, '@app.file_uploader', '@assets.packages']

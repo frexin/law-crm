@@ -41,7 +41,6 @@ class ServiceCategoryAdmin extends AbstractAdmin
             ]);
     }
 
-
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
